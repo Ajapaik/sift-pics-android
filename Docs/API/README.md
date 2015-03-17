@@ -105,7 +105,7 @@ Returns all the albums.
 	Errors:
 	    [standard]
 
-## Album State
+## Album state
 
 Returns the current state for an album
 
