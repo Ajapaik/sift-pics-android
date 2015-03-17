@@ -5,11 +5,9 @@ Every API call returns a JSON response.
 
 # Data Types
 
-	ARRAY<TYPE> - An array value that's made of TYPEs such as INTEGERs ('1,2,3')
 	INTEGER - An integer value such as '2' or '50'
 	NUMBER - A number value such as '2' or '5.3'
 	STRING - A string value
-	STRING[X] - A string value that supports up-to X characters
 
 # Error codes
 
