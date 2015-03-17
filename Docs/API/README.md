@@ -127,6 +127,8 @@ Returns the current state for an album
 	        	{
 	        		"id": 1234, /* Photo ID */
 	        		"image": "http://www.example.org/image.png", /* Photo image */
+	        		"title": "Title", /* Photo title */
+	        		"description": "Description", /* Photo description */
 	        		"tag": [ /* Tag choices to display */
 	        			"interior_or_exterior",
 	        			"public_or_private",
