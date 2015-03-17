@@ -52,6 +52,20 @@ public abstract class Model implements Parcelable {
         return 0;
     }
 
+    protected static long readLong(JsonObject obj, String key) {
+        JsonElement element = obj.get(key);
+
+        if(element != null && element.isJsonPrimitive()) {
+            JsonPrimitive primitive = element.getAsJsonPrimitive();
+
+            if(primitive.isNumber()) {
+                return primitive.getAsLong();
+            }
+        }
+
+        return 0;
+    }
+
     protected static JsonObject readObject(JsonObject obj, String key) {
         JsonElement element = obj.get(key);
 
@@ -79,6 +93,10 @@ public abstract class Model implements Parcelable {
     }
 
     protected static void write(JsonObject obj, String key, int value) {
+        obj.addProperty(key, value);
+    }
+
+    protected static void write(JsonObject obj, String key, long value) {
         obj.addProperty(key, value);
     }
 
