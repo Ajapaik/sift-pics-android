@@ -28,6 +28,16 @@ List of possible error codes:
     7 - session is invalid
     9 - application version is not supported
 
+# Hyperlinks
+
+Hyperlinks support 2 different notation styles. Either it's a simple string or a dictionary with a name and url:
+
+	"source1": "http://example.com",
+	"source2": {
+		"url": "http://example.com",
+		"name": "Example 1"
+	}
+
 # Authentication
 
 All the API calls require a valid session, but accounts are created automatically so it's invisible to end-users.
@@ -129,13 +139,18 @@ Returns the current state for an album
 	        		"id": 1234, /* Photo ID */
 	        		"image": "http://www.example.org/image.png", /* Photo image */
 	        		"title": "Title", /* Photo title */
-	        		"description": "Description", /* Photo description */
+	        		"author": "Author Name", /* Photo author if available */
+	        		"source": "http://example.com", /* Photo source. See: hyperlinks */
 	        		"tag": [ /* Tag choices to display */
 	        			"interior_or_exterior",
 	        			"public_or_private",
 	        			"urban_or_rural",
 	        			"landscape_or_portrait",
-	        			"group_or_not"
+	        			"ground_or_raised",
+	        			"view_or_social",
+	        			"staged_or_natural",
+	        			"one_or_many",
+	        			"whole_or_detail"
 	        		]
 	        	}
 	        ],
@@ -182,7 +197,7 @@ Returns the current state for an album
 				"tagged": 123 /* Number of tagged photos */
 			],
 			"message": "Message", /* An optional message from the server to display */,
-			"link": "http://" /* An optional link to open in the browser */
+			"link": "http://" /* An optional link to open in the browser. See: hyperlinks */
 		}
 	
 	Errors:
