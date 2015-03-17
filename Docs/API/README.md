@@ -55,6 +55,7 @@ Performs a login or creates an account if possible (type=auto). Returns a new se
     Returns:
         {
         	"error": 0,
+        	"id": 1234, /* _u value for the subsequent API calls */
         	"session": "12345678", /* _s value for the subsequent API calls */
         	"expires": 1000 /* Hint in seconds when the session should be automatically cleared by the client. */
         }
