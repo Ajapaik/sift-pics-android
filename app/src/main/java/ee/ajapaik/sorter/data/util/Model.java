@@ -1,0 +1,163 @@
+package ee.ajapaik.sorter.data.util;
+
+import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.stream.JsonReader;
+
+import java.io.StringReader;
+
+public abstract class Model implements Parcelable {
+    protected static JsonArray readArray(JsonObject obj, String key) {
+        JsonArray array = obj.getAsJsonArray(key);
+
+        return (array != null) ? array : new JsonArray();
+    }
+
+    protected static String readIdentifier(JsonObject obj, String key) {
+        JsonElement element = obj.get(key);
+
+        if(element != null && element.isJsonPrimitive()) {
+            JsonPrimitive primitive = element.getAsJsonPrimitive();
+
+            if(primitive.isString()) {
+                return primitive.getAsString();
+            }
+
+            if(primitive.isNumber()) {
+                return primitive.toString();
+            }
+        }
+
+        return null;
+    }
+
+    protected static int readInteger(JsonObject obj, String key) {
+        JsonElement element = obj.get(key);
+
+        if(element != null && element.isJsonPrimitive()) {
+            JsonPrimitive primitive = element.getAsJsonPrimitive();
+
+            if(primitive.isNumber()) {
+                return primitive.getAsInt();
+            }
+        }
+
+        return 0;
+    }
+
+    protected static JsonObject readObject(JsonObject obj, String key) {
+        JsonElement element = obj.get(key);
+
+        return (element != null && element.isJsonObject()) ? element.getAsJsonObject() : null;
+    }
+
+    protected static String readString(JsonObject obj, String key) {
+        JsonElement element = obj.get(key);
+
+        if(element != null && element.isJsonPrimitive()) {
+            JsonPrimitive primitive = element.getAsJsonPrimitive();
+
+            if(primitive.isString()) {
+                return primitive.getAsString();
+            }
+        }
+
+        return null;
+    }
+
+    protected static Uri readUri(JsonObject obj, String key) {
+        String uri = readString(obj, key);
+
+        return (uri != null) ? Uri.parse(uri) : null;
+    }
+
+    protected static void write(JsonObject obj, String key, int value) {
+        obj.addProperty(key, value);
+    }
+
+    protected static void write(JsonObject obj, String key, String value) {
+        if(value != null) {
+            obj.addProperty(key, value);
+        }
+    }
+
+    protected static void write(JsonObject obj, String key, Uri value) {
+        if(value != null) {
+            obj.addProperty(key, value.toString());
+        }
+    }
+
+    public abstract JsonObject getAttributes();
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(getAttributes().toString());
+    }
+
+    @Override
+    public String toString() {
+        return getAttributes().toString();
+    }
+
+    public static abstract class Creator<T> implements Parcelable.Creator<T> {
+        public T parse(JsonObject obj) {
+            if(obj != null) {
+                try {
+                    return newInstance(obj);
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return null;
+        }
+
+        public T parse(String str) {
+            if(str != null) {
+                try {
+                    JsonElement element = new JsonParser().parse(new JsonReader(new StringReader(str)));
+
+                    if(element.isJsonObject()) {
+                        return newInstance(element.getAsJsonObject());
+                    }
+                }
+                catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return null;
+        }
+
+        @Override
+        public T createFromParcel(Parcel in) {
+            try {
+                JsonElement element = new JsonParser().parse(new JsonReader(new StringReader(in.readString())));
+
+                if(element.isJsonObject()) {
+                    return newInstance(element.getAsJsonObject());
+                }
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        public abstract T newInstance(JsonObject attributes);
+    }
+}
