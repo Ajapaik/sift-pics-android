@@ -18,6 +18,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import ee.ajapaik.sorter.data.Session;
+import ee.ajapaik.sorter.data.util.Status;
+import ee.ajapaik.sorter.util.Authorization;
+import ee.ajapaik.sorter.util.Objects;
 import ee.ajapaik.sorter.util.Settings;
 import ee.ajapaik.sorter.util.WebAction;
 import ee.ajapaik.sorter.util.WebImage;
@@ -28,6 +31,7 @@ public class WebService extends Service {
 
     private static final String API_URL = "http://staging.ajapaik.ee/cat/v1/";
     private static final int MAX_CONNECTIONS = 4;
+    private static final int SHUTDOWN_DELAY_IN_SECONDS = 1;
 
     private class Task {
         private List<WeakReference<ResultHandler>> m_handlers;
@@ -38,8 +42,34 @@ public class WebService extends Service {
             m_operation = operation;
         }
 
+        public WebOperation getOperation() {
+            return m_operation;
+        }
+
         public void addHandler(ResultHandler handler) {
             m_handlers.add(new WeakReference<ResultHandler>(handler));
+        }
+
+        public void notifyHandlers() {
+            for(WeakReference<ResultHandler> handlers : m_handlers) {
+                ResultHandler handler = handlers.get();
+
+                if(handler != null) {
+                    handler.onResult(m_operation);
+                }
+            }
+        }
+
+        public boolean isRogue() {
+            for(WeakReference<ResultHandler> handlers : m_handlers) {
+                ResultHandler handler = handlers.get();
+
+                if(handler != null) {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 
@@ -54,12 +84,125 @@ public class WebService extends Service {
     public WebService() {
     }
 
-    public void enqueueOperation(WebOperation operation, ResultHandler handler) {
+    private void stopSelfIfNeeded() {
+        synchronized(m_tasks) {
+            for(int i = 0, c = m_tasks.size(); i < c; i++) {
+                Task task = m_tasks.get(i);
 
+                if(task.isRogue()) {
+                    task.getOperation().abortRequest();
+                    m_tasks.remove(i);
+                    i--;
+                    c--;
+                }
+            }
+
+            if(m_tasks.size() == 0) {
+                stopSelf();
+            }
+        }
+    }
+
+    private void runSilentLogin() {
+        Authorization authorization = m_settings.getAuthorization();
+        WebAction<Session> action;
+
+        if(authorization == null) {
+            authorization = Authorization.getAnonymous(WebService.this);
+            m_settings.setAuthorization(authorization);
+        }
+
+        action = Session.createLoginAction(this, authorization);
+        action.performRequest(API_URL, null);
+
+        if(action.getStatus() == Status.NONE) {
+            m_session = action.getObject();
+            m_settings.setSession(m_session);
+        }
+    }
+
+    private void runOperation(final Task task, final WebOperation operation) {
+        ExecutorService queue = (operation instanceof WebImage) ? m_imageQueue : m_actionQueue;
+
+        queue.execute(new Runnable() {
+            @Override
+            public void run() {
+                boolean isSecure = operation.isSecure();
+
+                if(isSecure && (m_session == null || m_session.isExpired())) {
+                    runSilentLogin();
+                }
+
+                operation.performRequest(API_URL, (isSecure && m_session != null) ? m_session.getWebParameters() : null);
+
+                if(operation.shouldRetry()) {
+                    runSilentLogin();
+
+                    if(m_session != null) {
+                        operation.performRequest(API_URL, m_session.getWebParameters());
+                    }
+                }
+
+                synchronized(m_tasks) {
+                    m_tasks.remove(task);
+                    task.notifyHandlers();
+                }
+
+                m_handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        stopSelfIfNeeded();
+                    }
+                }, SHUTDOWN_DELAY_IN_SECONDS * 1000);
+            }
+        });
+    }
+
+    public void enqueueOperation(WebOperation operation, ResultHandler handler) {
+        String uniqueId = operation.getUniqueId();
+        Task task;
+
+        synchronized(m_tasks) {
+            for(int i = 0, c = m_tasks.size(); i < c; i++) {
+                Task task_ = m_tasks.get(i);
+                WebOperation operation_ = task_.getOperation();
+
+                if(operation == operation_ || (uniqueId != null && Objects.match(uniqueId, operation_.getUniqueId()))) {
+                    task_.addHandler(handler);
+                    return;
+                }
+            }
+
+            task = new Task(operation);
+            task.addHandler(handler);
+            m_tasks.add(task);
+        }
+
+        runOperation(task, operation);
     }
 
     public void dequeueOperation(WebOperation operation) {
+        String uniqueId = operation.getUniqueId();
 
+        synchronized(m_tasks) {
+            for(int i = 0, c = m_tasks.size(); i < c; i++) {
+                Task task = m_tasks.get(i);
+                WebOperation operation_ = task.getOperation();
+
+                if(operation == operation_ || (uniqueId != null && Objects.match(uniqueId, operation_.getUniqueId()))) {
+                    operation_.abortRequest();
+                    m_tasks.remove(i);
+                    break;
+                }
+            }
+        }
+
+        m_handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                stopSelfIfNeeded();
+            }
+        }, SHUTDOWN_DELAY_IN_SECONDS * 1000);
     }
 
     @Override
@@ -104,8 +247,7 @@ public class WebService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        return super.onStartCommand(intent, flags, startId);
+        return START_NOT_STICKY;
     }
 
     public static class Connection implements ServiceConnection {
@@ -123,11 +265,13 @@ public class WebService extends Service {
             private Context m_context;
             private WebAction<T> m_action;
             private WebAction.ResultHandler<T> m_handler;
+            private Handler m_handle;
 
             public ActionItem(Context context, WebAction<T> action, WebAction.ResultHandler<T> handler) {
                 m_context = context;
                 m_action = action;
                 m_handler = handler;
+                m_handle = new Handler();
             }
 
             public WebOperation getOperation() {
@@ -143,18 +287,23 @@ public class WebService extends Service {
                 m_handler = null;
             }
 
-            public void onResult(WebOperation operation) {
-                m_queue.remove(this);
+            public void onResult(final WebOperation operation) {
+                m_handle.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        m_queue.remove(this);
 
-                if(m_handler != null) {
-                    WebAction<T> action = (WebAction<T>)operation;
+                        if(m_handler != null) {
+                            WebAction<T> action = (WebAction<T>)operation;
 
-                    m_handler.onActionResult(action.getStatus(), action.getObject());
-                }
+                            m_handler.onActionResult(action.getStatus(), action.getObject());
+                        }
 
-                if(m_queue.size() == 0) {
-                    disconnect(m_context);
-                }
+                        if(m_queue.size() == 0) {
+                            disconnect(m_context);
+                        }
+                    }
+                });
             }
         }
 
@@ -224,6 +373,7 @@ public class WebService extends Service {
             if(!m_connecting) {
                 m_connecting = true;
                 context.bindService(new Intent(context, WebService.class), this, Context.BIND_AUTO_CREATE);
+                context.startService(new Intent(context, WebService.class));
             }
         }
 
