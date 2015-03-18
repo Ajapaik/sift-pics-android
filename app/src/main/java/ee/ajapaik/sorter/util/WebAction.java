@@ -71,10 +71,10 @@ public class WebAction<T> extends WebOperation {
             Log.d(TAG, "statusCode=" + statusCode + ", stream=" + ((stream != null) ? "YES" : "NONE"));
         }
 
-        if((statusCode == HTTP_STATUS_OK || statusCode == HTTP_STATUS_INTERNAL_SERVER_ERROR) && stream != null) {
+        if((statusCode == HTTP_STATUS_OK || statusCode == HTTP_STATUS_FORBIDDEN || statusCode == HTTP_STATUS_INTERNAL_SERVER_ERROR) && stream != null) {
             try {
                 JsonElement element = new JsonParser().parse(new JsonReader(new InputStreamReader(stream, "UTF-8")));
-
+                Log.e(TAG, element.toString());
                 if(element.isJsonObject()) {
                     JsonObject attributes = element.getAsJsonObject();
                     JsonPrimitive error = attributes.getAsJsonPrimitive(KEY_ERROR);
