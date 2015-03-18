@@ -32,6 +32,10 @@
             android:name=".PhotoActivity"
             android:label="@string/title_activity_photo" >
         </activity>
+
+        <service
+            android:name=".WebService">
+        </service>
     </application>
 
 </manifest>
