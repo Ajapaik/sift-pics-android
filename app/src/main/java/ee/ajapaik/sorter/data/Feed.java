@@ -17,7 +17,7 @@ public class Feed extends Model {
     private static final String KEY_ALBUMS = "albums";
 
     public static WebAction<Feed> createAction(Context context) {
-        return new WebAction<Feed>(context, "/albums", null, CREATOR);
+        return new WebAction<Feed>(context, "/albums/", null, CREATOR);
     }
 
     public static Feed parse(String str) {

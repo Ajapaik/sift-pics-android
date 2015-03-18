@@ -33,11 +33,11 @@ public class Session extends Model {
         parameters.put("username", authorization.getUsername());
         parameters.put("password", authorization.getPassword());
 
-        return new Action(context, "/login", parameters, CREATOR);
+        return new Action(context, "/login/", parameters, CREATOR);
     }
 
     public static WebAction<Session> createLogoutAction(Context context) {
-        return new WebAction<Session>(context, "/logout", null, CREATOR);
+        return new WebAction<Session>(context, "/logout/", null, CREATOR);
     }
 
     public static Session parse(String str) {
