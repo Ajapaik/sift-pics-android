@@ -48,5 +48,11 @@ public enum Status {
     public boolean isNetworkProblem() {
         return (m_code < 0) ? true : false;
     }
+
+    public boolean isSessionProblem() {
+        return (m_code == SESSION_REQUIRED.m_code ||
+                m_code == SESSION_EXPIRED.m_code ||
+                m_code == SESSION_INVALID.m_code) ? true : false;
+    }
 }
 
