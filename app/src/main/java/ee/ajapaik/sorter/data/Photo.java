@@ -33,11 +33,15 @@ public class Photo extends Model {
     private List<Tag> m_tags;
 
     public Photo(JsonObject attributes) {
+        this(attributes, null);
+    }
+
+    public Photo(JsonObject attributes, Photo basePhoto) {
         m_identifier = readIdentifier(attributes, KEY_IDENTIFIER);
-        m_image = readUri(attributes, KEY_IMAGE);
-        m_title = readString(attributes, KEY_TITLE);
-        m_author = readString(attributes, KEY_AUTHOR);
-        m_source = readHyperlink(attributes, KEY_SOURCE);
+        m_image = readUri(attributes, KEY_IMAGE, (basePhoto != null) ? basePhoto.getImage() : null);
+        m_title = readString(attributes, KEY_TITLE, (basePhoto != null) ? basePhoto.getTitle() : null);
+        m_author = readString(attributes, KEY_AUTHOR, (basePhoto != null) ? basePhoto.getAuthor() : null);
+        m_source = readHyperlink(attributes, KEY_SOURCE, (basePhoto != null) ? basePhoto.getSource() : null);
         m_tags = new ArrayList<Tag>();
 
         for(JsonElement tagElement : readArray(attributes, KEY_TAGS)) {
