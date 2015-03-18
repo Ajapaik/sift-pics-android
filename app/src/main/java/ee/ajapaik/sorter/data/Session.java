@@ -1,11 +1,17 @@
 package ee.ajapaik.sorter.data;
 
+import android.content.Context;
+
 import com.google.gson.JsonObject;
 
 import java.util.Date;
+import java.util.Hashtable;
+import java.util.Map;
 
 import ee.ajapaik.sorter.data.util.Model;
+import ee.ajapaik.sorter.util.Authorization;
 import ee.ajapaik.sorter.util.Objects;
+import ee.ajapaik.sorter.util.WebAction;
 
 public class Session extends Model {
     private static final String KEY_EXPIRES = "expires.abs";
@@ -14,6 +20,33 @@ public class Session extends Model {
     private static final String KEY_USER = "user";
 
     private static final int DEFAULT_SESSION_LENGTH_IN_SECONDS = 60;
+
+    public static WebAction<Session> createLoginAction(Context context, Authorization authorization) {
+        Map<String, String> parameters = new Hashtable<String, String>();
+
+        parameters.put("os", "android");
+        parameters.put("version", "0.1");
+        parameters.put("type", (authorization.getType() == Authorization.Type.ANONYMOUS) ? "auto" : "user");
+        parameters.put("username", authorization.getUsername());
+        parameters.put("password", authorization.getPassword());
+
+        return new Action(context, "/login", parameters, CREATOR);
+    }
+
+    public static WebAction<Session> createLogoutAction(Context context) {
+        return new WebAction<Session>(context, "/logout", null, CREATOR);
+    }
+
+    private static class Action extends WebAction<Session> {
+        public Action(Context context, String path, Map<String, String> parameters, Model.Creator<Session> creator) {
+            super(context, path, parameters, creator);
+        }
+
+        @Override
+        public boolean isSecure() {
+            return false;
+        }
+    }
 
     public static Session parse(String str) {
         return CREATOR.parse(str);
