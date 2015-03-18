@@ -22,10 +22,36 @@ public abstract class Model implements Parcelable {
         return (array != null) ? array : new JsonArray();
     }
 
-    protected static Hyperlink readHyperlink(JsonObject obj, String key) {
+    protected static boolean readBoolean(JsonObject obj, String key) {
+        return readBoolean(obj, key, false);
+    }
+
+    protected static boolean readBoolean(JsonObject obj, String key, boolean defaultValue) {
         JsonElement element = obj.get(key);
 
-        return (element != null && element.isJsonObject()) ? Hyperlink.parse(element.getAsJsonObject()) : null;
+        if(element != null && element.isJsonPrimitive()) {
+            JsonPrimitive primitive = element.getAsJsonPrimitive();
+
+            if(primitive.isBoolean()) {
+                return primitive.getAsBoolean();
+            }
+
+            if(primitive.isNumber()) {
+                return (primitive.getAsInt() == 1) ? true : false;
+            }
+        }
+
+        return defaultValue;
+    }
+
+    protected static Hyperlink readHyperlink(JsonObject obj, String key) {
+        return readHyperlink(obj, key, null);
+    }
+
+    protected static Hyperlink readHyperlink(JsonObject obj, String key, Hyperlink defaultValue) {
+        JsonElement element = obj.get(key);
+
+        return (element != null && element.isJsonObject()) ? Hyperlink.parse(element.getAsJsonObject()) : defaultValue;
     }
 
     protected static String readIdentifier(JsonObject obj, String key) {
@@ -81,6 +107,10 @@ public abstract class Model implements Parcelable {
     }
 
     protected static String readString(JsonObject obj, String key) {
+        return readString(obj, key, null);
+    }
+
+    protected static String readString(JsonObject obj, String key, String defaultValue) {
         JsonElement element = obj.get(key);
 
         if(element != null && element.isJsonPrimitive()) {
@@ -91,10 +121,14 @@ public abstract class Model implements Parcelable {
             }
         }
 
-        return null;
+        return defaultValue;
     }
 
     protected static Uri readUri(JsonObject obj, String key) {
+        return readUri(obj, key, null);
+    }
+
+    protected static Uri readUri(JsonObject obj, String key, Uri defaultValue) {
         String uri = readString(obj, key);
         Hyperlink hyperlink;
 
@@ -106,7 +140,7 @@ public abstract class Model implements Parcelable {
             return hyperlink.getURL();
         }
 
-        return null;
+        return defaultValue;
     }
 
     protected static void write(JsonObject obj, String key, int value) {
