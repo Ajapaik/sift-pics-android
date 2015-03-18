@@ -19,6 +19,9 @@ public class Session extends Model {
     private static final String KEY_SESSION = "session";
     private static final String KEY_USER = "user";
 
+    private static final String KEY_WEB_TOKEN = "_s";
+    private static final String KEY_WEB_USER = "_u";
+
     private static final int DEFAULT_SESSION_LENGTH_IN_SECONDS = 60;
 
     public static WebAction<Session> createLoginAction(Context context, Authorization authorization) {
@@ -78,6 +81,15 @@ public class Session extends Model {
         attributes.addProperty(KEY_EXPIRES, m_expires);
 
         return attributes;
+    }
+
+    public Map<String, String> getWebParameters() {
+        Map<String, String> parameters = new Hashtable<String, String>();
+
+        parameters.put(KEY_WEB_TOKEN, m_token);
+        parameters.put(KEY_WEB_USER, m_user);
+
+        return parameters;
     }
 
     public long getExpires() {
