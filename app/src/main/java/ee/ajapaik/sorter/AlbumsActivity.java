@@ -1,30 +1,48 @@
 package ee.ajapaik.sorter;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 
+import ee.ajapaik.sorter.data.Feed;
+import ee.ajapaik.sorter.data.util.Status;
+import ee.ajapaik.sorter.util.WebAction;
 
 public class AlbumsActivity extends ActionBarActivity {
+    private static final String TAG = "AlbumsActivity";
+
+    private WebService.Connection m_connection = new WebService.Connection();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_albums);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
+        m_connection.open(this, Feed.createAction(this), new WebAction.ResultHandler<Feed>() {
+            @Override
+            public void onActionResult(Status status, Feed data) {
+                Log.e(TAG, "Feed completed: " + status.getCode());
+            }
+        });
     }
 
+    protected void onDestroy() {
+        m_connection.closeAll(this);
+
+        super.onDestroy();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
