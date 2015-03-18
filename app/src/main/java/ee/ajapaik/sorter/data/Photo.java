@@ -146,7 +146,7 @@ public class Photo extends Model {
 
         public static Tag parse(String code) {
             if(code != null) {
-                for(Tag tag : Tag.values()) {
+                for(Tag tag : values()) {
                     if(Objects.match(tag.m_code, code)) {
                         return tag;
                     }
