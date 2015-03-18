@@ -1,5 +1,7 @@
 package ee.ajapaik.sorter.data;
 
+import android.content.Context;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -9,9 +11,14 @@ import java.util.List;
 
 import ee.ajapaik.sorter.data.util.Model;
 import ee.ajapaik.sorter.util.Objects;
+import ee.ajapaik.sorter.util.WebAction;
 
 public class Feed extends Model {
     private static final String KEY_ALBUMS = "albums";
+
+    public static WebAction<Feed> createAction(Context context) {
+        return new WebAction<Feed>(context, "/albums", null, CREATOR);
+    }
 
     public static Feed parse(String str) {
         return CREATOR.parse(str);
