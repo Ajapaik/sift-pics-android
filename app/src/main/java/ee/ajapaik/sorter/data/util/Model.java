@@ -13,11 +13,19 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.StringReader;
 
+import ee.ajapaik.sorter.data.Hyperlink;
+
 public abstract class Model implements Parcelable {
     protected static JsonArray readArray(JsonObject obj, String key) {
         JsonArray array = obj.getAsJsonArray(key);
 
         return (array != null) ? array : new JsonArray();
+    }
+
+    protected static Hyperlink readHyperlink(JsonObject obj, String key) {
+        JsonElement element = obj.get(key);
+
+        return (element != null && element.isJsonObject()) ? Hyperlink.parse(element.getAsJsonObject()) : null;
     }
 
     protected static String readIdentifier(JsonObject obj, String key) {
@@ -88,8 +96,17 @@ public abstract class Model implements Parcelable {
 
     protected static Uri readUri(JsonObject obj, String key) {
         String uri = readString(obj, key);
+        Hyperlink hyperlink;
 
-        return (uri != null) ? Uri.parse(uri) : null;
+        if(uri != null) {
+            return Uri.parse(uri);
+        }
+
+        if((hyperlink = readHyperlink(obj, key)) != null) {
+            return hyperlink.getURL();
+        }
+
+        return null;
     }
 
     protected static void write(JsonObject obj, String key, int value) {
@@ -109,6 +126,12 @@ public abstract class Model implements Parcelable {
     protected static void write(JsonObject obj, String key, Uri value) {
         if(value != null) {
             obj.addProperty(key, value.toString());
+        }
+    }
+
+    protected static void write(JsonObject obj, String key, Hyperlink value) {
+        if(value != null) {
+            obj.add(key, value.getAttributes());
         }
     }
 
