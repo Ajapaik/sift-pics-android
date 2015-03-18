@@ -37,17 +37,6 @@ public class Session extends Model {
         return new WebAction<Session>(context, "/logout", null, CREATOR);
     }
 
-    private static class Action extends WebAction<Session> {
-        public Action(Context context, String path, Map<String, String> parameters, Model.Creator<Session> creator) {
-            super(context, path, parameters, creator);
-        }
-
-        @Override
-        public boolean isSecure() {
-            return false;
-        }
-    }
-
     public static Session parse(String str) {
         return CREATOR.parse(str);
     }
@@ -123,6 +112,17 @@ public class Session extends Model {
         }
 
         return true;
+    }
+
+    private static class Action extends WebAction<Session> {
+        public Action(Context context, String path, Map<String, String> parameters, Model.Creator<Session> creator) {
+            super(context, path, parameters, creator);
+        }
+
+        @Override
+        public boolean isSecure() {
+            return false;
+        }
     }
 
     public static final Model.Creator<Session> CREATOR = new Model.Creator<Session>() {
