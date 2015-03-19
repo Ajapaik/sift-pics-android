@@ -73,4 +73,26 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="ProfileItem">
+        <item name="android:paddingLeft">@dimen/profile_item_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/profile_item_horizontal_margin</item>
+        <item name="android:paddingTop">@dimen/profile_item_vertical_margin</item>
+        <item name="android:paddingBottom">@dimen/profile_item_vertical_margin</item>
+        <item name="android:layout_height">@dimen/profile_item_height</item>
+    </style>
+
+    <style name="ProfileItemIcon">
+        <item name="android:layout_width">@dimen/profile_item_height</item>
+    </style>
+
+    <style name="ProfileItemTitleText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/profile_item_title</item>
+        <item name="android:textSize">@dimen/font_size_huge</item>
+    </style>
+
+    <style name="ProfileItemSubtitleText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/profile_item_subtitle</item>
+        <item name="android:textSize">@dimen/font_size_medium</item>
+    </style>
+
 </resources>

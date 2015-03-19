@@ -11,6 +11,8 @@
     <!-- Profile -->
     <color name="profile_header">#000000</color>
     <color name="profile_item_separator">#333333</color>
+    <color name="profile_item_subtitle">#333333</color>
+    <color name="profile_item_title">#000000</color>
     <color name="profile_subtitle">#333333</color>
     <color name="profile_title">#000000</color>
 
