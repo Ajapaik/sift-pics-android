@@ -307,7 +307,7 @@ public class WebService extends Service {
             }
         }
 
-        public <T> WebAction<T> open(Context context, WebAction<T> action, WebAction.ResultHandler<T> handler) {
+        public <T> WebAction<T> enqueue(Context context, WebAction<T> action, WebAction.ResultHandler<T> handler) {
             String uniqueId = action.getUniqueId();
             ActionItem<T> actionItem;
 
@@ -340,11 +340,11 @@ public class WebService extends Service {
             return action;
         }
 
-        public WebImage open(Context context, WebImage image) {
+        public WebImage enqueue(Context context, WebImage image) {
             return image;
         }
 
-        public void close(Context context, WebOperation operation) {
+        public void dequeue(Context context, WebOperation operation) {
             for(int i = 0, c = m_queue.size(); i < c; i++) {
                 QueueItem item = m_queue.get(i);
 
@@ -360,7 +360,7 @@ public class WebService extends Service {
             }
         }
 
-        public void closeAll(Context context) {
+        public void dequeueAll(Context context) {
             for(QueueItem item : m_queue) {
                 item.stop();
             }

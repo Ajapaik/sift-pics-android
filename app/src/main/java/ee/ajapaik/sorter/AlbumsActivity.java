@@ -30,7 +30,7 @@ public class AlbumsActivity extends ActionBarActivity {
                     .commit();
         }
 
-        m_connection.open(this, Feed.createAction(this), new WebAction.ResultHandler<Feed>() {
+        m_connection.enqueue(this, Feed.createAction(this), new WebAction.ResultHandler<Feed>() {
             @Override
             public void onActionResult(Status status, Feed data) {
                 Log.e(TAG, "Feed completed: " + status.getCode());
@@ -39,7 +39,7 @@ public class AlbumsActivity extends ActionBarActivity {
     }
 
     protected void onDestroy() {
-        m_connection.closeAll(this);
+        m_connection.dequeueAll(this);
 
         super.onDestroy();
     }
