@@ -1,7 +1,6 @@
 package ee.ajapaik.sorter;
 
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
 import ee.ajapaik.sorter.fragment.ProfileFragment;
@@ -25,8 +24,8 @@ public class ProfileActivity extends WebActivity {
         int id = item.getItemId();
 
         if(id == android.R.id.home) {
-            NavUtils.navigateUpFromSameTask(this);
-
+            onBackPressed();
+            
             return true;
         }
 
