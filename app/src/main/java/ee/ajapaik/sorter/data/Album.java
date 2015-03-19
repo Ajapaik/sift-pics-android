@@ -51,22 +51,24 @@ public class Album extends Model {
         m_state = readString(attributes, KEY_STATE, (baseAlbum != null) ? baseAlbum.getState() : null);
         m_photos = new ArrayList<Photo>();
 
-        if(element.isJsonArray()) {
-            for(JsonElement photoElement : element.getAsJsonArray()) {
-                if(photoElement.isJsonObject()) {
-                    try {
-                        m_photos.add(new Photo(photoElement.getAsJsonObject()));
-                    } catch (Exception e) {
-                        e.printStackTrace();
+        if(element != null) {
+            if(element.isJsonArray()) {
+                for(JsonElement photoElement : element.getAsJsonArray()) {
+                    if(photoElement.isJsonObject()) {
+                        try {
+                            m_photos.add(new Photo(photoElement.getAsJsonObject()));
+                        } catch(Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            }
-        } else if(!element.isJsonNull() && baseAlbum != null) {
-            List<Photo> photos = baseAlbum.getPhotos();
+            } else if(!element.isJsonNull() && baseAlbum != null) {
+                List<Photo> photos = baseAlbum.getPhotos();
 
-            if(photos != null && photos.size() > 0) {
-                for(Photo photo : photos) {
-                    m_photos.add(photo);
+                if(photos != null && photos.size() > 0) {
+                    for(Photo photo : photos) {
+                        m_photos.add(photo);
+                    }
                 }
             }
         }
