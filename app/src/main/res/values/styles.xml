@@ -1,8 +1,23 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- Activities -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+
+    </style>
+
+    <!-- Albums -->
+    <style name="AlbumItemOverlay" parent="@android:style/TextAppearance">
+        <item name="android:background">@color/album_item_overlay</item>
+    </style>
+
+    <style name="AlbumItemTitleText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/album_item_title</item>
+        <item name="android:textSize">@dimen/font_size_huge</item>
+    </style>
+
+    <style name="AlbumItemSubtitleText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/album_item_subtitle</item>
+        <item name="android:textSize">@dimen/font_size_medium</item>
     </style>
 
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="album_item_overlay">#33000000</color>
+    <color name="album_item_separator">#999999</color>
+    <color name="album_item_subtitle">#FFFFFF</color>
+    <color name="album_item_title">#FFFFFF</color>
+</resources>
