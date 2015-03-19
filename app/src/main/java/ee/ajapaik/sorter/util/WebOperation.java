@@ -49,6 +49,7 @@ public abstract class WebOperation {
     public static final int HTTP_STATUS_OK = 200;
     public static final int HTTP_STATUS_NO_CONTENT = 204;
     public static final int HTTP_STATUS_FORBIDDEN = 403;
+    public static final int HTTP_STATUS_NOT_FOUND = 404;
     public static final int HTTP_STATUS_INTERNAL_SERVER_ERROR = 500;
 
     private static final int RETRY_COUNT = 3;

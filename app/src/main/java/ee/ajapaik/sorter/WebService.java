@@ -261,6 +261,52 @@ public class WebService extends Service {
             void stop();
         }
 
+        private class ImageItem implements QueueItem, WebService.ResultHandler {
+            private Context m_context;
+            private WebImage m_image;
+            private WebImage.ResultHandler m_handler;
+            private Handler m_handle;
+
+            public ImageItem(Context context, WebImage image, WebImage.ResultHandler handler) {
+                m_context = context;
+                m_image = image;
+                m_handler = handler;
+                m_handle = new Handler();
+            }
+
+            public WebOperation getOperation() {
+                return m_image;
+            }
+
+            public void start() {
+                m_binder.add(m_image, this);
+            }
+
+            public void stop() {
+                m_binder.remove(m_image);
+                m_handler = null;
+            }
+
+            public void onResult(final WebOperation operation) {
+                m_handle.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        m_queue.remove(ImageItem.this);
+
+                        if(m_handler != null) {
+                            WebImage image = (WebImage)operation;
+
+                            m_handler.onImageResult(image.getStatus(), image.getDrawable());
+                        }
+
+                        if(m_queue.size() == 0) {
+                            disconnect(m_context);
+                        }
+                    }
+                });
+            }
+        }
+
         private class ActionItem<T> implements QueueItem, WebService.ResultHandler {
             private Context m_context;
             private WebAction<T> m_action;
@@ -340,7 +386,36 @@ public class WebService extends Service {
             return action;
         }
 
-        public WebImage enqueue(Context context, WebImage image) {
+        public WebImage enqueue(Context context, WebImage image, WebImage.ResultHandler handler) {
+            String uniqueId = image.getUniqueId();
+            ImageItem imageItem;
+
+            if(uniqueId != null) {
+                for(QueueItem item : m_queue) {
+                    String uniqueId_ = item.getOperation().getUniqueId();
+
+                    if(uniqueId_ != null && uniqueId_.equals(uniqueId)) {
+                        try {
+                            image = (WebImage)item.getOperation();
+
+                            return image;
+                        }
+                        catch(Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            imageItem = new ImageItem(context, image, handler);
+            m_queue.add(imageItem);
+
+            if(m_binder != null) {
+                imageItem.start();
+            } else {
+                connect(context);
+            }
+
             return image;
         }
 
