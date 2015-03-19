@@ -33,59 +33,6 @@ public class WebService extends Service {
     private static final int MAX_CONNECTIONS = 4;
     private static final int SHUTDOWN_DELAY_IN_SECONDS = 1;
 
-    private class Task {
-        private List<WeakReference<ResultHandler>> m_handlers;
-        private WebOperation m_operation;
-
-        public Task(WebOperation operation) {
-            m_handlers = new ArrayList<WeakReference<ResultHandler>>();
-            m_operation = operation;
-        }
-
-        public WebOperation getOperation() {
-            return m_operation;
-        }
-
-        public int getHandlerCount() {
-            int count = 0;
-
-            for(WeakReference<ResultHandler> handlers : m_handlers) {
-                ResultHandler handler = handlers.get();
-
-                if(handler != null) {
-                    count += 1;
-                }
-            }
-
-            return count;
-        }
-        public void addHandler(ResultHandler handler) {
-            m_handlers.add(new WeakReference<ResultHandler>(handler));
-        }
-
-        public void notifyHandlers() {
-            for(WeakReference<ResultHandler> handlers : m_handlers) {
-                ResultHandler handler = handlers.get();
-
-                if(handler != null) {
-                    handler.onResult(m_operation);
-                }
-            }
-        }
-
-        public boolean isRogue() {
-            for(WeakReference<ResultHandler> handlers : m_handlers) {
-                ResultHandler handler = handlers.get();
-
-                if(handler != null) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-    }
-
     private final IBinder m_binder = new LocalBinder();
     private final Handler m_handler = new Handler(Looper.getMainLooper());
     private ExecutorService m_actionQueue = Executors.newFixedThreadPool(1);
@@ -264,108 +211,63 @@ public class WebService extends Service {
         return START_NOT_STICKY;
     }
 
+    private class Task {
+        private List<WeakReference<ResultHandler>> m_handlers;
+        private WebOperation m_operation;
+
+        public Task(WebOperation operation) {
+            m_handlers = new ArrayList<WeakReference<ResultHandler>>();
+            m_operation = operation;
+        }
+
+        public WebOperation getOperation() {
+            return m_operation;
+        }
+
+        public int getHandlerCount() {
+            int count = 0;
+
+            for(WeakReference<ResultHandler> handlers : m_handlers) {
+                ResultHandler handler = handlers.get();
+
+                if(handler != null) {
+                    count += 1;
+                }
+            }
+
+            return count;
+        }
+        public void addHandler(ResultHandler handler) {
+            m_handlers.add(new WeakReference<ResultHandler>(handler));
+        }
+
+        public void notifyHandlers() {
+            for(WeakReference<ResultHandler> handlers : m_handlers) {
+                ResultHandler handler = handlers.get();
+
+                if(handler != null) {
+                    handler.onResult(m_operation);
+                }
+            }
+        }
+
+        public boolean isRogue() {
+            for(WeakReference<ResultHandler> handlers : m_handlers) {
+                ResultHandler handler = handlers.get();
+
+                if(handler != null) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    }
+
     public static class Connection implements ServiceConnection {
         private List<QueueItem> m_queue = new ArrayList<QueueItem>();
         private boolean m_connecting = false;
         private LocalBinder m_binder;
-
-        private interface QueueItem {
-            WebOperation getOperation();
-            void start();
-            void stop();
-        }
-
-        private class ImageItem implements QueueItem, WebService.ResultHandler {
-            private Context m_context;
-            private WebImage m_image;
-            private WebImage.ResultHandler m_handler;
-            private Handler m_handle;
-
-            public ImageItem(Context context, WebImage image, WebImage.ResultHandler handler) {
-                m_context = context;
-                m_image = image;
-                m_handler = handler;
-                m_handle = new Handler();
-            }
-
-            public WebOperation getOperation() {
-                return m_image;
-            }
-
-            public void start() {
-                m_binder.add(m_image, this);
-            }
-
-            public void stop() {
-                m_binder.remove(m_image);
-                m_handler = null;
-            }
-
-            public void onResult(final WebOperation operation) {
-                m_handle.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        m_queue.remove(ImageItem.this);
-
-                        if(m_handler != null) {
-                            WebImage image = (WebImage)operation;
-
-                            m_handler.onImageResult(image.getStatus(), image.getDrawable());
-                        }
-
-                        if(m_queue.size() == 0) {
-                            disconnect(m_context);
-                        }
-                    }
-                });
-            }
-        }
-
-        private class ActionItem<T> implements QueueItem, WebService.ResultHandler {
-            private Context m_context;
-            private WebAction<T> m_action;
-            private WebAction.ResultHandler<T> m_handler;
-            private Handler m_handle;
-
-            public ActionItem(Context context, WebAction<T> action, WebAction.ResultHandler<T> handler) {
-                m_context = context;
-                m_action = action;
-                m_handler = handler;
-                m_handle = new Handler();
-            }
-
-            public WebOperation getOperation() {
-                return m_action;
-            }
-
-            public void start() {
-                m_binder.add(m_action, this);
-            }
-
-            public void stop() {
-                //m_binder.remove(m_action);
-                m_handler = null;
-            }
-
-            public void onResult(final WebOperation operation) {
-                m_handle.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        m_queue.remove(ActionItem.this);
-
-                        if(m_handler != null) {
-                            WebAction<T> action = (WebAction<T>)operation;
-
-                            m_handler.onActionResult(action.getStatus(), action.getObject());
-                        }
-
-                        if(m_queue.size() == 0) {
-                            disconnect(m_context);
-                        }
-                    }
-                });
-            }
-        }
 
         public <T> WebAction<T> enqueue(Context context, WebAction<T> action, WebAction.ResultHandler<T> handler) {
             String uniqueId = action.getUniqueId();
@@ -483,6 +385,104 @@ public class WebService extends Service {
             }
 
             m_binder = null;
+        }
+
+        private interface QueueItem {
+            WebOperation getOperation();
+            void start();
+            void stop();
+        }
+
+        private class ImageItem implements QueueItem, WebService.ResultHandler {
+            private Context m_context;
+            private WebImage m_image;
+            private WebImage.ResultHandler m_handler;
+            private Handler m_handle;
+
+            public ImageItem(Context context, WebImage image, WebImage.ResultHandler handler) {
+                m_context = context;
+                m_image = image;
+                m_handler = handler;
+                m_handle = new Handler();
+            }
+
+            public WebOperation getOperation() {
+                return m_image;
+            }
+
+            public void start() {
+                m_binder.add(m_image, this);
+            }
+
+            public void stop() {
+                m_binder.remove(m_image);
+                m_handler = null;
+            }
+
+            public void onResult(final WebOperation operation) {
+                m_handle.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        m_queue.remove(ImageItem.this);
+
+                        if(m_handler != null) {
+                            WebImage image = (WebImage)operation;
+
+                            m_handler.onImageResult(image.getStatus(), image.getDrawable());
+                        }
+
+                        if(m_queue.size() == 0) {
+                            disconnect(m_context);
+                        }
+                    }
+                });
+            }
+        }
+
+        private class ActionItem<T> implements QueueItem, WebService.ResultHandler {
+            private Context m_context;
+            private WebAction<T> m_action;
+            private WebAction.ResultHandler<T> m_handler;
+            private Handler m_handle;
+
+            public ActionItem(Context context, WebAction<T> action, WebAction.ResultHandler<T> handler) {
+                m_context = context;
+                m_action = action;
+                m_handler = handler;
+                m_handle = new Handler();
+            }
+
+            public WebOperation getOperation() {
+                return m_action;
+            }
+
+            public void start() {
+                m_binder.add(m_action, this);
+            }
+
+            public void stop() {
+                //m_binder.remove(m_action);
+                m_handler = null;
+            }
+
+            public void onResult(final WebOperation operation) {
+                m_handle.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        m_queue.remove(ActionItem.this);
+
+                        if(m_handler != null) {
+                            WebAction<T> action = (WebAction<T>)operation;
+
+                            m_handler.onActionResult(action.getStatus(), action.getObject());
+                        }
+
+                        if(m_queue.size() == 0) {
+                            disconnect(m_context);
+                        }
+                    }
+                });
+            }
         }
     }
 
