@@ -134,6 +134,20 @@ public class Favorite {
         return m_timestamp;
     }
 
+    public boolean matches(Favorite favorite) {
+        if(favorite == this) {
+            return true;
+        }
+
+        if(favorite == null ||
+           !Objects.match(favorite.getAlbumIdentifier(), m_albumIdentifier) ||
+           !Objects.match(favorite.getPhotoIdentifier(), m_photoIdentifier)) {
+            return false;
+        }
+
+        return true;
+    }
+
     @Override
     public boolean equals(Object obj) {
         Favorite favorite = (Favorite)obj;
