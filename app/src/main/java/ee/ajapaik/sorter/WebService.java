@@ -46,6 +46,19 @@ public class WebService extends Service {
             return m_operation;
         }
 
+        public int getHandlerCount() {
+            int count = 0;
+
+            for(WeakReference<ResultHandler> handlers : m_handlers) {
+                ResultHandler handler = handlers.get();
+
+                if(handler != null) {
+                    count += 1;
+                }
+            }
+
+            return count;
+        }
         public void addHandler(ResultHandler handler) {
             m_handlers.add(new WeakReference<ResultHandler>(handler));
         }
@@ -189,7 +202,8 @@ public class WebService extends Service {
                 Task task = m_tasks.get(i);
                 WebOperation operation_ = task.getOperation();
 
-                if(operation == operation_ || (uniqueId != null && Objects.match(uniqueId, operation_.getUniqueId()))) {
+                if((operation == operation_ || (uniqueId != null && Objects.match(uniqueId, operation_.getUniqueId()))) &&
+                    task.getHandlerCount() < 2) {
                     operation_.abortRequest();
                     m_tasks.remove(i);
                     break;
@@ -387,23 +401,11 @@ public class WebService extends Service {
         }
 
         public WebImage enqueue(Context context, WebImage image, WebImage.ResultHandler handler) {
-            String uniqueId = image.getUniqueId();
             ImageItem imageItem;
 
-            if(uniqueId != null) {
-                for(QueueItem item : m_queue) {
-                    String uniqueId_ = item.getOperation().getUniqueId();
-
-                    if(uniqueId_ != null && uniqueId_.equals(uniqueId)) {
-                        try {
-                            image = (WebImage)item.getOperation();
-
-                            return image;
-                        }
-                        catch(Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
+            for(QueueItem item : m_queue) {
+                if(image == item.getOperation()) {
+                    return image;
                 }
             }
 
