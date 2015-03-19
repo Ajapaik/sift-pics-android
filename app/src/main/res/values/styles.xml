@@ -6,6 +6,11 @@
     </style>
 
     <!-- Albums -->
+    <style name="AlbumPlaceholderTitleText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/album_placeholder_title</item>
+        <item name="android:textSize">@dimen/font_size_huge</item>
+    </style>
+
     <style name="AlbumItemOverlay" parent="@android:style/TextAppearance">
         <item name="android:background">@color/album_item_overlay</item>
     </style>
