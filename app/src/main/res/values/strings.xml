@@ -13,6 +13,11 @@
     <!-- Album -->
 
     <!-- Profile -->
+    <plurals name="profile_stats_tagged">
+        <item quantity="zero">You haven't tagged any pictures yet.</item>
+        <item quantity="one">You have tagged <b>1</b> picture.</item>
+        <item quantity="other">You have tagged <b>%d</b> pictures.</item>
+    </plurals>
     <string name="profile_favorites">Favorites:</string>
 
     <string name="hello_world">Hello world!</string>
