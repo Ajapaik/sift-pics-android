@@ -17,7 +17,7 @@ public class Session extends Model {
     private static final String KEY_EXPIRES = "expires.abs";
     private static final String KEY_SESSION_LENGTH = "expires";
     private static final String KEY_SESSION = "session";
-    private static final String KEY_USER = "user";
+    private static final String KEY_USER = "id";
 
     private static final String KEY_WEB_TOKEN = "_s";
     private static final String KEY_WEB_USER = "_u";
