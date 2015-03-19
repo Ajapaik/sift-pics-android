@@ -6,6 +6,10 @@
     </style>
 
     <!-- Albums -->
+    <style name="AlbumListView" parent="@android:style/Widget.ListView">
+        <item name="android:divider">@color/album_item_separator</item>
+    </style>
+
     <style name="AlbumPlaceholderTitleText" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/album_placeholder_title</item>
         <item name="android:textSize">@dimen/font_size_huge</item>
