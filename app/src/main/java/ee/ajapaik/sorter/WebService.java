@@ -291,7 +291,7 @@ public class WebService extends Service {
                 m_handle.post(new Runnable() {
                     @Override
                     public void run() {
-                        m_queue.remove(this);
+                        m_queue.remove(ActionItem.this);
 
                         if(m_handler != null) {
                             WebAction<T> action = (WebAction<T>)operation;
