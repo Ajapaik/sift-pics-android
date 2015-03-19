@@ -13,34 +13,38 @@
         android:contentDescription="@string/none"
         android:scaleType="centerCrop" />
 
-    <LinearLayout
-        style="@style/AlbumItemOverlay"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/text_title"
-            style="@style/AlbumItemTitleText"
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <LinearLayout
+            style="@style/AlbumItemOverlay"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/album_item_horizontal_margin"
-            android:paddingRight="@dimen/album_item_horizontal_margin"
-            android:paddingTop="@dimen/album_item_vertical_margin"
-            android:text="" />
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/text_subtitle"
-            style="@style/AlbumItemSubtitleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/album_item_horizontal_margin"
-            android:paddingRight="@dimen/album_item_horizontal_margin"
-            android:paddingBottom="@dimen/album_item_vertical_margin"
-            android:text="" />
+            <TextView
+                android:id="@+id/text_title"
+                style="@style/AlbumItemTitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/album_item_horizontal_margin"
+                android:paddingRight="@dimen/album_item_horizontal_margin"
+                android:paddingTop="@dimen/album_item_vertical_margin"
+                android:text="" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/text_subtitle"
+                style="@style/AlbumItemSubtitleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/album_item_horizontal_margin"
+                android:paddingRight="@dimen/album_item_horizontal_margin"
+                android:paddingBottom="@dimen/album_item_vertical_margin"
+                android:text="" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </ee.ajapaik.sorter.widget.FixedAspectRatioLayout>
