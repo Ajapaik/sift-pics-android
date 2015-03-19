@@ -8,16 +8,18 @@ import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import ee.ajapaik.sorter.data.util.Model;
 import ee.ajapaik.sorter.util.Objects;
 import ee.ajapaik.sorter.util.WebAction;
 
 public class Feed extends Model {
+    private static final String API_PATH = "/albums/";
     private static final String KEY_ALBUMS = "albums";
 
     public static WebAction<Feed> createAction(Context context) {
-        return new WebAction<Feed>(context, "/albums/", null, CREATOR);
+        return new Action(context, API_PATH, null);
     }
 
     public static Feed parse(String str) {
@@ -75,6 +77,17 @@ public class Feed extends Model {
         }
 
         return true;
+    }
+
+    private static class Action extends WebAction<Feed> {
+        public Action(Context context, String path, Map<String, String> parameters) {
+            super(context, path, parameters, CREATOR);
+        }
+
+        @Override
+        public String getUniqueId() {
+            return API_PATH;
+        }
     }
 
     public static final Model.Creator<Feed> CREATOR = new Model.Creator<Feed>() {

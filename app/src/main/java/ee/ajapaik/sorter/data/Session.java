@@ -33,7 +33,7 @@ public class Session extends Model {
         parameters.put("username", authorization.getUsername());
         parameters.put("password", authorization.getPassword());
 
-        return new Action(context, "/login/", parameters, CREATOR);
+        return new Action(context, "/login/", parameters);
     }
 
     public static WebAction<Session> createLogoutAction(Context context) {
@@ -127,8 +127,8 @@ public class Session extends Model {
     }
 
     private static class Action extends WebAction<Session> {
-        public Action(Context context, String path, Map<String, String> parameters, Model.Creator<Session> creator) {
-            super(context, path, parameters, creator);
+        public Action(Context context, String path, Map<String, String> parameters) {
+            super(context, path, parameters, CREATOR);
         }
 
         @Override
