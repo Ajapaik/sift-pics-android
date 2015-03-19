@@ -51,7 +51,25 @@ public abstract class Model implements Parcelable {
     protected static Hyperlink readHyperlink(JsonObject obj, String key, Hyperlink defaultValue) {
         JsonElement element = obj.get(key);
 
-        return (element != null && element.isJsonObject()) ? Hyperlink.parse(element.getAsJsonObject()) : defaultValue;
+        if(element != null) {
+            if(element.isJsonObject()) {
+                return Hyperlink.parse(element.getAsJsonObject());
+            }
+
+            if(element.isJsonPrimitive()) {
+                JsonPrimitive primitive = element.getAsJsonPrimitive();
+
+                if(primitive.isString()) {
+                    Uri uri = Uri.parse(primitive.getAsString());
+
+                    if(uri != null) {
+                        return new Hyperlink(uri, null);
+                    }
+                }
+            }
+        }
+
+        return defaultValue;
     }
 
     protected static String readIdentifier(JsonObject obj, String key) {
