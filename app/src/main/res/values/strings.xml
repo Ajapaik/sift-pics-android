@@ -1,12 +1,23 @@
 <resources>
+
+    <!-- Global -->
     <string name="app_name">classify.pics</string>
     <string name="none"></string>
     <string name="action_profile">Profile</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Albums -->
     <string name="album_label_no_data">No Albums</string>
+
+    <!-- Album -->
+
+    <!-- Profile -->
+    <string name="profile_favorites">Favorites:</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_album">AlbumActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_photo">PhotoActivity</string>
+
 </resources>

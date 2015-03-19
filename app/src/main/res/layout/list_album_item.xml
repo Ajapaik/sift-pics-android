@@ -28,9 +28,6 @@
                 style="@style/AlbumItemTitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/album_item_horizontal_margin"
-                android:paddingRight="@dimen/album_item_horizontal_margin"
-                android:paddingTop="@dimen/album_item_vertical_margin"
                 android:text="" />
 
             <TextView
@@ -38,9 +35,6 @@
                 style="@style/AlbumItemSubtitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/album_item_horizontal_margin"
-                android:paddingRight="@dimen/album_item_horizontal_margin"
-                android:paddingBottom="@dimen/album_item_vertical_margin"
                 android:text="" />
 
         </LinearLayout>

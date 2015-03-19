@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Albums -->
     <color name="album_placeholder_title">#666666</color>
     <color name="album_item_overlay">#66000000</color>
     <color name="album_item_separator">#999999</color>
     <color name="album_item_subtitle">#FFFFFF</color>
     <color name="album_item_title">#FFFFFF</color>
+
+    <!-- Profile -->
+    <color name="profile_header">#000000</color>
+    <color name="profile_item_separator">#333333</color>
+    <color name="profile_subtitle">#333333</color>
+    <color name="profile_title">#000000</color>
+
 </resources>

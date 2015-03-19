@@ -14,4 +14,6 @@
     <dimen name="album_item_horizontal_margin">16dp</dimen>
     <dimen name="album_item_vertical_margin">16dp</dimen>
 
+    <!-- Profile -->
+
 </resources>

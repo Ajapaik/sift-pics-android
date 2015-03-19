@@ -20,13 +20,57 @@
     </style>
 
     <style name="AlbumItemTitleText" parent="@android:style/TextAppearance">
+        <item name="android:paddingLeft">@dimen/album_item_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/album_item_horizontal_margin</item>
+        <item name="android:paddingTop">@dimen/album_item_vertical_margin</item>
         <item name="android:textColor">@color/album_item_title</item>
         <item name="android:textSize">@dimen/font_size_huge</item>
     </style>
 
     <style name="AlbumItemSubtitleText" parent="@android:style/TextAppearance">
+        <item name="android:paddingLeft">@dimen/album_item_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/album_item_horizontal_margin</item>
+        <item name="android:paddingBottom">@dimen/album_item_vertical_margin</item>
         <item name="android:textColor">@color/album_item_subtitle</item>
         <item name="android:textSize">@dimen/font_size_medium</item>
+    </style>
+
+    <!-- Profile -->
+    <style name="ProfileListView" parent="@android:style/Widget.ListView">
+        <item name="android:divider">@color/profile_item_separator</item>
+    </style>
+
+    <style name="ProfileLinkText" parent="@android:style/TextAppearance">
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingBottom">@dimen/activity_horizontal_margin</item>
+        <item name="android:textColor">@color/profile_subtitle</item>
+        <item name="android:textSize">@dimen/font_size_large</item>
+    </style>
+
+    <style name="ProfileTitleText" parent="@android:style/TextAppearance">
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingTop">@dimen/activity_horizontal_margin</item>
+        <item name="android:textColor">@color/profile_title</item>
+        <item name="android:textSize">@dimen/font_size_large</item>
+    </style>
+
+    <style name="ProfileSubtitleText" parent="@android:style/TextAppearance">
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingBottom">@dimen/activity_horizontal_margin</item>
+        <item name="android:textColor">@color/profile_subtitle</item>
+        <item name="android:textSize">@dimen/font_size_medium</item>
+    </style>
+
+    <style name="ProfileHeaderText" parent="@android:style/TextAppearance">
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingBottom">@dimen/activity_horizontal_margin</item>
+        <item name="android:textColor">@color/profile_header</item>
+        <item name="android:textSize">@dimen/font_size_medium</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>
