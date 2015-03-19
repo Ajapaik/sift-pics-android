@@ -19,10 +19,10 @@
         <item quantity="other">You have tagged <b>%d</b> pictures.</item>
     </plurals>
     <string name="profile_favorites">Favorites:</string>
+    <string name="profile_title">My Profile</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_album">AlbumActivity</string>
-    <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_photo">PhotoActivity</string>
 
 </resources>

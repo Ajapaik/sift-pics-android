@@ -53,7 +53,7 @@
         <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
         <item name="android:paddingTop">@dimen/activity_horizontal_margin</item>
         <item name="android:textColor">@color/profile_title</item>
-        <item name="android:textSize">@dimen/font_size_large</item>
+        <item name="android:textSize">@dimen/font_size_huge</item>
     </style>
 
     <style name="ProfileSubtitleText" parent="@android:style/TextAppearance">
@@ -69,7 +69,7 @@
         <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
         <item name="android:paddingBottom">@dimen/activity_horizontal_margin</item>
         <item name="android:textColor">@color/profile_header</item>
-        <item name="android:textSize">@dimen/font_size_medium</item>
+        <item name="android:textSize">@dimen/font_size_large</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -87,12 +87,12 @@
 
     <style name="ProfileItemTitleText" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/profile_item_title</item>
-        <item name="android:textSize">@dimen/font_size_huge</item>
+        <item name="android:textSize">@dimen/font_size_medium</item>
     </style>
 
     <style name="ProfileItemSubtitleText" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/profile_item_subtitle</item>
-        <item name="android:textSize">@dimen/font_size_medium</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
     </style>
 
 </resources>
