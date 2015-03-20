@@ -96,10 +96,7 @@ public class ProfileFragment extends WebFragment {
                 }
 
                 if(link != null) {
-                    String name = link.getName();
-                    String url = link.getURL().toString();
-
-                    getLinkView().setText(Html.fromHtml(String.format("<a href='%s'>%s</a>", url, ((name != null) ? name : url))));
+                    getLinkView().setText(link.toHtml());
                 } else {
                     getLinkView().setVisibility(View.GONE);
                 }
