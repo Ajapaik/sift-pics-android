@@ -1,5 +1,6 @@
 package ee.ajapaik.sorter.data;
 
+import android.content.Context;
 import android.net.Uri;
 
 import com.google.gson.JsonArray;
@@ -8,10 +9,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import ee.ajapaik.sorter.data.util.Model;
 import ee.ajapaik.sorter.util.Objects;
+import ee.ajapaik.sorter.util.WebAction;
 
 public class Album extends Model {
     private static final String KEY_IDENTIFIER = "id";
@@ -23,6 +27,26 @@ public class Album extends Model {
     private static final String KEY_PHOTOS = "photos";
     private static final String KEY_PHOTOS_ADD = "photos+";
     private static final String KEY_PHOTOS_REMOVE = "photos-";
+
+    public static WebAction<Album> createStateAction(Context context, Album album) {
+        Map<String, String> parameters = new Hashtable<String, String>();
+
+        parameters.put("id", album.getIdentifier());
+
+        if(album.getState() != null) {
+            parameters.put("state", album.getState());
+        }
+        
+        return new Action(context, "/album/state/", parameters, album);
+    }
+
+    public static WebAction<Album> createStateAction(Context context, String albumIdentifier) {
+        Map<String, String> parameters = new Hashtable<String, String>();
+
+        parameters.put("id", albumIdentifier);
+
+        return new Action(context, "/album/state/", parameters, null);
+    }
 
     public static Album parse(String str) {
         return CREATOR.parse(str);
@@ -196,6 +220,20 @@ public class Album extends Model {
         }
 
         return true;
+    }
+
+    private static class Action extends WebAction<Album> {
+        private Album m_baseAlbum;
+
+        public Action(Context context, String path, Map<String, String> parameters, Album baseAlbum) {
+            super(context, path, parameters, CREATOR);
+            m_baseAlbum = baseAlbum;
+        }
+
+        @Override
+        protected Album parseObject(JsonObject attributes) {
+            return new Album(attributes, m_baseAlbum);
+        }
     }
 
     public static final Model.Creator<Album> CREATOR = new Model.Creator<Album>() {
