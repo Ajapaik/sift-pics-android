@@ -11,7 +11,11 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import ee.ajapaik.sorter.data.Album;
+import ee.ajapaik.sorter.data.Photo;
 
 public class Favorite {
     private static final String KEY_ALBUM_IDENTIFIER = "album_id";
@@ -75,8 +79,16 @@ public class Favorite {
     private String m_albumIdentifier;
     private String m_photoIdentifier;
     private Uri m_image;
-    private String m_timestamp;
+    private Date m_timestamp;
     private String m_title;
+
+    public Favorite(Album album, Photo photo) {
+        m_albumIdentifier = album.getIdentifier();
+        m_photoIdentifier = photo.getIdentifier();
+        m_image = photo.getImage();
+        m_title = photo.getTitle();
+        m_timestamp = new Date();
+    }
 
     public Favorite(JsonObject attributes) {
         JsonPrimitive primitive;
@@ -85,7 +97,7 @@ public class Favorite {
         m_photoIdentifier = ((primitive = attributes.getAsJsonPrimitive(KEY_PHOTO_IDENTIFIER)) != null && primitive.isString()) ? primitive.getAsString() : null;
         m_image = ((primitive = attributes.getAsJsonPrimitive(KEY_IMAGE)) != null && primitive.isString()) ? Uri.parse(primitive.getAsString()) : null;
         m_title = ((primitive = attributes.getAsJsonPrimitive(KEY_TITLE)) != null && primitive.isString()) ? primitive.getAsString() : null;
-        m_timestamp = ((primitive = attributes.getAsJsonPrimitive(KEY_TIMESTAMP)) != null && primitive.isString()) ? primitive.getAsString() : null;
+        m_timestamp = Dates.parse(((primitive = attributes.getAsJsonPrimitive(KEY_TIMESTAMP)) != null && primitive.isString()) ? primitive.getAsString() : null);
     }
 
     public JsonObject getAttributes() {
@@ -108,7 +120,7 @@ public class Favorite {
         }
 
         if(m_timestamp != null) {
-            attributes.addProperty(KEY_TIMESTAMP, m_timestamp);
+            attributes.addProperty(KEY_TIMESTAMP, Dates.toString(m_timestamp));
         }
 
         return attributes;
@@ -130,7 +142,7 @@ public class Favorite {
         return m_title;
     }
 
-    public String getTimestamp() {
+    public Date getTimestamp() {
         return m_timestamp;
     }
 
