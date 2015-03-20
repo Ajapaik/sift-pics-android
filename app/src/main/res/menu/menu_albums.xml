@@ -1,12 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".AlbumsActivity">
+
     <item
         android:id="@+id/action_refresh"
         android:title="@string/action_refresh"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_autorenew_white_36dp"
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_profile"
         android:title="@string/action_profile"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_account_circle_white_36dp"
+        app:showAsAction="always" />
+
 </menu>
