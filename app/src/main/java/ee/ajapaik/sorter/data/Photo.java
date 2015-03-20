@@ -65,6 +65,10 @@ public class Photo extends Model {
         }
     }
 
+    public boolean hasTags() {
+        return (m_tags != null && m_tags.size() > 0) ? true : false;
+    }
+
     @Override
     public JsonObject getAttributes() {
         JsonObject attributes = new JsonObject();

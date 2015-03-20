@@ -188,6 +188,68 @@ public class Album extends Model {
         return m_state;
     }
 
+    public Photo getFirstPhoto() {
+        if(m_photos != null) {
+            for(Photo photo : m_photos) {
+                if(photo.hasTags()) {
+                    return photo;
+                }
+            }
+
+            if(m_photos.size() > 0) {
+                return m_photos.get(0);
+            }
+        }
+
+        return null;
+    }
+
+    public Photo getLastPhoto() {
+        if(m_photos != null) {
+            for(int i = m_photos.size() - 1; i >= 0; i--) {
+                Photo photo = m_photos.get(i);
+
+                if(photo.hasTags()) {
+                    return photo;
+                }
+            }
+
+            if(m_photos.size() > 0) {
+                return m_photos.get(m_photos.size() - 1);
+            }
+        }
+
+        return null;
+    }
+
+    public Photo getPrevPhoto(String identifier) {
+        if(identifier != null && m_photos != null) {
+            for(int i = 0, c = m_photos.size(); i < c; i++) {
+                Photo photo = m_photos.get(i);
+
+                if(photo.getIdentifier().equals(identifier)) {
+                    return (i > 0) ? m_photos.get(i - 1) : null;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public Photo getNextPhoto(String identifier) {
+        if(identifier != null && m_photos != null) {
+            for(int i = 0, c = m_photos.size(); i < c; i++) {
+                Photo photo = m_photos.get(i);
+
+                if(photo.getIdentifier().equals(identifier)) {
+                    return (i + 1 < c) ? m_photos.get(i + 1) : null;
+                }
+            }
+        }
+
+        return null;
+    }
+
     public Photo getPhoto(String identifier) {
         if(identifier != null && m_photos != null) {
             for(Photo photo : m_photos) {
@@ -234,6 +296,11 @@ public class Album extends Model {
             super(context, path, parameters, CREATOR);
             m_baseAlbum = baseAlbum;
             m_baseIdentifier = baseIdentifier;
+        }
+
+        @Override
+        public String getUniqueId() {
+            return "/album/state/" + m_baseIdentifier + "/" + ((m_baseAlbum != null && m_baseAlbum.getState() != null) ? m_baseAlbum.getState() : "");
         }
 
         @Override
