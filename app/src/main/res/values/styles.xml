@@ -15,7 +15,7 @@
         <item name="android:textSize">@dimen/font_size_huge</item>
     </style>
 
-    <style name="AlbumItemOverlay" parent="@android:style/TextAppearance">
+    <style name="AlbumItemOverlay">
         <item name="android:background">@color/album_item_overlay</item>
     </style>
 
@@ -28,6 +28,31 @@
     </style>
 
     <style name="AlbumItemSubtitleText" parent="@android:style/TextAppearance">
+        <item name="android:paddingLeft">@dimen/album_item_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/album_item_horizontal_margin</item>
+        <item name="android:paddingBottom">@dimen/album_item_vertical_margin</item>
+        <item name="android:textColor">@color/album_item_subtitle</item>
+        <item name="android:textSize">@dimen/font_size_medium</item>
+    </style>
+
+    <!-- Album -->
+    <style name="AlbumInfoBox">
+        <item name="android:background">@color/album_item_overlay</item>
+    </style>
+
+    <style name="AlbumInfoOverlay">
+        <item name="android:background">@color/album_item_overlay</item>
+    </style>
+
+    <style name="AlbumInfoTitleText" parent="@android:style/TextAppearance">
+        <item name="android:paddingLeft">@dimen/album_item_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/album_item_horizontal_margin</item>
+        <item name="android:paddingTop">@dimen/album_item_vertical_margin</item>
+        <item name="android:textColor">@color/album_item_title</item>
+        <item name="android:textSize">@dimen/font_size_huge</item>
+    </style>
+
+    <style name="AlbumInfoSubtitleText" parent="@android:style/TextAppearance">
         <item name="android:paddingLeft">@dimen/album_item_horizontal_margin</item>
         <item name="android:paddingRight">@dimen/album_item_horizontal_margin</item>
         <item name="android:paddingBottom">@dimen/album_item_vertical_margin</item>
