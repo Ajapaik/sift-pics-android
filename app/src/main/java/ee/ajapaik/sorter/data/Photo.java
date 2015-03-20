@@ -176,12 +176,20 @@ public class Photo extends Model {
             return m_mask;
         }
 
+        public int getLeftSubtractMask() {
+            return 0x00;
+        }
+
         public int getLeftTitleResourceId() {
             return m_leftTitleResourceId;
         }
 
         public int getLeftImageResourceId() {
             return m_leftImageResourceId;
+        }
+
+        public int getRightSubtractMask() {
+            return 0x00;
         }
 
         public int getRightTitleResourceId() {
