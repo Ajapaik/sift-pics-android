@@ -177,6 +177,14 @@ public class Photo extends Model {
         }
 
         public int getLeftSubtractMask() {
+            if(this == INTERIOR_OR_EXTERIOR) {
+                return GROUND_OR_RAISED.getMask() | URBAN_OR_RURAL.getMask();
+            }
+
+            if(this == VIEW_OR_SOCIAL) {
+                return ONE_OR_MANY.getMask() | STAGED_OR_NATURAL.getMask();
+            }
+
             return 0x00;
         }
 
@@ -189,6 +197,10 @@ public class Photo extends Model {
         }
 
         public int getRightSubtractMask() {
+            if(this == VIEW_OR_SOCIAL) {
+                return WHOLE_OR_DETAIL.getMask();
+            }
+
             return 0x00;
         }
 
