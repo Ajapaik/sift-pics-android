@@ -25,7 +25,7 @@ public class ProfileActivity extends WebActivity {
 
         if(id == android.R.id.home) {
             onBackPressed();
-            
+
             return true;
         }
 

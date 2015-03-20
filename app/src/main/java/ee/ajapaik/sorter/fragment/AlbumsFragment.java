@@ -11,8 +11,10 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import ee.ajapaik.sorter.AlbumActivity;
 import ee.ajapaik.sorter.R;
 import ee.ajapaik.sorter.adapter.AlbumAdapter;
+import ee.ajapaik.sorter.data.Album;
 import ee.ajapaik.sorter.data.Feed;
 import ee.ajapaik.sorter.data.util.Status;
 import ee.ajapaik.sorter.fragment.util.WebFragment;
@@ -47,7 +49,9 @@ public class AlbumsFragment extends WebFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Album album = (Album)parent.getItemAtPosition(position);
 
+                AlbumActivity.start(getActivity(), album.getIdentifier());
             }
         });
 
