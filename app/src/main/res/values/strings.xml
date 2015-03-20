@@ -7,6 +7,25 @@
     <string name="action_refresh">Refresh</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Photo tags -->
+    <string name="photo_tag_detail">Detail</string>
+    <string name="photo_tag_exterior">Exterior</string>
+    <string name="photo_tag_ground">Ground</string>
+    <string name="photo_tag_interior">Interior</string>
+    <string name="photo_tag_many">Many People</string>
+    <string name="photo_tag_na">Not Applicable</string>
+    <string name="photo_tag_natural">Natural</string>
+    <string name="photo_tag_one">One Person</string>
+    <string name="photo_tag_private">Private</string>
+    <string name="photo_tag_public">Public</string>
+    <string name="photo_tag_raised">Raised</string>
+    <string name="photo_tag_rural">Countryside</string>
+    <string name="photo_tag_social">Social</string>
+    <string name="photo_tag_staged">Staged</string>
+    <string name="photo_tag_urban">Urban</string>
+    <string name="photo_tag_whole">Whole</string>
+    <string name="photo_tag_view">View</string>
+
     <!-- Albums -->
     <string name="album_label_no_data">No Albums</string>
 

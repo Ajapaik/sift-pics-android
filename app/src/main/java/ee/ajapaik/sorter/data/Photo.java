@@ -10,6 +10,7 @@ import com.google.gson.JsonPrimitive;
 import java.util.ArrayList;
 import java.util.List;
 
+import ee.ajapaik.sorter.R;
 import ee.ajapaik.sorter.data.util.Model;
 import ee.ajapaik.sorter.util.Objects;
 
@@ -133,16 +134,15 @@ public class Photo extends Model {
     }
 
     public enum Tag {
-        INTERIOR_OR_EXTERIOR("interior_or_exterior"),
-        PUBLIC_OR_PRIVATE("public_or_private"),
-        URBAN_OR_RURAL("urban_or_rural"),
-        LANDSCAPE_OR_PORTRAIT("landscape_or_portrait"),
-        GROUND_OR_RAISED("ground_or_raised"),
-        VIEW_OR_SOCIAL("view_or_social"),
-        STAGED_OR_NATURAL("staged_or_natural"),
-        ONE_OR_MANY("one_or_many"),
-        WHOLE_OR_DETAIL("whole_or_detail"),
-        UNKNOWN(null);
+        INTERIOR_OR_EXTERIOR("interior_or_exterior", R.string.photo_tag_interior, R.drawable.ic_local_hotel_white_48dp, R.string.photo_tag_exterior, R.drawable.ic_nature_people_white_48dp),
+        PUBLIC_OR_PRIVATE("public_or_private", R.string.photo_tag_public, R.drawable.ic_public_white_48dp, R.string.photo_tag_private, R.drawable.ic_vpn_lock_white_48dp),
+        URBAN_OR_RURAL("urban_or_rural", R.string.photo_tag_urban, R.drawable.ic_location_city_white_48dp, R.string.photo_tag_rural, R.drawable.ic_nature_white_48dp),
+        GROUND_OR_RAISED("ground_or_raised", R.string.photo_tag_ground, R.drawable.ic_nature_people_white_48dp, R.string.photo_tag_raised, R.drawable.ic_filter_drama_white_48dp),
+        VIEW_OR_SOCIAL("view_or_social", R.string.photo_tag_view, R.drawable.ic_landscape_white_48dp, R.string.photo_tag_social, R.drawable.ic_accessibility_white_48dp),
+        STAGED_OR_NATURAL("staged_or_natural", R.string.photo_tag_staged, R.drawable.ic_account_box_white_48dp, R.string.photo_tag_natural, R.drawable.ic_directions_walk_white_48dp),
+        ONE_OR_MANY("one_or_many", R.string.photo_tag_one, R.drawable.ic_person_white_48dp, R.string.photo_tag_many, R.drawable.ic_group_add_white_48dp),
+        WHOLE_OR_DETAIL("whole_or_detail", R.string.photo_tag_whole, R.drawable.ic_location_city_white_48dp, R.string.photo_tag_detail, R.drawable.ic_local_florist_white_48dp),
+        UNKNOWN(null, 0, 0, 0, 0);
 
         public static Tag parse(String code) {
             if(code != null) {
@@ -157,9 +157,33 @@ public class Photo extends Model {
         }
 
         private final String m_code;
+        private final int m_leftTitleResourceId;
+        private final int m_leftImageResourceId;
+        private final int m_rightTitleResourceId;
+        private final int m_rightImageResourceId;
 
-        private Tag(final String code) {
+        private Tag(final String code, final int leftTitleResourceId, final int leftImageResourceId, final int rightTitleResourceId, final int rightImageResourceId) {
             m_code = code;
+            m_leftTitleResourceId = leftTitleResourceId;
+            m_leftImageResourceId = leftImageResourceId;
+            m_rightTitleResourceId = rightTitleResourceId;
+            m_rightImageResourceId = rightImageResourceId;
+        }
+
+        public int getLeftTitleResourceId() {
+            return m_leftTitleResourceId;
+        }
+
+        public int getLeftImageResourceId() {
+            return m_leftImageResourceId;
+        }
+
+        public int getRightTitleResourceId() {
+            return m_rightTitleResourceId;
+        }
+
+        public int getRightImageResourceId() {
+            return m_rightImageResourceId;
         }
 
         @Override
