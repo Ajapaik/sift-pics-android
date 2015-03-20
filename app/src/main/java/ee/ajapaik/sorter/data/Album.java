@@ -36,8 +36,8 @@ public class Album extends Model {
         if(album.getState() != null) {
             parameters.put("state", album.getState());
         }
-        
-        return new Action(context, "/album/state/", parameters, album);
+
+        return new Action(context, "/album/state/", parameters, album, album.getIdentifier());
     }
 
     public static WebAction<Album> createStateAction(Context context, String albumIdentifier) {
@@ -45,7 +45,7 @@ public class Album extends Model {
 
         parameters.put("id", albumIdentifier);
 
-        return new Action(context, "/album/state/", parameters, null);
+        return new Action(context, "/album/state/", parameters, null, albumIdentifier);
     }
 
     public static Album parse(String str) {
@@ -61,10 +61,10 @@ public class Album extends Model {
     private List<Photo> m_photos;
 
     public Album(JsonObject attributes) {
-        this(attributes, null);
+        this(attributes, null, null);
     }
 
-    public Album(JsonObject attributes, Album baseAlbum) {
+    public Album(JsonObject attributes, Album baseAlbum, String baseIdentifier) {
         JsonElement element = attributes.get(KEY_PHOTOS);
 
         m_identifier = readIdentifier(attributes, KEY_IDENTIFIER);
@@ -74,6 +74,10 @@ public class Album extends Model {
         m_tagged = readBoolean(attributes, KEY_TAGGED, (baseAlbum != null) ? baseAlbum.isTagged() : false);
         m_state = readString(attributes, KEY_STATE, (baseAlbum != null) ? baseAlbum.getState() : null);
         m_photos = new ArrayList<Photo>();
+
+        if(m_identifier == null && baseIdentifier != null) {
+            m_identifier = baseIdentifier;
+        }
 
         if(element != null) {
             if(element.isJsonArray()) {
@@ -224,15 +228,17 @@ public class Album extends Model {
 
     private static class Action extends WebAction<Album> {
         private Album m_baseAlbum;
+        private String m_baseIdentifier;
 
-        public Action(Context context, String path, Map<String, String> parameters, Album baseAlbum) {
+        public Action(Context context, String path, Map<String, String> parameters, Album baseAlbum, String baseIdentifier) {
             super(context, path, parameters, CREATOR);
             m_baseAlbum = baseAlbum;
+            m_baseIdentifier = baseIdentifier;
         }
 
         @Override
         protected Album parseObject(JsonObject attributes) {
-            return new Album(attributes, m_baseAlbum);
+            return new Album(attributes, m_baseAlbum, m_baseIdentifier);
         }
     }
 
