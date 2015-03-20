@@ -1,6 +1,8 @@
 package ee.ajapaik.sorter.data;
 
 import android.net.Uri;
+import android.text.Html;
+import android.text.Spanned;
 
 import com.google.gson.JsonObject;
 
@@ -72,6 +74,21 @@ public class Hyperlink extends Model {
         }
 
         return true;
+    }
+
+    public Spanned toHtml() {
+        if(m_url != null) {
+            String url = m_url.toString();
+
+            return Html.fromHtml(String.format("<a href='%s'>%s</a>", url, ((m_name != null) ? m_name : url)));
+        }
+
+        return Html.fromHtml((m_name != null) ? m_name : "");
+    }
+
+    @Override
+    public String toString() {
+        return m_url.toString();
     }
 
     public static final Model.Creator<Hyperlink> CREATOR = new Model.Creator<Hyperlink>() {
