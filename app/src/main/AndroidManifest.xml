@@ -32,11 +32,6 @@
             android:name=".ProfileActivity"
             android:label="@string/profile_title" >
         </activity>
-        <activity
-            android:name=".PhotoActivity"
-            android:label="@string/title_activity_photo" >
-        </activity>
-
         <service
             android:name=".WebService">
         </service>
