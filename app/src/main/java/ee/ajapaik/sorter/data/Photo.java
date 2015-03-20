@@ -45,7 +45,8 @@ public class Photo extends Model {
         m_source = readHyperlink(attributes, KEY_SOURCE, (basePhoto != null) ? basePhoto.getSource() : null);
         m_tags = new ArrayList<Tag>();
 
-        for(JsonElement tagElement : readArray(attributes, KEY_TAGS)) {
+        // FIXME: "tag" is just a temporary workaround for a server-side bug
+        for(JsonElement tagElement : readArray(attributes, (attributes.has("tag")) ? "tag" : KEY_TAGS)) {
             if(tagElement.isJsonPrimitive()) {
                 JsonPrimitive tagPrimitive = tagElement.getAsJsonPrimitive();
                 String tagName = (tagPrimitive.isString()) ? tagPrimitive.getAsString() : null;
