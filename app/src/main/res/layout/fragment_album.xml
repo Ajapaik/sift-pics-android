@@ -44,7 +44,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/button_action_left"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_cancel_white_48dp" />
 
             </RelativeLayout>
 
