@@ -51,7 +51,7 @@ public class AlbumsFragment extends WebFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Album album = (Album)parent.getItemAtPosition(position);
 
-                AlbumActivity.start(getActivity(), album.getIdentifier());
+                AlbumActivity.start(getActivity(), album);
             }
         });
 

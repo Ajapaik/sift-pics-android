@@ -35,7 +35,7 @@ public class FavoritesAdapter extends ArrayAdapter<Favorite> {
         textView.setText(favorite.getTitle());
 
         textView = (TextView)convertView.findViewById(R.id.text_subtitle);
-        textView.setText(favorite.getTimestamp());
+        textView.setText(favorite.getTimestamp().toString());
 
         return convertView;
     }

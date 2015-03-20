@@ -30,6 +30,7 @@
     <string name="album_label_no_data">No Albums</string>
 
     <!-- Album -->
+    <string name="album_title">Album</string>
 
     <!-- Profile -->
     <plurals name="profile_stats_tagged">
@@ -39,9 +40,5 @@
     </plurals>
     <string name="profile_favorites">Favorites:</string>
     <string name="profile_title">My Profile</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_album">AlbumActivity</string>
-    <string name="title_activity_photo">PhotoActivity</string>
 
 </resources>
