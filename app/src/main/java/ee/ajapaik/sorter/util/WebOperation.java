@@ -85,6 +85,10 @@ public abstract class WebOperation {
         return false;
     }
 
+    protected String getUrl() {
+        return m_url;
+    }
+
     public boolean isStarted() {
         return m_started;
     }
