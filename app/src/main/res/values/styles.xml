@@ -79,6 +79,7 @@
     <!-- Profile -->
     <style name="ProfileListView" parent="@android:style/Widget.ListView">
         <item name="android:divider">@color/profile_item_separator</item>
+        <item name="android:dividerHeight">@dimen/profile_item_divider</item>
     </style>
 
     <style name="ProfileLinkText" parent="@android:style/TextAppearance">
@@ -118,8 +119,6 @@
     <style name="ProfileItem">
         <item name="android:paddingLeft">@dimen/profile_item_horizontal_margin</item>
         <item name="android:paddingRight">@dimen/profile_item_horizontal_margin</item>
-        <item name="android:paddingTop">@dimen/profile_item_vertical_margin</item>
-        <item name="android:paddingBottom">@dimen/profile_item_vertical_margin</item>
         <item name="android:layout_height">@dimen/profile_item_height</item>
     </style>
 

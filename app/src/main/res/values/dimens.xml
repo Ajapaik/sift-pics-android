@@ -21,7 +21,8 @@
     <dimen name="album_overlay_vertical_margin">8dp</dimen>
 
     <!-- Profile -->
-    <dimen name="profile_item_height">32dp</dimen>
+    <dimen name="profile_item_divider">1dp</dimen>
+    <dimen name="profile_item_height">48dp</dimen>
     <dimen name="profile_item_horizontal_margin">16dp</dimen>
     <dimen name="profile_item_vertical_margin">16dp</dimen>
 
