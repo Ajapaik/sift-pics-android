@@ -10,7 +10,7 @@
 
     <!-- Album -->
     <color name="album_background">#000000</color>
-    <color name="album_info_overlay">#66000000</color>
+    <color name="album_info_overlay">#00000000</color>
     <color name="album_info_subtitle">#FFFFFF</color>
     <color name="album_info_title">#FFFFFF</color>
 
