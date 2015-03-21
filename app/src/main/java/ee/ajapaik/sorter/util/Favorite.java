@@ -23,6 +23,7 @@ public class Favorite {
     private static final String KEY_IMAGE = "url";
     private static final String KEY_TIMESTAMP = "timestamp";
     private static final String KEY_TITLE = "title";
+    private static final String KEY_SUBTITLE = "subtitle";
 
     public static Favorite parse(String str) {
         if(str != null) {
@@ -81,12 +82,14 @@ public class Favorite {
     private Uri m_image;
     private Date m_timestamp;
     private String m_title;
+    private String m_subtitle;
 
     public Favorite(Album album, Photo photo) {
         m_albumIdentifier = album.getIdentifier();
         m_photoIdentifier = photo.getIdentifier();
         m_image = photo.getImage();
-        m_title = photo.getTitle();
+        m_title = album.getTitle();
+        m_subtitle = photo.getTitle();
         m_timestamp = new Date();
     }
 
@@ -97,6 +100,7 @@ public class Favorite {
         m_photoIdentifier = ((primitive = attributes.getAsJsonPrimitive(KEY_PHOTO_IDENTIFIER)) != null && primitive.isString()) ? primitive.getAsString() : null;
         m_image = ((primitive = attributes.getAsJsonPrimitive(KEY_IMAGE)) != null && primitive.isString()) ? Uri.parse(primitive.getAsString()) : null;
         m_title = ((primitive = attributes.getAsJsonPrimitive(KEY_TITLE)) != null && primitive.isString()) ? primitive.getAsString() : null;
+        m_subtitle = ((primitive = attributes.getAsJsonPrimitive(KEY_SUBTITLE)) != null && primitive.isString()) ? primitive.getAsString() : null;
         m_timestamp = Dates.parse(((primitive = attributes.getAsJsonPrimitive(KEY_TIMESTAMP)) != null && primitive.isString()) ? primitive.getAsString() : null);
     }
 
@@ -117,6 +121,10 @@ public class Favorite {
 
         if(m_title != null) {
             attributes.addProperty(KEY_TITLE, m_title);
+        }
+
+        if(m_subtitle != null) {
+            attributes.addProperty(KEY_SUBTITLE, m_subtitle);
         }
 
         if(m_timestamp != null) {
@@ -153,6 +161,10 @@ public class Favorite {
         return m_title;
     }
 
+    public String getSubtitle() {
+        return m_subtitle;
+    }
+
     public Date getTimestamp() {
         return m_timestamp;
     }
@@ -184,7 +196,8 @@ public class Favorite {
            !Objects.match(favorite.getPhotoIdentifier(), m_photoIdentifier) ||
            !Objects.match(favorite.getImage(), m_image) ||
            !Objects.match(favorite.getTimestamp(), m_timestamp) ||
-           !Objects.match(favorite.getTitle(), m_title)) {
+           !Objects.match(favorite.getTitle(), m_title) ||
+           !Objects.match(favorite.getTitle(), m_subtitle)) {
             return false;
         }
 

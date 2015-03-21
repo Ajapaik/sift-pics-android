@@ -161,6 +161,8 @@ public class AlbumFragment extends WebFragment {
             setDetailsShown(m_selectedInfo);
             setAlbum(album);
         } else {
+            m_selectedPhoto = getPhotoIdentifier();
+
             setDetailsShown(m_selectedInfo);
         }
     }

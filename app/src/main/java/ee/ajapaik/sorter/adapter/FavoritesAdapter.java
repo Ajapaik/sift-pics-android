@@ -32,7 +32,7 @@ public class FavoritesAdapter extends ArrayAdapter<Favorite> {
         imageView.setImageURI(favorite.getThumbnail());
 
         textView = (TextView)convertView.findViewById(R.id.text_title);
-        textView.setText(favorite.getTitle());
+        textView.setText(favorite.getSubtitle());
 
         textView = (TextView)convertView.findViewById(R.id.text_subtitle);
         textView.setText(favorite.getTimestamp().toString());
