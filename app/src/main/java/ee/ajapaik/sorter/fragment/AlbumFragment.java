@@ -23,10 +23,12 @@ import ee.ajapaik.sorter.util.Favorite;
 import ee.ajapaik.sorter.util.Objects;
 import ee.ajapaik.sorter.util.Settings;
 import ee.ajapaik.sorter.util.WebAction;
+import ee.ajapaik.sorter.widget.util.OnSwipeTouchListener;
 
 public class AlbumFragment extends WebFragment {
     private static final String TAG = "AlbumsFragment";
     private static final String KEY_ALBUM = "album";
+    private static final String KEY_IMMERSIVE_MODE = "immersive_mode";
     private static final String KEY_SELECTED_PHOTO = "selected_photo";
     private static final String KEY_SELECTED_TAG = "selected_tag";
     private static final String KEY_SELECTED_INFO = "selected_info";
@@ -37,6 +39,7 @@ public class AlbumFragment extends WebFragment {
 
     private Album m_album;
     private List<Favorite> m_favorites;
+    private boolean m_immersiveMode;
     private String m_selectedPhoto;
     private Photo.Tag m_selectedTag;
     private boolean m_selectedInfo;
@@ -104,6 +107,23 @@ public class AlbumFragment extends WebFragment {
         m_settings = new Settings(getActivity());
         m_favorites = m_settings.getFavorites();
 
+        getImageView().setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
+            @Override
+            public void onSwipeLeft() {
+                onNextPhoto();
+            }
+
+            @Override
+            public void onSwipeRight() {
+                onPrevPhoto();
+            }
+
+            @Override
+            public void onSingleTap() {
+                setImmersiveMode(!m_immersiveMode);
+            }
+        });
+
         getPrevButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,6 +178,7 @@ public class AlbumFragment extends WebFragment {
         if(savedInstanceState != null) {
             Album album = savedInstanceState.getParcelable(KEY_ALBUM);
 
+            m_immersiveMode = savedInstanceState.getBoolean(KEY_IMMERSIVE_MODE);
             m_selectedPhoto = savedInstanceState.getString(KEY_SELECTED_PHOTO);
             m_selectedTag = Photo.Tag.parse(savedInstanceState.getString(KEY_SELECTED_TAG), null);
             m_selectedInfo = savedInstanceState.getBoolean(KEY_SELECTED_INFO, false);
@@ -169,6 +190,8 @@ public class AlbumFragment extends WebFragment {
 
             setDetailsShown(m_selectedInfo);
         }
+
+        setImmersiveMode(m_immersiveMode);
     }
 
     @Override
@@ -176,6 +199,7 @@ public class AlbumFragment extends WebFragment {
         super.onSaveInstanceState(savedInstanceState);
 
         savedInstanceState.putParcelable(KEY_ALBUM, m_album);
+        savedInstanceState.putBoolean(KEY_IMMERSIVE_MODE, m_immersiveMode);
         savedInstanceState.putBoolean(KEY_SELECTED_INFO, m_selectedInfo);
         savedInstanceState.putString(KEY_SELECTED_PHOTO, m_selectedPhoto);
         savedInstanceState.putString(KEY_SELECTED_TAG, (m_selectedTag != null) ? m_selectedTag.toString() : null);
@@ -276,6 +300,18 @@ public class AlbumFragment extends WebFragment {
             getToggleDetailsButton().setImageResource(R.drawable.ic_info_outline_white_36dp);
             getInfoLayout().setVisibility(View.GONE);
             getActionsLayout().setVisibility(View.VISIBLE);
+        }
+    }
+
+    protected void setImmersiveMode(boolean flag) {
+        m_immersiveMode = flag;
+
+        if(m_immersiveMode) {
+            getOverlayImageLayout().setVisibility(View.INVISIBLE);
+            getOverlayDetailsLayout().setVisibility(View.INVISIBLE);
+        } else {
+            getOverlayImageLayout().setVisibility(View.VISIBLE);
+            getOverlayDetailsLayout().setVisibility(View.VISIBLE);
         }
     }
 
@@ -401,6 +437,14 @@ public class AlbumFragment extends WebFragment {
 
     private View getMainLayout() {
         return getView().findViewById(R.id.layout_main);
+    }
+
+    private View getOverlayImageLayout() {
+        return getView().findViewById(R.id.layout_image);
+    }
+
+    private View getOverlayDetailsLayout() {
+        return getView().findViewById(R.id.layout_details);
     }
 
     private View getActionsLayout() {
