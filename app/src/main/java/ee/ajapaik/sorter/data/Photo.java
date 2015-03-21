@@ -150,6 +150,10 @@ public class Photo extends Model {
         UNKNOWN(null, R.string.photo_tag_na, 0x00, R.drawable.ic_cancel_white_48dp, R.string.photo_tag_na, R.drawable.ic_cancel_white_48dp);
 
         public static Tag parse(String code) {
+            return parse(code, UNKNOWN);
+        }
+
+        public static Tag parse(String code, Tag defaultValue) {
             if(code != null) {
                 for(Tag tag : values()) {
                     if(Objects.match(tag.m_code, code)) {
@@ -158,7 +162,7 @@ public class Photo extends Model {
                 }
             }
 
-            return UNKNOWN;
+            return defaultValue;
         }
 
         private final String m_code;

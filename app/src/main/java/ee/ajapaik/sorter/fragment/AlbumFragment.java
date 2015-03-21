@@ -36,7 +36,7 @@ public class AlbumFragment extends WebFragment {
     private Album m_album;
     private List<Favorite> m_favorites;
     private String m_selectedPhoto;
-    private int m_selectedTag;
+    private Photo.Tag m_selectedTag;
     private boolean m_selectedInfo;
     private Settings m_settings;
 
@@ -155,7 +155,7 @@ public class AlbumFragment extends WebFragment {
             Album album = savedInstanceState.getParcelable(KEY_ALBUM);
 
             m_selectedPhoto = savedInstanceState.getString(KEY_SELECTED_PHOTO);
-            m_selectedTag = savedInstanceState.getInt(KEY_SELECTED_TAG, 0);
+            m_selectedTag = Photo.Tag.parse(savedInstanceState.getString(KEY_SELECTED_TAG), null);
             m_selectedInfo = savedInstanceState.getBoolean(KEY_SELECTED_INFO, false);
 
             setDetailsShown(m_selectedInfo);
@@ -174,7 +174,7 @@ public class AlbumFragment extends WebFragment {
         savedInstanceState.putParcelable(KEY_ALBUM, m_album);
         savedInstanceState.putBoolean(KEY_SELECTED_INFO, m_selectedInfo);
         savedInstanceState.putString(KEY_SELECTED_PHOTO, m_selectedPhoto);
-        savedInstanceState.putInt(KEY_SELECTED_TAG, m_selectedTag);
+        savedInstanceState.putString(KEY_SELECTED_TAG, (m_selectedTag != null) ? m_selectedTag.toString() : null);
     }
 
     @Override
@@ -220,7 +220,7 @@ public class AlbumFragment extends WebFragment {
             }
 
             if(photo != null) {
-                m_selectedTag = 0;
+                m_selectedTag = null;
                 invalidatePhoto(photo);
             } else {
                 // TODO: Exit dialog
@@ -237,7 +237,7 @@ public class AlbumFragment extends WebFragment {
             }
 
             if(photo != null) {
-                m_selectedTag = 0;
+                m_selectedTag = null;
                 invalidatePhoto(photo);
             } else {
                 // TODO: Exit dialog
@@ -306,29 +306,27 @@ public class AlbumFragment extends WebFragment {
         if(m_album != null && (photo = m_album.getPhoto(m_selectedPhoto)) != null && photo.hasTags()) {
             List<Photo.Tag> tags = photo.getTags();
             Context context = getActivity();
-            Photo.Tag tag;
+            int index;
 
-            if(m_selectedTag < 0 || m_selectedTag >= tags.size()) {
-                m_selectedTag = 0;
+            if(m_selectedTag == null || tags.indexOf(m_selectedTag) == -1) {
+                m_selectedTag = tags.get(0);
             }
 
-            if((tag = tags.get(m_selectedTag)) != null) {
-                getConnection().enqueue(context, Album.createTagAction(context, m_album, photo.getIdentifier(), tag, result), new WebAction.ResultHandler<Album>() {
-                    @Override
-                    public void onActionResult(Status status, Album album) {
-                        if(album != null) {
-                            setAlbum(album);
-                        }
+            getConnection().enqueue(context, Album.createTagAction(context, m_album, photo.getIdentifier(), m_selectedTag, result), new WebAction.ResultHandler<Album>() {
+                @Override
+                public void onActionResult(Status status, Album album) {
+                    if(album != null) {
+                        setAlbum(album);
                     }
-                });
-
-                m_selectedTag++;
-
-                if(m_selectedTag < tags.size()) {
-                    invalidatePhotoTag(photo, m_selectedTag);
-                } else {
-                    onNextPhoto();
                 }
+            });
+
+            index = tags.indexOf(m_selectedTag);
+
+            if(index >= 0 && index + 1 < tags.size()) {
+                invalidatePhotoTag(photo, tags.get(index + 1));
+            } else {
+                onNextPhoto();
             }
         }
     }
@@ -359,12 +357,12 @@ public class AlbumFragment extends WebFragment {
         }
     }
 
-    private void invalidatePhotoTag(Photo photo, int selectedTag) {
+    private void invalidatePhotoTag(Photo photo, Photo.Tag selectedTag) {
         m_selectedTag = selectedTag;
 
         if(photo.hasTags()) {
+            Resources resources = getActivity().getResources();
             List<Photo.Tag> tags = photo.getTags();
-            Photo.Tag tag;
 
             getToggleDetailsButton().setVisibility(View.VISIBLE);
 
@@ -372,18 +370,14 @@ public class AlbumFragment extends WebFragment {
                 setDetailsShown(m_selectedInfo);
             }
 
-            if(m_selectedTag < 0 || m_selectedTag >= tags.size()) {
-                m_selectedTag = 0;
+            if(m_selectedTag == null || tags.indexOf(m_selectedTag) == -1) {
+                m_selectedTag = tags.get(0);
             }
 
-            if((tag = tags.get(m_selectedTag)) != null) {
-                Resources resources = getActivity().getResources();
-
-                getLeftActionButton().setCompoundDrawablesWithIntrinsicBounds(0, tag.getLeftImageResourceId(), 0, 0);
-                getLeftActionButton().setText(resources.getString(tag.getLeftTitleResourceId()));
-                getRightActionButton().setCompoundDrawablesWithIntrinsicBounds(0, tag.getRightImageResourceId(), 0, 0);
-                getRightActionButton().setText(resources.getString(tag.getRightTitleResourceId()));
-            }
+            getLeftActionButton().setCompoundDrawablesWithIntrinsicBounds(0, m_selectedTag.getLeftImageResourceId(), 0, 0);
+            getLeftActionButton().setText(resources.getString(m_selectedTag.getLeftTitleResourceId()));
+            getRightActionButton().setCompoundDrawablesWithIntrinsicBounds(0, m_selectedTag.getRightImageResourceId(), 0, 0);
+            getRightActionButton().setText(resources.getString(m_selectedTag.getRightTitleResourceId()));
         } else {
             getToggleDetailsButton().setVisibility(View.GONE);
             getInfoLayout().setVisibility(View.VISIBLE);
