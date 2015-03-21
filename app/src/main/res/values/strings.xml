@@ -8,7 +8,7 @@
     <string name="action_settings">Settings</string>
 
     <!-- Photo tags -->
-    <string name="photo_tag_detail">Detail</string>
+    <string name="photo_tag_detail">Close-up</string>
     <string name="photo_tag_exterior">Exterior</string>
     <string name="photo_tag_ground">Ground</string>
     <string name="photo_tag_interior">Interior</string>
@@ -23,7 +23,7 @@
     <string name="photo_tag_social">Social</string>
     <string name="photo_tag_staged">Staged</string>
     <string name="photo_tag_urban">Urban</string>
-    <string name="photo_tag_whole">Whole</string>
+    <string name="photo_tag_whole">General</string>
     <string name="photo_tag_view">View</string>
 
     <!-- Albums -->
