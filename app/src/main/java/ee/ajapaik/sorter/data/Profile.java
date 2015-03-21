@@ -2,7 +2,6 @@ package ee.ajapaik.sorter.data;
 
 import android.content.Context;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import ee.ajapaik.sorter.data.util.Model;
@@ -12,7 +11,6 @@ import ee.ajapaik.sorter.util.WebAction;
 public class Profile extends Model {
     private static final String KEY_LINK = "link";
     private static final String KEY_MESSAGE = "message";
-    private static final String KEY_STATS = "stats";
     private static final String KEY_STATS_TAGGED = "tagged";
 
     public static WebAction<Profile> createAction(Context context) {
@@ -28,16 +26,9 @@ public class Profile extends Model {
     private int m_tagged;
 
     public Profile(JsonObject attributes) {
-        JsonElement statsElement = attributes.get(KEY_STATS);
-
         m_link = readHyperlink(attributes, KEY_LINK);
         m_message = readString(attributes, KEY_MESSAGE);
-
-        if(statsElement != null && statsElement.isJsonObject()) {
-            JsonObject statsObject = statsElement.getAsJsonObject();
-
-            m_tagged = readInteger(statsObject, KEY_STATS_TAGGED);
-        }
+        m_tagged = readInteger(attributes, KEY_STATS_TAGGED);
     }
 
     @Override
@@ -46,14 +37,7 @@ public class Profile extends Model {
 
         write(attributes, KEY_LINK, m_link);
         write(attributes, KEY_MESSAGE, m_message);
-
-        if(m_tagged > 0) {
-            JsonObject stats = new JsonObject();
-
-            write(stats, KEY_STATS_TAGGED, m_tagged);
-
-            attributes.add(KEY_STATS, stats);
-        }
+        write(attributes, KEY_STATS_TAGGED, m_tagged);
 
         return attributes;
     }
