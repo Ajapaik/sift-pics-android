@@ -36,6 +36,10 @@
     </style>
 
     <!-- Album -->
+    <style name="AlbumFragment">
+        <item name="android:background">@color/album_background</item>
+    </style>
+
     <style name="AlbumActionButton">
         <item name="android:background">@android:color/transparent</item>
         <item name="android:textColor">@color/album_info_title</item>
@@ -46,14 +50,6 @@
         <item name="android:paddingRight">@dimen/album_overlay_horizontal_margin</item>
         <item name="android:paddingTop">@dimen/album_overlay_vertical_margin</item>
         <item name="android:paddingBottom">@dimen/album_overlay_vertical_margin</item>
-    </style>
-
-    <style name="AlbumInfoBox">
-        <item name="android:background">@color/album_info_box</item>
-        <item name="android:paddingLeft">@dimen/album_info_horizontal_margin</item>
-        <item name="android:paddingRight">@dimen/album_info_horizontal_margin</item>
-        <item name="android:paddingTop">@dimen/album_info_vertical_margin</item>
-        <item name="android:paddingBottom">@dimen/album_info_vertical_margin</item>
     </style>
 
     <style name="AlbumInfoOverlay">
