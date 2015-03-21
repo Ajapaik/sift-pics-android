@@ -185,6 +185,10 @@ public class Album extends Model {
         return m_image;
     }
 
+    public Uri getThumbnail(int preferredDimension) {
+        return Photo.resolve(m_image, preferredDimension);
+    }
+
     public String getTitle() {
         return m_title;
     }

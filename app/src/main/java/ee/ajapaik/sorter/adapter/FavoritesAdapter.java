@@ -14,6 +14,8 @@ import ee.ajapaik.sorter.R;
 import ee.ajapaik.sorter.util.Favorite;
 
 public class FavoritesAdapter extends ArrayAdapter<Favorite> {
+    private static final int THUMBNAIL_SIZE = 64;
+
     public FavoritesAdapter(Context context, List<Favorite> items) {
         super(context, 0, items);
     }
@@ -29,7 +31,7 @@ public class FavoritesAdapter extends ArrayAdapter<Favorite> {
         }
 
         imageView = (ImageView)convertView.findViewById(R.id.image_icon);
-        imageView.setImageURI(favorite.getThumbnail());
+        imageView.setImageURI(favorite.getThumbnail(THUMBNAIL_SIZE));
 
         textView = (TextView)convertView.findViewById(R.id.text_title);
         textView.setText(favorite.getSubtitle());

@@ -26,6 +26,22 @@ public class Photo extends Model {
         return CREATOR.parse(str);
     }
 
+    public static Uri resolve(Uri uri) {
+        return resolve(uri, 400);
+    }
+
+    public static Uri resolve(Uri uri, int preferredDimension) {
+        if(uri != null) {
+            String str = uri.toString();
+
+            str = str.replaceAll("[DIM]", Integer.toString(preferredDimension));
+
+            return Uri.parse(str);
+        }
+
+        return uri;
+    }
+
     private String m_identifier;
     private Uri m_image;
     private String m_title;
@@ -99,6 +115,10 @@ public class Photo extends Model {
 
     public Uri getImage() {
         return m_image;
+    }
+
+    public Uri getThumbnail(int preferredDimension) {
+        return resolve(m_image, preferredDimension);
     }
 
     public String getTitle() {

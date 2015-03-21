@@ -14,6 +14,8 @@ import ee.ajapaik.sorter.R;
 import ee.ajapaik.sorter.data.Album;
 
 public class AlbumAdapter extends ArrayAdapter<Album> {
+    private static final int THUMBNAIL_SIZE = 250;
+
     public AlbumAdapter(Context context, List<Album> items) {
         super(context, 0, items);
     }
@@ -29,7 +31,7 @@ public class AlbumAdapter extends ArrayAdapter<Album> {
         }
 
         imageView = (ImageView)convertView.findViewById(R.id.image_background);
-        imageView.setImageURI(album.getImage());
+        imageView.setImageURI(album.getThumbnail(THUMBNAIL_SIZE));
 
         textView = (TextView)convertView.findViewById(R.id.text_title);
         textView.setText(album.getTitle());

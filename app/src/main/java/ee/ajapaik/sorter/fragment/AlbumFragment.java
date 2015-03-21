@@ -33,6 +33,8 @@ public class AlbumFragment extends WebFragment {
     private static final String KEY_ALBUM_IDENTIFIER = "album_id";
     private static final String KEY_PHOTO_IDENTIFIER = "photo_id";
 
+    private static final int THUMBNAIL_SIZE = 400;
+
     private Album m_album;
     private List<Favorite> m_favorites;
     private String m_selectedPhoto;
@@ -108,6 +110,7 @@ public class AlbumFragment extends WebFragment {
                 onPrevPhoto();
             }
         });
+        getPrevButton().setVisibility(View.GONE);
 
         getNextButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +118,7 @@ public class AlbumFragment extends WebFragment {
                 onNextPhoto();
             }
         });
+        getNextButton().setVisibility(View.GONE);
 
         getToggleDetailsButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -334,7 +338,7 @@ public class AlbumFragment extends WebFragment {
     private void invalidatePhoto(Photo photo) {
         m_selectedPhoto = photo.getIdentifier();
 
-        getImageView().setImageURI(photo.getImage());
+        getImageView().setImageURI(photo.getThumbnail(THUMBNAIL_SIZE));
         getTitleView().setText(photo.getTitle());
 
         if(photo.getSource() != null) {
