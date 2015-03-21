@@ -92,7 +92,7 @@ public class ProfileFragment extends WebFragment {
                 listView.setAdapter(new FavoritesAdapter(listView.getContext(), favorites));
                 listView.addHeaderView(header, null, false);
 
-                getTitleView().setText(Html.fromHtml(context.getResources().getQuantityString(R.plurals.profile_stats_tagged, m_profile.getTaggedCount(), m_profile.getTaggedCount())));
+                getTitleView().setText(Html.fromHtml(context.getResources().getQuantityString(R.plurals.profile_stats, m_profile.getTaggedCount(), m_profile.getTaggedCount(), m_profile.getPicturesCount())));
 
                 if(m_profile.getMessage() != null) {
                     getSubtitleView().setText(m_profile.getMessage());
