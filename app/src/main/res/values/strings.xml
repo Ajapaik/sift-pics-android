@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Global -->
-    <string name="app_name">classify.pics</string>
+    <string name="app_name">Sift.pics</string>
     <string name="none"></string>
     <string name="action_profile">Profile</string>
     <string name="action_refresh">Refresh</string>
