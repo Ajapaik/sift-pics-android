@@ -11,6 +11,7 @@ import ee.ajapaik.sorter.util.WebAction;
 public class Profile extends Model {
     private static final String KEY_LINK = "link";
     private static final String KEY_MESSAGE = "message";
+    private static final String KEY_STATS_PICS = "pics";
     private static final String KEY_STATS_TAGGED = "tagged";
 
     public static WebAction<Profile> createAction(Context context) {
@@ -23,11 +24,13 @@ public class Profile extends Model {
 
     private String m_message;
     private Hyperlink m_link;
+    private int m_pics;
     private int m_tagged;
 
     public Profile(JsonObject attributes) {
         m_link = readHyperlink(attributes, KEY_LINK);
         m_message = readString(attributes, KEY_MESSAGE);
+        m_pics = readInteger(attributes, KEY_STATS_PICS);
         m_tagged = readInteger(attributes, KEY_STATS_TAGGED);
     }
 
@@ -37,6 +40,7 @@ public class Profile extends Model {
 
         write(attributes, KEY_LINK, m_link);
         write(attributes, KEY_MESSAGE, m_message);
+        write(attributes, KEY_STATS_PICS, m_pics);
         write(attributes, KEY_STATS_TAGGED, m_tagged);
 
         return attributes;
@@ -48,6 +52,10 @@ public class Profile extends Model {
 
     public String getMessage() {
         return m_message;
+    }
+
+    public int getPicturesCounts() {
+        return m_pics;
     }
 
     public int getTaggedCount() {
@@ -65,6 +73,7 @@ public class Profile extends Model {
         if(profile == null ||
            !Objects.match(profile.getLink(), m_link) ||
            !Objects.match(profile.getMessage(), m_message) ||
+           profile.getPicturesCounts() != m_pics ||
            profile.getTaggedCount() != m_tagged) {
             return false;
         }
