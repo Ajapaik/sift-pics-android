@@ -1,7 +1,9 @@
 package ee.ajapaik.sorter.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import java.util.List;
 
 import ee.ajapaik.sorter.R;
 import ee.ajapaik.sorter.data.Album;
+import ee.ajapaik.sorter.data.Hyperlink;
 import ee.ajapaik.sorter.data.Photo;
 import ee.ajapaik.sorter.data.util.Status;
 import ee.ajapaik.sorter.fragment.util.WebFragment;
@@ -121,6 +124,26 @@ public class AlbumFragment extends WebFragment {
             @Override
             public void onSingleTap() {
                 setImmersiveMode(!m_immersiveMode);
+            }
+        });
+
+        getSubtitleView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(m_album != null) {
+                    Photo photo = m_album.getPhoto(m_selectedPhoto);
+
+                    if(photo != null) {
+                        Hyperlink link = photo.getSource();
+
+                        if(link != null && link.getURL() != null) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+
+                            intent.setData(link.getURL());
+                            startActivity(intent);
+                        }
+                    }
+                }
             }
         });
 
@@ -467,8 +490,8 @@ public class AlbumFragment extends WebFragment {
         return (TextView)getView().findViewById(R.id.text_title);
     }
 
-    private TextView getSubtitleView() {
-        return (TextView)getView().findViewById(R.id.text_subtitle);
+    private Button getSubtitleView() {
+        return (Button)getView().findViewById(R.id.button_subtitle);
     }
 
     private ImageButton getPrevButton() {

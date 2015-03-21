@@ -35,8 +35,8 @@
     <!-- Profile -->
     <plurals name="profile_stats">
         <item quantity="zero">You haven\'t tagged any pictures yet.</item>
-        <item quantity="one">You have tagged <b>1</b> classification for <b>1</b> picture.</item>
-        <item quantity="other">You have made <b>%1$d</b> classifications for <b>%2$d</b> pictures.</item>
+        <item quantity="one">You have tagged &lt;b>1&lt;/b> classification for &lt;b>1&lt;/b> picture.</item>
+        <item quantity="other">You have made &lt;b>%1$d&lt;/b> classifications for &lt;b>%2$d&lt;/b> pictures.</item>
     </plurals>
     <string name="profile_favorites">Favorites:</string>
     <string name="profile_title">My Profile</string>

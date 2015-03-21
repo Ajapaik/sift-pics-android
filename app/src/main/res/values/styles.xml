@@ -67,6 +67,10 @@
     </style>
 
     <style name="AlbumInfoSubtitleText" parent="@android:style/TextAppearance">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
         <item name="android:textColor">@color/album_info_subtitle</item>
         <item name="android:textColorLink">@color/album_info_subtitle</item>
         <item name="android:textSize">@dimen/font_size_medium</item>
