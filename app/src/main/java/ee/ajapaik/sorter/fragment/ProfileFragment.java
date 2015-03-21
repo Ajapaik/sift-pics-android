@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ee.ajapaik.sorter.AlbumActivity;
 import ee.ajapaik.sorter.R;
 import ee.ajapaik.sorter.adapter.FavoritesAdapter;
 import ee.ajapaik.sorter.data.Hyperlink;
@@ -45,7 +46,9 @@ public class ProfileFragment extends WebFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Favorite favorite = (Favorite)parent.getItemAtPosition(position);
 
+                AlbumActivity.start(getActivity(), favorite);
             }
         });
 
