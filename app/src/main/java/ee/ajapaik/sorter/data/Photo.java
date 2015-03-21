@@ -34,7 +34,7 @@ public class Photo extends Model {
         if(uri != null) {
             String str = uri.toString();
 
-            str = str.replaceAll("[DIM]", Integer.toString(preferredDimension));
+            str = str.replace("[DIM]", Integer.toString(preferredDimension));
 
             return Uri.parse(str);
         }
