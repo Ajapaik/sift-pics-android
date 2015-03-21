@@ -141,7 +141,7 @@ Returns the current state for an album
 	        		"title": "Title", /* Photo title */
 	        		"author": "Author Name", /* Photo author if available */
 	        		"source": "http://example.com", /* Photo source. See: hyperlinks */
-	        		"tag": [ /* Tag choices to display */
+	        		"tags": [ /* Tag choices to display */
 	        			"interior_or_exterior",
 	        			"public_or_private",
 	        			"urban_or_rural",
@@ -193,9 +193,8 @@ Returns the current state for an album
 	Returns:
 		{
 			"error": 0,
-			"stats": [
-				"tagged": 123 /* Number of tagged photos */
-			],
+			"tagged": 123 /* Number of times tagged */
+			"pics": 123, /* Number of tagged photos */
 			"message": "Message", /* An optional message from the server to display */,
 			"link": "http://" /* An optional link to open in the browser. See: hyperlinks */
 		}
