@@ -1,10 +1,12 @@
 package ee.ajapaik.sorter.fragment;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -25,7 +27,6 @@ import ee.ajapaik.sorter.util.WebAction;
 public class AlbumFragment extends WebFragment {
     private static final String TAG = "AlbumsFragment";
     private static final String KEY_ALBUM = "album";
-    private static final String KEY_SELECTED_FAVORITE = "selected_favorite";
     private static final String KEY_SELECTED_PHOTO = "selected_photo";
     private static final String KEY_SELECTED_TAG = "selected_tag";
     private static final String KEY_SELECTED_INFO = "selected_info";
@@ -33,7 +34,7 @@ public class AlbumFragment extends WebFragment {
     private static final String KEY_PHOTO_IDENTIFIER = "photo_id";
 
     private Album m_album;
-    private boolean m_selectedFavorite;
+    private List<Favorite> m_favorites;
     private String m_selectedPhoto;
     private int m_selectedTag;
     private boolean m_selectedInfo;
@@ -99,6 +100,7 @@ public class AlbumFragment extends WebFragment {
         super.onActivityCreated(savedInstanceState);
 
         m_settings = new Settings(getActivity());
+        m_favorites = m_settings.getFavorites();
 
         getPrevButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +126,7 @@ public class AlbumFragment extends WebFragment {
         getToggleFavoriteButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setFavorite(!m_selectedFavorite);
+                setFavorite(!isFavorite(m_selectedPhoto));
             }
         });
 
@@ -152,17 +154,15 @@ public class AlbumFragment extends WebFragment {
         if(savedInstanceState != null) {
             Album album = savedInstanceState.getParcelable(KEY_ALBUM);
 
-            m_selectedFavorite = savedInstanceState.getBoolean(KEY_SELECTED_FAVORITE);
             m_selectedPhoto = savedInstanceState.getString(KEY_SELECTED_PHOTO);
             m_selectedTag = savedInstanceState.getInt(KEY_SELECTED_TAG, 0);
             m_selectedInfo = savedInstanceState.getBoolean(KEY_SELECTED_INFO, false);
 
+            setDetailsShown(m_selectedInfo);
             setAlbum(album);
         } else {
             setDetailsShown(m_selectedInfo);
         }
-
-        setFavorite(m_selectedFavorite);
     }
 
     @Override
@@ -170,7 +170,6 @@ public class AlbumFragment extends WebFragment {
         super.onSaveInstanceState(savedInstanceState);
 
         savedInstanceState.putParcelable(KEY_ALBUM, m_album);
-        savedInstanceState.putBoolean(KEY_SELECTED_FAVORITE, m_selectedFavorite);
         savedInstanceState.putBoolean(KEY_SELECTED_INFO, m_selectedInfo);
         savedInstanceState.putString(KEY_SELECTED_PHOTO, m_selectedPhoto);
         savedInstanceState.putInt(KEY_SELECTED_TAG, m_selectedTag);
@@ -245,22 +244,16 @@ public class AlbumFragment extends WebFragment {
     protected void setFavorite(boolean flag) {
         Photo photo;
 
-        m_selectedFavorite = flag;
-
-        if(m_selectedFavorite) {
-            getToggleFavoriteButton().setImageResource(R.drawable.ic_favorite_white_36dp);
-        } else {
-            getToggleFavoriteButton().setImageResource(R.drawable.ic_favorite_outline_white_36dp);
-        }
-
         if(m_album != null && (photo = m_album.getPhoto(m_selectedPhoto)) != null) {
             Favorite favorite = new Favorite(m_album, photo);
 
-            if(m_selectedFavorite) {
-                m_settings.addFavorite(favorite);
+            if(flag) {
+                m_settings.addFavorite(favorite, m_favorites);
             } else {
-                m_settings.removeFavorite(favorite);
+                m_settings.removeFavorite(favorite, m_favorites);
             }
+
+            invalidatePhotoFavorite(photo, flag);
         }
     }
 
@@ -270,7 +263,7 @@ public class AlbumFragment extends WebFragment {
         if(m_selectedInfo) {
             getToggleDetailsButton().setImageResource(R.drawable.ic_highlight_remove_white_36dp);
             getInfoLayout().setVisibility(View.VISIBLE);
-            getActionsLayout().setVisibility(View.GONE);
+            getActionsLayout().setVisibility(View.INVISIBLE);
         } else {
             getToggleDetailsButton().setImageResource(R.drawable.ic_info_outline_white_36dp);
             getInfoLayout().setVisibility(View.GONE);
@@ -318,7 +311,16 @@ public class AlbumFragment extends WebFragment {
             getSubtitleView().setText("");
         }
 
+        invalidatePhotoFavorite(photo, isFavorite(photo.getIdentifier()));
         invalidatePhotoTag(photo, m_selectedTag);
+    }
+
+    private void invalidatePhotoFavorite(Photo photo, boolean flag) {
+        if(flag) {
+            getToggleFavoriteButton().setImageResource(R.drawable.ic_favorite_white_36dp);
+        } else {
+            getToggleFavoriteButton().setImageResource(R.drawable.ic_favorite_outline_white_36dp);
+        }
     }
 
     private void invalidatePhotoTag(Photo photo, int selectedTag) {
@@ -339,14 +341,28 @@ public class AlbumFragment extends WebFragment {
             }
 
             if((tag = tags.get(m_selectedTag)) != null) {
-                getLeftActionButton().setImageResource(tag.getLeftImageResourceId());
-                getRightActionButton().setImageResource(tag.getRightImageResourceId());
+                Resources resources = getActivity().getResources();
+
+                getLeftActionButton().setCompoundDrawablesWithIntrinsicBounds(0, tag.getLeftImageResourceId(), 0, 0);
+                getLeftActionButton().setText(resources.getString(tag.getLeftTitleResourceId()));
+                getRightActionButton().setCompoundDrawablesWithIntrinsicBounds(0, tag.getRightImageResourceId(), 0, 0);
+                getRightActionButton().setText(resources.getString(tag.getRightTitleResourceId()));
             }
         } else {
             getToggleDetailsButton().setVisibility(View.GONE);
             getInfoLayout().setVisibility(View.VISIBLE);
             getActionsLayout().setVisibility(View.GONE);
         }
+    }
+
+    private boolean isFavorite(String photoIdentifier) {
+        for(Favorite favorite : m_favorites) {
+            if(Objects.match(photoIdentifier, favorite.getPhotoIdentifier())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private View getMainLayout() {
@@ -393,15 +409,15 @@ public class AlbumFragment extends WebFragment {
         return (ImageButton)getView().findViewById(R.id.button_favorite);
     }
 
-    private ImageButton getLeftActionButton() {
-        return (ImageButton)getView().findViewById(R.id.button_action_left);
+    private Button getLeftActionButton() {
+        return (Button)getView().findViewById(R.id.button_action_left);
     }
 
-    private ImageButton getRightActionButton() {
-        return (ImageButton)getView().findViewById(R.id.button_action_right);
+    private Button getRightActionButton() {
+        return (Button)getView().findViewById(R.id.button_action_right);
     }
 
-    private ImageButton getOtherActionButton() {
-        return (ImageButton)getView().findViewById(R.id.button_action_other);
+    private Button getOtherActionButton() {
+        return (Button)getView().findViewById(R.id.button_action_other);
     }
 }

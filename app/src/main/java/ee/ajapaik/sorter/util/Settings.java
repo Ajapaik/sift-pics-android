@@ -45,8 +45,10 @@ public class Settings {
     }
 
     public void addFavorite(Favorite favorite) {
-        List<Favorite> favorites = getFavorites();
+        addFavorite(favorite, getFavorites());
+    }
 
+    public void addFavorite(Favorite favorite, List<Favorite> favorites) {
         for(int i = 0, c = favorites.size(); i < c; i++) {
             Favorite favorite_ = favorites.get(i);
 
@@ -64,8 +66,10 @@ public class Settings {
     }
 
     public void removeFavorite(Favorite favorite) {
-        List<Favorite> favorites = getFavorites();
+        removeFavorite(favorite, getFavorites());
+    }
 
+    public void removeFavorite(Favorite favorite, List<Favorite> favorites) {
         for(int i = 0, c = favorites.size(); i < c; i++) {
             Favorite favorite_ = favorites.get(i);
 
