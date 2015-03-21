@@ -29,7 +29,7 @@ public class FavoritesAdapter extends ArrayAdapter<Favorite> {
         }
 
         imageView = (ImageView)convertView.findViewById(R.id.image_icon);
-        imageView.setImageURI(favorite.getImage());
+        imageView.setImageURI(favorite.getThumbnail());
 
         textView = (TextView)convertView.findViewById(R.id.text_title);
         textView.setText(favorite.getTitle());
