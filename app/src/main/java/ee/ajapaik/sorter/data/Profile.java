@@ -54,7 +54,7 @@ public class Profile extends Model {
         return m_message;
     }
 
-    public int getPicturesCounts() {
+    public int getPicturesCount() {
         return m_pics;
     }
 
@@ -73,7 +73,7 @@ public class Profile extends Model {
         if(profile == null ||
            !Objects.match(profile.getLink(), m_link) ||
            !Objects.match(profile.getMessage(), m_message) ||
-           profile.getPicturesCounts() != m_pics ||
+           profile.getPicturesCount() != m_pics ||
            profile.getTaggedCount() != m_tagged) {
             return false;
         }
