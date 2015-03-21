@@ -144,7 +144,7 @@ public class Photo extends Model {
         URBAN_OR_RURAL("urban_or_rural", 0x04, R.string.photo_tag_urban, R.drawable.ic_location_city_white_48dp, R.string.photo_tag_rural, R.drawable.ic_nature_white_48dp),
         GROUND_OR_RAISED("ground_or_raised", 0x08, R.string.photo_tag_ground, R.drawable.ic_nature_people_white_48dp, R.string.photo_tag_raised, R.drawable.ic_filter_drama_white_48dp),
         VIEW_OR_SOCIAL("view_or_social", 0x10, R.string.photo_tag_view, R.drawable.ic_landscape_white_48dp, R.string.photo_tag_social, R.drawable.ic_accessibility_white_48dp),
-        STAGED_OR_NATURAL("staged_or_natural", 0x20, R.string.photo_tag_staged, R.drawable.ic_account_box_white_48dp, R.string.photo_tag_natural, R.drawable.ic_directions_walk_white_48dp),
+        STAGED_OR_NATURAL("staged_or_natural", 0x20, R.string.photo_tag_staged, R.drawable.ic_portrait_white_48dp, R.string.photo_tag_natural, R.drawable.ic_directions_walk_white_48dp),
         ONE_OR_MANY("one_or_many", 0x40, R.string.photo_tag_one, R.drawable.ic_person_white_48dp, R.string.photo_tag_many, R.drawable.ic_group_add_white_48dp),
         WHOLE_OR_DETAIL("whole_or_detail", 0x80, R.string.photo_tag_whole, R.drawable.ic_location_city_white_48dp, R.string.photo_tag_detail, R.drawable.ic_local_florist_white_48dp),
         UNKNOWN(null, R.string.photo_tag_na, 0x00, R.drawable.ic_cancel_white_48dp, R.string.photo_tag_na, R.drawable.ic_cancel_white_48dp);
