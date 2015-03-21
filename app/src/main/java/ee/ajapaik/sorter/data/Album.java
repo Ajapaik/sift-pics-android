@@ -48,6 +48,21 @@ public class Album extends Model {
         return new Action(context, "/album/state/", parameters, null, albumIdentifier);
     }
 
+    public static WebAction<Album> createTagAction(Context context, Album album, String photoIdentifier, Photo.Tag tag, Photo.TagResult result) {
+        Map<String, String> parameters = new Hashtable<String, String>();
+
+        parameters.put("id", album.getIdentifier());
+        parameters.put("photo", photoIdentifier);
+        parameters.put("tag", tag.toString());
+        parameters.put("value", Integer.toString(result.getCode()));
+
+        if(album.getState() != null) {
+            parameters.put("state", album.getState());
+        }
+
+        return new Action(context, "/album/tag/", parameters, album, album.getIdentifier());
+    }
+
     public static Album parse(String str) {
         return CREATOR.parse(str);
     }
@@ -300,7 +315,7 @@ public class Album extends Model {
 
         @Override
         public String getUniqueId() {
-            return "/album/state/" + m_baseIdentifier + "/" + ((m_baseAlbum != null && m_baseAlbum.getState() != null) ? m_baseAlbum.getState() : "");
+            return getUrl() + m_baseIdentifier + "/" + ((m_baseAlbum != null && m_baseAlbum.getState() != null) ? m_baseAlbum.getState() : "");
         }
 
         @Override

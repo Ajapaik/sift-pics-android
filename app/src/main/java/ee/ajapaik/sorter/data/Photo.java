@@ -223,6 +223,27 @@ public class Photo extends Model {
         }
     }
 
+    public enum TagResult {
+        LEFT(-1),
+        RIGHT(1),
+        NOT_APPLICABLE(0);
+
+        private final int m_code;
+
+        private TagResult(final int code) {
+            m_code = code;
+        }
+
+        public int getCode() {
+            return m_code;
+        }
+
+        @Override
+        public String toString() {
+            return Integer.toString(m_code);
+        }
+    }
+
     public static final Model.Creator<Photo> CREATOR = new Model.Creator<Photo>() {
         @Override
         public Photo newInstance(JsonObject attributes) {
