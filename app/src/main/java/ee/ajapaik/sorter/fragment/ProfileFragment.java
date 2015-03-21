@@ -89,8 +89,8 @@ public class ProfileFragment extends WebFragment {
                 List<Favorite> favorites = settings.getFavorites();
                 Hyperlink link = m_profile.getLink();
 
-                listView.setAdapter(new FavoritesAdapter(listView.getContext(), favorites));
                 listView.addHeaderView(header, null, false);
+                listView.setAdapter(new FavoritesAdapter(listView.getContext(), favorites));
 
                 getTitleView().setText(Html.fromHtml(context.getResources().getQuantityString(R.plurals.profile_stats, m_profile.getTaggedCount(), m_profile.getTaggedCount(), m_profile.getPicturesCount())));
 
