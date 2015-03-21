@@ -8,13 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/layout_details"
             style="@style/AlbumInfoBox"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:id="@+id/layout_details_actions"
@@ -22,32 +21,34 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <ImageButton
+                <Button
                     android:id="@+id/button_action_left"
-                    android:background="@android:color/transparent"
+                    style="@style/AlbumActionButton"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_cancel_white_48dp" />
+                    android:drawableTop="@drawable/ic_cancel_white_48dp" />
 
-                <ImageButton
+                <Button
                     android:id="@+id/button_action_right"
-                    android:background="@android:color/transparent"
+                    style="@style/AlbumActionButton"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_cancel_white_48dp" />
+                    android:drawableTop="@drawable/ic_cancel_white_48dp" />
 
-                <ImageButton
+                <Button
                     android:id="@+id/button_action_other"
-                    android:background="@android:color/transparent"
+                    style="@style/AlbumActionButton"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/button_action_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_cancel_white_48dp" />
+                    android:gravity="center"
+                    android:text="@string/photo_tag_na"
+                    android:drawableTop="@drawable/ic_cancel_white_48dp" />
 
             </RelativeLayout>
 
@@ -73,7 +74,7 @@
 
             </LinearLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/layout_image"
@@ -97,6 +98,7 @@
 
             <ImageButton
                 android:id="@+id/button_favorite"
+                style="@style/AlbumOverlayButton"
                 android:background="@android:color/transparent"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
@@ -106,6 +108,7 @@
 
             <ImageButton
                 android:id="@+id/button_details"
+                style="@style/AlbumOverlayButton"
                 android:background="@android:color/transparent"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
@@ -115,6 +118,7 @@
 
             <ImageButton
                 android:id="@+id/button_prev"
+                style="@style/AlbumOverlayButton"
                 android:background="@android:color/transparent"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
@@ -124,6 +128,7 @@
 
             <ImageButton
                 android:id="@+id/button_next"
+                style="@style/AlbumOverlayButton"
                 android:background="@android:color/transparent"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"

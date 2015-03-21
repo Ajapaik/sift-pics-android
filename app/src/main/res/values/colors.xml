@@ -8,6 +8,12 @@
     <color name="album_item_subtitle">#FFFFFF</color>
     <color name="album_item_title">#FFFFFF</color>
 
+    <!-- Album -->
+    <color name="album_info_box">#000000</color>
+    <color name="album_info_overlay">#66000000</color>
+    <color name="album_info_subtitle">#FFFFFF</color>
+    <color name="album_info_title">#FFFFFF</color>
+
     <!-- Profile -->
     <color name="profile_header">#000000</color>
     <color name="profile_item_separator">#333333</color>
