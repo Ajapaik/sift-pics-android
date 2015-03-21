@@ -133,21 +133,21 @@ public class AlbumFragment extends WebFragment {
         getLeftActionButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onTag(Photo.TagResult.LEFT);
             }
         });
 
         getRightActionButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onTag(Photo.TagResult.RIGHT);
             }
         });
 
         getOtherActionButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onTag(Photo.TagResult.NOT_APPLICABLE);
             }
         });
 
@@ -220,6 +220,7 @@ public class AlbumFragment extends WebFragment {
             }
 
             if(photo != null) {
+                m_selectedTag = 0;
                 invalidatePhoto(photo);
             } else {
                 // TODO: Exit dialog
@@ -236,6 +237,7 @@ public class AlbumFragment extends WebFragment {
             }
 
             if(photo != null) {
+                m_selectedTag = 0;
                 invalidatePhoto(photo);
             } else {
                 // TODO: Exit dialog
@@ -298,6 +300,38 @@ public class AlbumFragment extends WebFragment {
         });
     }
 
+    protected void onTag(Photo.TagResult result) {
+        Photo photo;
+
+        if(m_album != null && (photo = m_album.getPhoto(m_selectedPhoto)) != null && photo.hasTags()) {
+            List<Photo.Tag> tags = photo.getTags();
+            Context context = getActivity();
+            Photo.Tag tag;
+
+            if(m_selectedTag < 0 || m_selectedTag >= tags.size()) {
+                m_selectedTag = 0;
+            }
+
+            if((tag = tags.get(m_selectedTag)) != null) {
+                getConnection().enqueue(context, Album.createTagAction(context, m_album, photo.getIdentifier(), tag, result), new WebAction.ResultHandler<Album>() {
+                    @Override
+                    public void onActionResult(Status status, Album album) {
+                        if(album != null) {
+                            setAlbum(album);
+                        }
+                    }
+                });
+
+                m_selectedTag++;
+
+                if(m_selectedTag < tags.size()) {
+                    invalidatePhotoTag(photo, m_selectedTag);
+                } else {
+                    onNextPhoto();
+                }
+            }
+        }
+    }
 
     private void invalidatePhoto(Photo photo) {
         m_selectedPhoto = photo.getIdentifier();

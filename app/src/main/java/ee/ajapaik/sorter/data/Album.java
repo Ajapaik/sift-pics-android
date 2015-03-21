@@ -94,24 +94,22 @@ public class Album extends Model {
             m_identifier = baseIdentifier;
         }
 
-        if(element != null) {
-            if(element.isJsonArray()) {
-                for(JsonElement photoElement : element.getAsJsonArray()) {
-                    if(photoElement.isJsonObject()) {
-                        try {
-                            m_photos.add(new Photo(photoElement.getAsJsonObject()));
-                        } catch(Exception e) {
-                            e.printStackTrace();
-                        }
+        if(element != null && element.isJsonArray()) {
+            for(JsonElement photoElement : element.getAsJsonArray()) {
+                if(photoElement.isJsonObject()) {
+                    try {
+                        m_photos.add(new Photo(photoElement.getAsJsonObject()));
+                    } catch(Exception e) {
+                        e.printStackTrace();
                     }
                 }
-            } else if(!element.isJsonNull() && baseAlbum != null) {
-                List<Photo> photos = baseAlbum.getPhotos();
+            }
+        } else if(baseAlbum != null) {
+            List<Photo> photos = baseAlbum.getPhotos();
 
-                if(photos != null && photos.size() > 0) {
-                    for(Photo photo : photos) {
-                        m_photos.add(photo);
-                    }
+            if(photos != null && photos.size() > 0) {
+                for(Photo photo : photos) {
+                    m_photos.add(photo);
                 }
             }
         }
@@ -145,7 +143,7 @@ public class Album extends Model {
                     } else if(!Objects.match(oldPhoto, newPhoto)) {
                         m_photos.set(m_photos.indexOf(oldPhoto), newPhoto);
                     }
-                } catch (Exception e) {
+                } catch(Exception e) {
                     e.printStackTrace();
                 }
             }
