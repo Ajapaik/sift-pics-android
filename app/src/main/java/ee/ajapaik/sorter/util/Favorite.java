@@ -138,6 +138,17 @@ public class Favorite {
         return m_image;
     }
 
+    public Uri getThumbnail() {
+        String url = m_image.toString();
+
+        // FIXME: Quick hack to improve thumbnail performance in lists
+        if(url.endsWith("/400/")) {
+            return Uri.parse(url.substring(0, url.length() - 4) + "64/");
+        }
+
+        return m_image;
+    }
+
     public String getTitle() {
         return m_title;
     }
