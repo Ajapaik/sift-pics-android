@@ -38,6 +38,11 @@
         <service
             android:name=".WebService">
         </service>
+        <activity android:name="org.acra.CrashReportDialog"
+                  android:theme="@style/AppDialog"
+                  android:launchMode="singleInstance"
+                  android:excludeFromRecents="true"
+                  android:finishOnTaskLaunch="true" />
     </application>
 
 </manifest>

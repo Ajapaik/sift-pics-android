@@ -1,9 +1,10 @@
 <resources>
 
     <!-- Activities -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar" />
 
-    </style>
+    <!-- Dialogs -->
+    <style name="AppDialog" parent="@android:style/Theme.DeviceDefault.Dialog" />
 
     <!-- Albums -->
     <style name="AlbumListView" parent="@android:style/Widget.ListView">
