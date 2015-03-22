@@ -22,7 +22,7 @@ import ee.ajapaik.sorter.BuildConfig;
 public class WebImage extends WebOperation {
     private static final String TAG = "WebImage";
 
-    private static final long MAX_CACHE_AGE = 24 * 60 * 60; // 24H
+    private static final long MAX_CACHE_AGE = 24 * 60 * 60 * 1000; // 24H
     private static final long MAX_CACHE_SIZE = 10 * 1024 * 1024; // 10MB
 
     private static final String CACHE_PREFIX = "img_";
