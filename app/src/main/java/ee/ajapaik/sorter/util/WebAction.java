@@ -74,7 +74,7 @@ public class WebAction<T> extends WebOperation {
         if((statusCode == HTTP_STATUS_OK || statusCode == HTTP_STATUS_FORBIDDEN || statusCode == HTTP_STATUS_INTERNAL_SERVER_ERROR) && stream != null) {
             try {
                 JsonElement element = new JsonParser().parse(new JsonReader(new InputStreamReader(stream, "UTF-8")));
-                
+
                 if(element.isJsonObject()) {
                     JsonObject attributes = element.getAsJsonObject();
                     JsonPrimitive error = attributes.getAsJsonPrimitive(KEY_ERROR);
