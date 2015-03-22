@@ -28,6 +28,8 @@ public class WebImage extends WebOperation {
     private static final String CACHE_PREFIX = "img_";
     private static final int BUFFER_SIZE = 32000;
 
+    private static final Object s_lock = new Object();
+
     public static void invalidate(Context context) {
         List<File> cache = new ArrayList<File>();
         long timestamp = new Date().getTime();
@@ -39,6 +41,10 @@ public class WebImage extends WebOperation {
             for(File file : files) {
                 if(file.getName().startsWith(CACHE_PREFIX)) {
                     if(Math.abs(file.lastModified() - timestamp) > MAX_CACHE_AGE) {
+                        if(BuildConfig.DEBUG) {
+                            Log.d(TAG, "Removed cached image (> age, " + file.getName() + ")");
+                        }
+
                         file.delete();
                     } else {
                         cache.add(file);
@@ -53,6 +59,10 @@ public class WebImage extends WebOperation {
             long fileSize = file.length();
 
             if(totalSize + fileSize > MAX_CACHE_SIZE) {
+                if(BuildConfig.DEBUG) {
+                    Log.d(TAG, "Removed cached image (> size, " + file.getName() + ")");
+                }
+
                 file.delete();
             } else {
                 totalSize += fileSize;
@@ -67,6 +77,10 @@ public class WebImage extends WebOperation {
         if(files != null) {
             for(File file : files) {
                 if(file.getName().startsWith(CACHE_PREFIX)) {
+                    if(BuildConfig.DEBUG) {
+                        Log.d(TAG, "Removed cached image (" + file.getName() + ")");
+                    }
+
                     file.delete();
                 }
             }
@@ -172,7 +186,13 @@ public class WebImage extends WebOperation {
         boolean result = false;
 
         if(m_cache) {
-            File file = new File(getCacheDir(m_context), m_path);
+            File file;
+
+            synchronized(s_lock) {
+                invalidate(m_context);
+            }
+
+            file = new File(getCacheDir(m_context), m_path);
 
             if(file.exists()) {
                 file.setLastModified(new Date().getTime());
