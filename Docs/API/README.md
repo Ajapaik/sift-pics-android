@@ -208,6 +208,7 @@ Returns the current state for an album
 				{
 					"album_id": 1234, /* Album ID */
 					"photo_id": 1245, /* Photo ID */
+					"image": "http://www.example.org/image.png", /* Favorite thumbnail image */
 					"date": "yyyy-MM-ddTHH:mm:ss.SSSZ" /* ISO-8601 date in UTC */
 				}
 			],
