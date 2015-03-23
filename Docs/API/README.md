@@ -108,7 +108,8 @@ Returns all the albums.
 	                "title": "Abc" /* Album name */,
 	                "subtitle": "hmm" /* Optional subtitle under the name */,
 	                "image": "http://www.example.org/image.png", /* Album thumbnail image */
-	                "tagged": 0 /* 1 if the user has tagged all the pictures in the album */
+	                "tagged": 0, /* Number of tagged photos for the user */
+	                "total": 0 /* Number of photos in the album */
 	            }
 	        ]
 	    }
@@ -125,6 +126,7 @@ Returns the current state for an album
     Parameters:
         [session]
         INTEGER id [R] - Album ID
+        INTEGER max [O=0] - Maximum number of tags per photo (client-side hint)
         STRING state [O] - The value of the state parameter from the previous API call
     
     Returns:
@@ -173,8 +175,9 @@ Returns the current state for an album
         [session]
         INTEGER id [R] - Album ID
         INTEGER photo [R] - Photo ID
-        STRING "tag" [R] - Tag key (such as "interior_or_exterior")
-        INTEGER "value" [R] - -1 - left, 0 - not applicable, 1 - right
+        INTEGER max [O=0] - Maximum number of tags per photo (client-side hint)
+        STRING tag [R] - Tag key (such as "interior_or_exterior")
+        INTEGER value [R] - -1 - left, 0 - not applicable, 1 - right
         STRING state [O] - The value of the state parameter from the previous API call
     
     Returns:
@@ -185,19 +188,72 @@ Returns the current state for an album
 
 # User calls
 
+## Profile info
+
 	/user/me
 	
 	Parameters:
 		[session]
+		STRING state [O] - The value of the state parameter from the previous API call
 	
 	Returns:
 		{
 			"error": 0,
+			"state": "ABCDEF012345789", /* State variable managed by the back-end that can be used to track client-app state */
 			"tagged": 123 /* Number of times tagged */
 			"pics": 123, /* Number of tagged photos */
 			"message": "Message", /* An optional message from the server to display */,
-			"link": "http://" /* An optional link to open in the browser. See: hyperlinks */
+			"link": "http://", /* An optional link to open in the browser. See: hyperlinks */
+			"favorites": [
+				{
+					"album_id": 1234, /* Album ID */
+					"photo_id": 1245, /* Photo ID */
+					"date": "yyyy-MM-ddTHH:mm:ss.SSSZ" /* ISO-8601 date in UTC */
+				}
+			],
+			"favorites+": [
+				/* Optional, favorites to add or update */
+			],
+			"favorites-": [
+				1234, 1235, 1236 /* Optional, favorites to remove */
+			]
 		}
 	
 	Errors:
         [standard]
+    
+## Add favorite
+
+Adds a new favorite and updates client-side favorites
+
+	/user/favorite/add
+	
+	Parameters:
+		[session]
+		INTEGER album [R] - Album ID
+		INTEGER photo [R] - Photo ID
+		STRING state [O] - The value of the state parameter from the previous API call
+	
+	Returns:
+        See /user/me
+    
+    Errors:
+        See /user/me
+
+## Remove favorite
+
+Removes a favorite and updates client-side favorites
+ 
+	/user/favorite/remove
+	
+	Parameters:
+		[session]
+		INTEGER album [R] - Album ID
+		INTEGER photo [R] - Photo ID
+		STRING state [O] - The value of the state parameter from the previous API call
+	
+	Returns:
+        See /user/me
+    
+    Errors:
+        See /user/me
