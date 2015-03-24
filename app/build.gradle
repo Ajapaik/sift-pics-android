@@ -5,7 +5,7 @@ android {
     buildToolsVersion "20.0.0"
 
     defaultConfig {
-        applicationId "ee.ajapaik.sorter"
+        applicationId "ee.ajapaik.android"
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 1

@@ -4,7 +4,7 @@
                 android:layout_width="fill_parent"
                 style="@style/ProfileItem">
 
-    <ee.ajapaik.sorter.widget.WebImageView
+    <pics.sift.android.widget.WebImageView
         android:id="@+id/image_icon"
         style="@style/ProfileItemIcon"
         android:layout_height="fill_parent"
