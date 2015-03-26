@@ -20,7 +20,7 @@ import pics.sift.android.data.Hyperlink;
 import pics.sift.android.data.Profile;
 import pics.sift.android.data.util.Status;
 import pics.sift.android.fragment.util.WebFragment;
-import pics.sift.android.util.Favorite;
+import pics.sift.android.data.Favorite;
 import pics.sift.android.util.Objects;
 import pics.sift.android.util.Settings;
 import pics.sift.android.util.WebAction;
@@ -30,6 +30,7 @@ public class ProfileFragment extends WebFragment {
     private static final String KEY_PROFILE = "profile";
 
     private Profile m_profile;
+    private Settings m_settings;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class ProfileFragment extends WebFragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        Profile profile = null;
         ListView listView;
 
         super.onActivityCreated(savedInstanceState);
@@ -53,10 +55,17 @@ public class ProfileFragment extends WebFragment {
         });
 
         if(savedInstanceState != null) {
-            Profile profile = savedInstanceState.getParcelable(KEY_PROFILE);
-
-            setProfile(profile);
+            profile = savedInstanceState.getParcelable(KEY_PROFILE);
         }
+
+        m_settings = new Settings(getActivity());
+        profile = m_settings.getProfile();
+
+        if(profile == null) {
+            profile = new Profile();
+        }
+
+        setProfile(profile);
     }
 
     @Override
@@ -79,14 +88,13 @@ public class ProfileFragment extends WebFragment {
     public void setProfile(Profile profile) {
         if(!Objects.match(m_profile, profile)) {
             Context context = getActivity();
-            Settings settings = new Settings(context);
             ListView listView = getListView();
 
             m_profile = profile;
 
             if(m_profile != null) {
                 View header = LayoutInflater.from(context).inflate(R.layout.list_profile_header, listView, false);
-                List<Favorite> favorites = settings.getFavorites();
+                List<Favorite> favorites = m_profile.getFavorites();
                 Hyperlink link = m_profile.getLink();
 
                 listView.addHeaderView(header, null, false);
@@ -120,7 +128,7 @@ public class ProfileFragment extends WebFragment {
             getProgressBar().setVisibility(View.VISIBLE);
         }
 
-        getConnection().enqueue(context, Profile.createAction(context), new WebAction.ResultHandler<Profile>() {
+        getConnection().enqueue(context, Profile.createAction(context, m_profile), new WebAction.ResultHandler<Profile>() {
             @Override
             public void onActionResult(Status status, Profile profile) {
                 if(m_profile == null) {
@@ -128,6 +136,10 @@ public class ProfileFragment extends WebFragment {
                 }
 
                 if(profile != null) {
+                    if(!Objects.match(m_profile, profile)) {
+                        m_settings.setProfile(m_profile);
+                    }
+
                     setProfile(profile);
                 } else if(m_profile == null || animated) {
                     // TODO: Show error alert

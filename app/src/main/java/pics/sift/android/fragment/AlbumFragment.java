@@ -17,11 +17,12 @@ import java.util.List;
 
 import pics.sift.android.R;
 import pics.sift.android.data.Album;
+import pics.sift.android.data.Favorite;
 import pics.sift.android.data.Hyperlink;
 import pics.sift.android.data.Photo;
+import pics.sift.android.data.Profile;
 import pics.sift.android.data.util.Status;
 import pics.sift.android.fragment.util.WebFragment;
-import pics.sift.android.util.Favorite;
 import pics.sift.android.util.Objects;
 import pics.sift.android.util.Settings;
 import pics.sift.android.util.WebAction;
@@ -40,7 +41,7 @@ public class AlbumFragment extends WebFragment {
     private static final int THUMBNAIL_SIZE = 400;
 
     private Album m_album;
-    private List<Favorite> m_favorites;
+    private Profile m_profile;
     private boolean m_immersiveMode;
     private String m_selectedPhoto;
     private Photo.Tag m_selectedTag;
@@ -107,7 +108,11 @@ public class AlbumFragment extends WebFragment {
         super.onActivityCreated(savedInstanceState);
 
         m_settings = new Settings(getActivity());
-        m_favorites = m_settings.getFavorites();
+        m_profile = m_settings.getProfile();
+
+        if(m_profile == null) {
+            m_profile = new Profile();
+        }
 
         getImageView().setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
             @Override
@@ -302,10 +307,18 @@ public class AlbumFragment extends WebFragment {
             Favorite favorite = new Favorite(m_album, photo);
 
             if(flag) {
-                m_settings.addFavorite(favorite, m_favorites);
+                m_profile = m_settings.addFavorite(favorite, m_profile);
             } else {
-                m_settings.removeFavorite(favorite, m_favorites);
+                m_profile = m_settings.removeFavorite(favorite, m_profile);
             }
+
+            // TODO: Testing
+            getConnection().enqueue(getActivity(), Profile.createFavoriteAction(getActivity(), m_profile, favorite, flag), new WebAction.ResultHandler<Profile>() {
+                @Override
+                public void onActionResult(Status status, Profile profile) {
+
+                }
+            });
 
             invalidatePhotoFavorite(photo, flag);
         }
@@ -448,7 +461,7 @@ public class AlbumFragment extends WebFragment {
     }
 
     private boolean isFavorite(String photoIdentifier) {
-        for(Favorite favorite : m_favorites) {
+        for(Favorite favorite : m_profile.getFavorites()) {
             if(Objects.match(photoIdentifier, favorite.getPhotoIdentifier())) {
                 return true;
             }

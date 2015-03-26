@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import pics.sift.android.data.Album;
 import pics.sift.android.fragment.AlbumFragment;
-import pics.sift.android.util.Favorite;
+import pics.sift.android.data.Favorite;
 import pics.sift.android.util.WebActivity;
 
 public class AlbumActivity extends WebActivity {

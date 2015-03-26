@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import pics.sift.android.R;
-import pics.sift.android.util.Favorite;
+import pics.sift.android.data.Favorite;
 
 public class FavoritesAdapter extends ArrayAdapter<Favorite> {
     private static final int THUMBNAIL_SIZE = 64;
@@ -34,10 +34,10 @@ public class FavoritesAdapter extends ArrayAdapter<Favorite> {
         imageView.setImageURI(favorite.getThumbnail(THUMBNAIL_SIZE));
 
         textView = (TextView)convertView.findViewById(R.id.text_title);
-        textView.setText(favorite.getSubtitle());
+        textView.setText(favorite.getTitle());
 
         textView = (TextView)convertView.findViewById(R.id.text_subtitle);
-        textView.setText(favorite.getTimestamp().toString());
+        textView.setText(favorite.getDate().toString());
 
         return convertView;
     }
