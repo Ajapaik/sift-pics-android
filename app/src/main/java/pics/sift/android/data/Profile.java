@@ -118,11 +118,22 @@ public class Profile extends Model {
         }
 
         for(JsonElement favoriteToAddElement : readArray(attributes, KEY_FAVORITES_ADD)) {
+            List<Favorite> localFavorites = getLocalFavorites();
+
             if(favoriteToAddElement.isJsonObject()) {
                 try {
                     JsonObject favoriteObject = favoriteToAddElement.getAsJsonObject();
                     Favorite oldFavorite = getFavorite(readIdentifier(favoriteObject, KEY_IDENTIFIER));
                     Favorite newFavorite = new Favorite(favoriteObject, oldFavorite);
+
+                    if(oldFavorite == null) {
+                        for(Favorite localFavorite : localFavorites) {
+                            if(localFavorite.matches(newFavorite)) {
+                                oldFavorite = localFavorite;
+                                break;
+                            }
+                        }
+                    }
 
                     if(oldFavorite == null) {
                         m_favorites.add(newFavorite);
