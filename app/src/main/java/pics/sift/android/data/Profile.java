@@ -163,6 +163,18 @@ public class Profile extends Model {
         return m_favorites;
     }
 
+    public List<Favorite> getLocalFavorites() {
+        List<Favorite> favorites = new ArrayList<Favorite>();
+
+        for(Favorite favorite : m_favorites) {
+            if(favorite.getIdentifier() == null) {
+                favorites.add(favorite);
+            }
+        }
+
+        return favorites;
+    }
+
     public Favorite getFavorite(String identifier) {
         if(identifier != null && m_favorites != null) {
             for(Favorite favorite : m_favorites) {
