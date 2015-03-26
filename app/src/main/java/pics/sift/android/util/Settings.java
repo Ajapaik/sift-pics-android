@@ -3,8 +3,8 @@ package pics.sift.android.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.util.List;
-
+import pics.sift.android.data.Favorite;
+import pics.sift.android.data.Profile;
 import pics.sift.android.data.Session;
 
 public class Settings {
@@ -13,7 +13,7 @@ public class Settings {
     private static final String SHARED_PREFS = "prefs";
 
     private static String KEY_AUTHORIZATION = "authorization";
-    private static String KEY_FAVORITES = "favorites";
+    private static String KEY_PROFILE = "profile";
     private static String KEY_SESSION = "session";
 
     private SharedPreferences m_preferences;
@@ -33,52 +33,43 @@ public class Settings {
         editor.apply();
     }
 
-    public List<Favorite> getFavorites() {
-        return Favorite.parseAll(m_preferences.getString(KEY_FAVORITES, null));
+    public Profile getProfile() {
+        return Profile.parse(m_preferences.getString(KEY_PROFILE, null));
     }
 
-    public void setFavorites(List<Favorite> favorites) {
+    public void setProfile(Profile profile) {
         SharedPreferences.Editor editor = m_preferences.edit();
 
-        editor.putString(KEY_FAVORITES, (favorites != null) ? Favorite.getAttributes(favorites) : null);
+        editor.putString(KEY_PROFILE, (profile != null) ? profile.toString() : null);
         editor.apply();
     }
 
-    public void addFavorite(Favorite favorite) {
-        addFavorite(favorite, getFavorites());
+    public Profile addFavorite(Favorite favorite) {
+        return addFavorite(favorite, getProfile());
     }
 
-    public void addFavorite(Favorite favorite, List<Favorite> favorites) {
-        for(int i = 0, c = favorites.size(); i < c; i++) {
-            Favorite favorite_ = favorites.get(i);
+    public Profile addFavorite(Favorite favorite, Profile oldProfile) {
+        Profile newProfile = oldProfile.profileByAddingFavorite(favorite);
 
-            if(favorite_.matches(favorite)) {
-                if(!favorite.equals(favorite)) {
-                    favorites.set(i, favorite);
-                    setFavorites(favorites);
-                    return;
-                }
-            }
+        if(newProfile != oldProfile) {
+            setProfile(newProfile);
         }
 
-        favorites.add(favorite);
-        setFavorites(favorites);
+        return newProfile;
     }
 
-    public void removeFavorite(Favorite favorite) {
-        removeFavorite(favorite, getFavorites());
+    public Profile removeFavorite(Favorite favorite) {
+        return removeFavorite(favorite, getProfile());
     }
 
-    public void removeFavorite(Favorite favorite, List<Favorite> favorites) {
-        for(int i = 0, c = favorites.size(); i < c; i++) {
-            Favorite favorite_ = favorites.get(i);
+    public Profile removeFavorite(Favorite favorite, Profile oldProfile) {
+        Profile newProfile = oldProfile.profileByRemovingFavorite(favorite);
 
-            if(favorite_.matches(favorite)) {
-                favorites.remove(i);
-                setFavorites(favorites);
-                return;
-            }
+        if(newProfile != oldProfile) {
+            setProfile(newProfile);
         }
+
+        return newProfile;
     }
 
     public Session getSession() {
