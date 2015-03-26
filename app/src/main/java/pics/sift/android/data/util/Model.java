@@ -73,6 +73,10 @@ public abstract class Model implements Parcelable {
     }
 
     protected static String readIdentifier(JsonObject obj, String key) {
+        return readIdentifier(obj, key, null);
+    }
+
+    protected static String readIdentifier(JsonObject obj, String key, String defaultValue) {
         JsonElement element = obj.get(key);
 
         if(element != null && element.isJsonPrimitive()) {
@@ -87,7 +91,7 @@ public abstract class Model implements Parcelable {
             }
         }
 
-        return null;
+        return defaultValue;
     }
 
     protected static int readInteger(JsonObject obj, String key) {
