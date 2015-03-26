@@ -136,6 +136,15 @@ public class Profile extends Model {
         }
     }
 
+    protected Profile(Profile baseProfile, List<Favorite> favorites) {
+        m_link = baseProfile.getLink();
+        m_message = baseProfile.getMessage();
+        m_state = baseProfile.getState();
+        m_pics = baseProfile.getPicturesCount();
+        m_tagged = baseProfile.getTaggedCount();
+        m_favorites = favorites;
+    }
+
     @Override
     public JsonObject getAttributes() {
         JsonObject attributes = new JsonObject();
@@ -220,6 +229,46 @@ public class Profile extends Model {
 
     public int getTaggedCount() {
         return m_tagged;
+    }
+
+    public Profile profileByAddingFavorite(Favorite favorite) {
+        List<Favorite> copy;
+
+        for(int i = 0, c = m_favorites.size(); i < c; i++) {
+            Favorite favorite_ = m_favorites.get(i);
+
+            if(favorite_.matches(favorite)) {
+                if(!favorite.equals(favorite)) {
+                    copy = new ArrayList<Favorite>(m_favorites);
+                    copy.set(i, favorite);
+
+                    return new Profile(this, copy);
+                } else {
+                    return this;
+                }
+            }
+        }
+
+        copy = new ArrayList<Favorite>(m_favorites);
+        copy.add(favorite);
+
+        return new Profile(this, copy);
+    }
+
+    public Profile profileByRemovingFavorite(Favorite favorite) {
+        for(int i = 0, c = m_favorites.size(); i < c; i++) {
+            Favorite favorite_ = m_favorites.get(i);
+
+            if(favorite_.matches(favorite)) {
+                List<Favorite> copy = new ArrayList<Favorite>(m_favorites);
+
+                copy.remove(i);
+
+                return new Profile(this, copy);
+            }
+        }
+
+        return this;
     }
 
     @Override
