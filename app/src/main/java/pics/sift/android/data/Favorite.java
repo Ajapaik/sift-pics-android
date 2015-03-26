@@ -62,6 +62,15 @@ public class Favorite extends Model {
         }
     }
 
+    protected Favorite(Favorite favorite) {
+        m_identifier = favorite.getIdentifier();
+        m_albumIdentifier = favorite.getIdentifier();
+        m_photoIdentifier = favorite.getIdentifier();
+        m_image = favorite.getImage();
+        m_title = favorite.getTitle();
+        m_date = favorite.getDate();
+    }
+
     public JsonObject getAttributes() {
         JsonObject attributes = new JsonObject();
 
@@ -101,6 +110,22 @@ public class Favorite extends Model {
 
     public Date getDate() {
         return m_date;
+    }
+
+    public boolean isObsolete() {
+        return (m_image == null) ? true : false;
+    }
+
+    public Favorite getObsolete() {
+        if(m_image != null) {
+            Favorite obsolete = new Favorite(this);
+
+            obsolete.m_image = null;
+
+            return obsolete;
+        }
+
+        return this;
     }
 
     public boolean matches(Favorite favorite) {

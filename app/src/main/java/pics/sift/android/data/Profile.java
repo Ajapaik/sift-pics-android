@@ -66,6 +66,10 @@ public class Profile extends Model {
     private String m_state;
     private int m_tagged;
 
+    public Profile() {
+        m_favorites = new ArrayList<Favorite>();
+    }
+
     public Profile(JsonObject attributes) {
         this(attributes, null);
     }
@@ -270,10 +274,10 @@ public class Profile extends Model {
         for(int i = 0, c = m_favorites.size(); i < c; i++) {
             Favorite favorite_ = m_favorites.get(i);
 
-            if(favorite_.matches(favorite)) {
+            if(!favorite_.isObsolete() && favorite_.matches(favorite)) {
                 List<Favorite> copy = new ArrayList<Favorite>(m_favorites);
 
-                copy.remove(i);
+                copy.set(i, favorite.getObsolete());
 
                 return new Profile(this, copy);
             }
