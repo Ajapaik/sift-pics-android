@@ -41,6 +41,7 @@ public class AlbumFragment extends WebFragment {
     private static final String KEY_SELECTED_INFO = "selected_info";
     private static final String KEY_ALBUM_IDENTIFIER = "album_id";
     private static final String KEY_PHOTO_IDENTIFIER = "photo_id";
+    private static final String KEY_PROFILE = "profile";
 
     private static final int THUMBNAIL_SIZE = 400;
 
@@ -113,11 +114,6 @@ public class AlbumFragment extends WebFragment {
         super.onActivityCreated(savedInstanceState);
 
         m_settings = new Settings(getActivity());
-        m_profile = m_settings.getProfile();
-
-        if(m_profile == null) {
-            m_profile = new Profile();
-        }
 
         getImageView().setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
             @Override
@@ -223,6 +219,18 @@ public class AlbumFragment extends WebFragment {
         });
 
         if(savedInstanceState != null) {
+            m_profile = savedInstanceState.getParcelable(KEY_PROFILE);
+        }
+
+        if(m_profile == null) {
+            m_profile = m_settings.getProfile();
+
+            if(m_profile == null) {
+                m_profile = new Profile();
+            }
+        }
+
+        if(savedInstanceState != null) {
             Album album = savedInstanceState.getParcelable(KEY_ALBUM);
 
             m_immersiveMode = savedInstanceState.getBoolean(KEY_IMMERSIVE_MODE);
@@ -266,6 +274,7 @@ public class AlbumFragment extends WebFragment {
         super.onSaveInstanceState(savedInstanceState);
 
         savedInstanceState.putParcelable(KEY_ALBUM, m_album);
+        savedInstanceState.putParcelable(KEY_PROFILE, m_profile);
         savedInstanceState.putBoolean(KEY_IMMERSIVE_MODE, m_immersiveMode);
         savedInstanceState.putBoolean(KEY_SELECTED_INFO, m_selectedInfo);
         savedInstanceState.putString(KEY_SELECTED_PHOTO, m_selectedPhoto);

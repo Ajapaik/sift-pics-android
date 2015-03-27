@@ -78,7 +78,7 @@ public class WebAction<T> extends WebOperation {
                 if(element.isJsonObject()) {
                     JsonObject attributes = element.getAsJsonObject();
                     JsonPrimitive error = attributes.getAsJsonPrimitive(KEY_ERROR);
-                    
+
                     if(error != null) {
                         if(error.isNumber()) {
                             m_status = Status.parse(error.getAsInt());

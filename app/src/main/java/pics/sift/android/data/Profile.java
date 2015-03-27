@@ -234,7 +234,7 @@ public class Profile extends Model {
     }
 
     public Favorite getFavorite(String albumIdentifier, String photoIdentifier) {
-        if(albumIdentifier != null && photoIdentifier != null && m_favorites != null) {
+        if(photoIdentifier != null && m_favorites != null) {
             for(Favorite favorite : m_favorites) {
                 if(favorite.getPhotoIdentifier().equals(photoIdentifier) &&
                    (albumIdentifier == null || favorite.getAlbumIdentifier().equals(albumIdentifier))) {
@@ -313,12 +313,12 @@ public class Profile extends Model {
         }
 
         if(profile == null ||
+           profile.getPicturesCount() != m_pics ||
+           profile.getTaggedCount() != m_tagged ||
            !Objects.match(profile.getLink(), m_link) ||
            !Objects.match(profile.getMessage(), m_message) ||
            !Objects.match(profile.getState(), m_state) ||
-           !Objects.match(profile.m_favorites, m_favorites) ||
-           profile.getPicturesCount() != m_pics ||
-           profile.getTaggedCount() != m_tagged) {
+           !Objects.match(profile.m_favorites, m_favorites)) {
             return false;
         }
 

@@ -16,11 +16,11 @@ import java.util.List;
 import pics.sift.android.AlbumActivity;
 import pics.sift.android.R;
 import pics.sift.android.adapter.FavoritesAdapter;
+import pics.sift.android.data.Favorite;
 import pics.sift.android.data.Hyperlink;
 import pics.sift.android.data.Profile;
 import pics.sift.android.data.util.Status;
 import pics.sift.android.fragment.util.WebFragment;
-import pics.sift.android.data.Favorite;
 import pics.sift.android.util.Objects;
 import pics.sift.android.util.Settings;
 import pics.sift.android.util.WebAction;
@@ -53,18 +53,14 @@ public class ProfileFragment extends WebFragment {
                 AlbumActivity.start(getActivity(), favorite);
             }
         });
+        listView.addHeaderView(LayoutInflater.from(getActivity()).inflate(R.layout.list_profile_header, listView, false), null, false);
+
 
         if(savedInstanceState != null) {
             profile = savedInstanceState.getParcelable(KEY_PROFILE);
         }
 
         m_settings = new Settings(getActivity());
-        profile = m_settings.getProfile();
-
-        if(profile == null) {
-            profile = new Profile();
-        }
-
         setProfile(profile);
     }
 
@@ -93,13 +89,10 @@ public class ProfileFragment extends WebFragment {
             m_profile = profile;
 
             if(m_profile != null) {
-                View header = LayoutInflater.from(context).inflate(R.layout.list_profile_header, listView, false);
                 List<Favorite> favorites = m_profile.getFavorites();
                 Hyperlink link = m_profile.getLink();
 
-                listView.addHeaderView(header, null, false);
                 listView.setAdapter(new FavoritesAdapter(listView.getContext(), favorites));
-
                 getTitleView().setText(Html.fromHtml(context.getResources().getQuantityString(R.plurals.profile_stats, m_profile.getTaggedCount(), m_profile.getTaggedCount(), m_profile.getPicturesCount())));
 
                 if(m_profile.getMessage() != null) {
@@ -112,9 +105,7 @@ public class ProfileFragment extends WebFragment {
                     getLinkView().setVisibility(View.GONE);
                 }
 
-                if(favorites.size() == 0) {
-                    getFavoritesView().setVisibility(View.GONE);
-                }
+                getFavoritesView().setVisibility((favorites.size() == 0) ? View.GONE : View.VISIBLE);
             } else {
                 listView.setAdapter(null);
             }
@@ -128,7 +119,7 @@ public class ProfileFragment extends WebFragment {
             getProgressBar().setVisibility(View.VISIBLE);
         }
 
-        getConnection().enqueue(context, Profile.createAction(context, m_profile), new WebAction.ResultHandler<Profile>() {
+        getConnection().enqueue(context, Profile.createAction(context, (m_profile != null) ? m_profile : m_settings.getProfile()), new WebAction.ResultHandler<Profile>() {
             @Override
             public void onActionResult(Status status, Profile profile) {
                 if(m_profile == null) {

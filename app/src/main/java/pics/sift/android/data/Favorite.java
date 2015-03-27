@@ -16,10 +16,8 @@ public class Favorite extends Model {
     private static final String KEY_IDENTIFIER = "id";
     private static final String KEY_ALBUM_IDENTIFIER = "album_id";
     private static final String KEY_PHOTO_IDENTIFIER = "photo_id";
-    private static final String KEY_IMAGE = "url";
+    private static final String KEY_IMAGE = "image";
     private static final String KEY_DATE = "date";
-    private static final String KEY_TITLE = "title";
-    private static final String KEY_SUBTITLE = "subtitle";
 
     public static Favorite parse(String str) {
         return CREATOR.parse(str);
@@ -30,13 +28,11 @@ public class Favorite extends Model {
     private String m_photoIdentifier;
     private Uri m_image;
     private Date m_date;
-    private String m_title;
 
     public Favorite(Album album, Photo photo) {
         m_albumIdentifier = album.getIdentifier();
         m_photoIdentifier = photo.getIdentifier();
         m_image = photo.getImage();
-        m_title = album.getTitle();
         m_date = new Date();
     }
 
@@ -51,7 +47,6 @@ public class Favorite extends Model {
         m_albumIdentifier = readIdentifier(attributes, KEY_ALBUM_IDENTIFIER, (baseFavorite != null) ? baseFavorite.getAlbumIdentifier() : null);
         m_photoIdentifier = readIdentifier(attributes, KEY_PHOTO_IDENTIFIER, (baseFavorite != null) ? baseFavorite.getPhotoIdentifier() : null);
         m_image = readUri(attributes, KEY_IMAGE, (baseFavorite != null) ? baseFavorite.getImage() : null);
-        m_title = readString(attributes, KEY_TITLE, (baseFavorite != null) ? baseFavorite.getTitle() : null);
         m_date = Dates.parse(readString(attributes, KEY_DATE));
 
         if(m_date == null && baseFavorite != null) {
@@ -65,10 +60,9 @@ public class Favorite extends Model {
 
     protected Favorite(Favorite favorite) {
         m_identifier = favorite.getIdentifier();
-        m_albumIdentifier = favorite.getIdentifier();
-        m_photoIdentifier = favorite.getIdentifier();
+        m_albumIdentifier = favorite.getAlbumIdentifier();
+        m_photoIdentifier = favorite.getPhotoIdentifier();
         m_image = favorite.getImage();
-        m_title = favorite.getTitle();
         m_date = favorite.getDate();
     }
 
@@ -77,7 +71,6 @@ public class Favorite extends Model {
 
         write(attributes, KEY_IDENTIFIER, m_identifier);
         write(attributes, KEY_IMAGE, m_image);
-        write(attributes, KEY_TITLE, m_title);
         write(attributes, KEY_ALBUM_IDENTIFIER, m_albumIdentifier);
         write(attributes, KEY_PHOTO_IDENTIFIER, m_photoIdentifier);
         write(attributes, KEY_DATE, Dates.toString(m_date));
@@ -103,10 +96,6 @@ public class Favorite extends Model {
 
     public Uri getThumbnail(int preferredDimension) {
         return Photo.resolve(m_image, preferredDimension);
-    }
-
-    public String getTitle() {
-        return m_title;
     }
 
     public Date getDate() {
@@ -156,8 +145,7 @@ public class Favorite extends Model {
            !Objects.match(favorite.getAlbumIdentifier(), m_albumIdentifier) ||
            !Objects.match(favorite.getPhotoIdentifier(), m_photoIdentifier) ||
            !Objects.match(favorite.getImage(), m_image) ||
-           !Objects.match(favorite.getDate(), m_date) ||
-           !Objects.match(favorite.getTitle(), m_title)) {
+           !Objects.match(favorite.getDate(), m_date)) {
             return false;
         }
 
