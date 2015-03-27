@@ -53,8 +53,16 @@
         <item name="android:paddingBottom">@dimen/album_overlay_vertical_margin</item>
     </style>
 
-    <style name="AlbumInfoOverlay">
-        <item name="android:background">@color/album_info_overlay</item>
+    <style name="AlbumInfoOverlayActions">
+        <item name="android:background">@color/album_info_overlay_actions</item>
+        <item name="android:paddingLeft">@dimen/album_info_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/album_info_horizontal_margin</item>
+        <item name="android:paddingTop">@dimen/album_info_vertical_margin</item>
+        <item name="android:paddingBottom">@dimen/album_info_vertical_margin</item>
+    </style>
+
+    <style name="AlbumInfoOverlayInfo">
+        <item name="android:background">@color/album_info_overlay_info</item>
         <item name="android:paddingLeft">@dimen/album_info_horizontal_margin</item>
         <item name="android:paddingRight">@dimen/album_info_horizontal_margin</item>
         <item name="android:paddingTop">@dimen/album_info_vertical_margin</item>
