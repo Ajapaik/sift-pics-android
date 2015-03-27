@@ -95,6 +95,10 @@ public abstract class Model implements Parcelable {
     }
 
     protected static int readInteger(JsonObject obj, String key) {
+        return readInteger(obj, key, 0);
+    }
+
+    protected static int readInteger(JsonObject obj, String key, int defaultValue) {
         JsonElement element = obj.get(key);
 
         if(element != null && element.isJsonPrimitive()) {
@@ -105,7 +109,7 @@ public abstract class Model implements Parcelable {
             }
         }
 
-        return 0;
+        return defaultValue;
     }
 
     protected static long readLong(JsonObject obj, String key) {

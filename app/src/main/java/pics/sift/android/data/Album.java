@@ -23,6 +23,7 @@ public class Album extends Model {
     private static final String KEY_TITLE = "title";
     private static final String KEY_SUBTITLE = "subtitle";
     private static final String KEY_TAGGED = "tagged";
+    private static final String KEY_TOTAL = "total";
     private static final String KEY_STATE = "state";
     private static final String KEY_PHOTOS = "photos";
     private static final String KEY_PHOTOS_ADD = "photos+";
@@ -71,7 +72,8 @@ public class Album extends Model {
     private Uri m_image;
     private String m_title;
     private String m_subtitle;
-    private boolean m_tagged;
+    private int m_tagged;
+    private int m_total;
     private String m_state;
     private List<Photo> m_photos;
 
@@ -86,7 +88,8 @@ public class Album extends Model {
         m_image = readUri(attributes, KEY_IMAGE, (baseAlbum != null) ? baseAlbum.getImage() : null);
         m_title = readString(attributes, KEY_TITLE, (baseAlbum != null) ? baseAlbum.getTitle() : null);
         m_subtitle = readString(attributes, KEY_SUBTITLE, (baseAlbum != null) ? baseAlbum.getSubtitle() : null);
-        m_tagged = readBoolean(attributes, KEY_TAGGED, (baseAlbum != null) ? baseAlbum.isTagged() : false);
+        m_tagged = readInteger(attributes, KEY_TAGGED, (baseAlbum != null) ? baseAlbum.getTaggedCount() : 0);
+        m_total = readInteger(attributes, KEY_TOTAL, (baseAlbum != null) ? baseAlbum.getTotalCount() : 0);
         m_state = readString(attributes, KEY_STATE, (baseAlbum != null) ? baseAlbum.getState() : null);
         m_photos = new ArrayList<Photo>();
 
@@ -162,7 +165,8 @@ public class Album extends Model {
         write(attributes, KEY_IMAGE, m_image);
         write(attributes, KEY_TITLE, m_title);
         write(attributes, KEY_SUBTITLE, m_subtitle);
-        write(attributes, KEY_TAGGED, (m_tagged) ? 1 : 0);
+        write(attributes, KEY_TAGGED, m_tagged);
+        write(attributes, KEY_TOTAL, m_total);
 
         if(m_photos != null && m_photos.size() > 0) {
             JsonArray array = new JsonArray();
@@ -197,8 +201,12 @@ public class Album extends Model {
         return m_subtitle;
     }
 
-    public boolean isTagged() {
+    public int getTaggedCount() {
         return m_tagged;
+    }
+
+    public int getTotalCount() {
+        return m_total;
     }
 
     public String getState() {
@@ -298,7 +306,8 @@ public class Album extends Model {
            !Objects.match(album.getSubtitle(), m_subtitle) ||
            !Objects.match(album.getState(), m_state) ||
            !Objects.match(album.getPhotos(), m_photos) ||
-           album.isTagged() != m_tagged) {
+           album.getTaggedCount() != m_tagged ||
+           album.getTotalCount() != m_total) {
             return false;
         }
 
