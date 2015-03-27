@@ -291,7 +291,9 @@ public class AlbumFragment extends WebFragment {
             m_album = album;
 
             if(m_album != null) {
-                Photo photo =  (m_selectedPhoto != null) ? m_album.getPhoto(m_selectedPhoto) : null;
+                Photo photo = (m_selectedPhoto != null) ? m_album.getPhoto(m_selectedPhoto) : null;
+
+                getActionBar().setTitle(m_album.getTitle());
 
                 if(photo == null) {
                     photo = m_album.getFirstPhoto();
