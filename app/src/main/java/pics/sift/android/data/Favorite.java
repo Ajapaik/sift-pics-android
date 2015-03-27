@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
+import java.util.Comparator;
 import java.util.Date;
 
 import pics.sift.android.data.util.Model;
@@ -161,6 +162,23 @@ public class Favorite extends Model {
         }
 
         return true;
+    }
+
+    public static class FavoriteComparator implements Comparator<Favorite> {
+        public int compare(Favorite a, Favorite b) {
+            long aL = a.m_date.getTime();
+            long bL = b.m_date.getTime();
+
+            if(aL > bL) {
+                return -1;
+            }
+
+            if(aL < bL) {
+                return 1;
+            }
+
+            return 0;
+        }
     }
 
     public static final Model.Creator<Favorite> CREATOR = new Model.Creator<Favorite>() {
