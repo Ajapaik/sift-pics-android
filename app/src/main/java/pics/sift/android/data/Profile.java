@@ -9,9 +9,11 @@ import com.google.gson.JsonPrimitive;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import pics.sift.android.data.util.Model;
 import pics.sift.android.util.Objects;
@@ -60,7 +62,7 @@ public class Profile extends Model {
         return CREATOR.parse(str);
     }
 
-    private List<Favorite> m_favorites;
+    private Set<Favorite> m_favorites;
     private String m_message;
     private Hyperlink m_link;
     private int m_pics;
@@ -68,7 +70,7 @@ public class Profile extends Model {
     private int m_tagged;
 
     public Profile() {
-        m_favorites = new ArrayList<Favorite>();
+        m_favorites = new HashSet<Favorite>();
         m_pics = -1;
         m_tagged = -1;
     }
@@ -85,7 +87,7 @@ public class Profile extends Model {
         m_pics = readInteger(attributes, KEY_STATS_PICS);
         m_state = readString(attributes, KEY_STATE);
         m_tagged = readInteger(attributes, KEY_STATS_TAGGED);
-        m_favorites = new ArrayList<Favorite>();
+        m_favorites = new HashSet<Favorite>();
 
         if(element != null && element.isJsonArray()) {
             for(JsonElement favoriteElement : element.getAsJsonArray()) {
@@ -98,7 +100,7 @@ public class Profile extends Model {
                 }
             }
         } else if(baseProfile != null) {
-            List<Favorite> favorites = baseProfile.m_favorites;
+            Set<Favorite> favorites = baseProfile.m_favorites;
 
             if(favorites != null && favorites.size() > 0) {
                 for(Favorite favorite : favorites) {
@@ -145,7 +147,8 @@ public class Profile extends Model {
                     if(oldFavorite == null) {
                         m_favorites.add(newFavorite);
                     } else if(!Objects.match(oldFavorite, newFavorite)) {
-                        m_favorites.set(m_favorites.indexOf(oldFavorite), newFavorite);
+                        m_favorites.remove(oldFavorite);
+                        m_favorites.add(newFavorite);
                     }
                 } catch(Exception e) {
                     e.printStackTrace();
@@ -154,7 +157,7 @@ public class Profile extends Model {
         }
     }
 
-    protected Profile(Profile baseProfile, List<Favorite> favorites) {
+    protected Profile(Profile baseProfile, Set<Favorite> favorites) {
         m_link = baseProfile.getLink();
         m_message = baseProfile.getMessage();
         m_state = baseProfile.getState();
@@ -264,15 +267,14 @@ public class Profile extends Model {
     }
 
     public Profile profileByAddingFavorite(Favorite favorite) {
-        List<Favorite> copy;
+        Set<Favorite> copy;
 
-        for(int i = 0, c = m_favorites.size(); i < c; i++) {
-            Favorite favorite_ = m_favorites.get(i);
-
+        for(Favorite favorite_ : m_favorites) {
             if(favorite_.matches(favorite)) {
                 if(!favorite.equals(favorite)) {
-                    copy = new ArrayList<Favorite>(m_favorites);
-                    copy.set(i, favorite);
+                    copy = new HashSet<Favorite>(m_favorites);
+                    copy.remove(favorite_);
+                    copy.add(favorite);
 
                     return new Profile(this, copy);
                 } else {
@@ -281,20 +283,19 @@ public class Profile extends Model {
             }
         }
 
-        copy = new ArrayList<Favorite>(m_favorites);
+        copy = new HashSet<Favorite>(m_favorites);
         copy.add(favorite);
 
         return new Profile(this, copy);
     }
 
     public Profile profileByRemovingFavorite(Favorite favorite) {
-        for(int i = 0, c = m_favorites.size(); i < c; i++) {
-            Favorite favorite_ = m_favorites.get(i);
-
+        for(Favorite favorite_ : m_favorites) {
             if(!favorite_.isObsolete() && favorite_.matches(favorite)) {
-                List<Favorite> copy = new ArrayList<Favorite>(m_favorites);
+                Set<Favorite> copy = new HashSet<Favorite>(m_favorites);
 
-                copy.set(i, favorite.getObsolete());
+                copy.remove(favorite_);
+                copy.add(favorite.getObsolete());
 
                 return new Profile(this, copy);
             }
