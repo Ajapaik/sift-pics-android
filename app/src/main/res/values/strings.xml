@@ -34,6 +34,16 @@
 
     <!-- Albums -->
     <string name="album_label_no_data">No Albums</string>
+    <plurals name="album_stats_tagged">
+        <item quantity="zero">You haven\'t tagged any pictures in this album yet</item>
+        <item quantity="one">You have tagged &lt;b>%d&lt;/b> picture in this album</item>
+        <item quantity="other">You have tagged &lt;b>%d&lt;/b> pictures in this album</item>
+    </plurals>
+    <plurals name="album_stats_total">
+        <item quantity="zero">&lt;b>0&lt;/b> pictures in total</item>
+        <item quantity="one">&lt;b>%d&lt;/b> picture in total</item>
+        <item quantity="other">&lt;b>%d&lt;/b> pictures in total</item>
+    </plurals>
 
     <!-- Album -->
     <string name="album_title">Album</string>

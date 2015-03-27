@@ -40,6 +40,16 @@
 
         </LinearLayout>
 
+        <ImageButton
+            android:id="@+id/button_details"
+            style="@style/AlbumOverlayButton"
+            android:background="@android:color/transparent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_info_outline_white_36dp" />
+
     </RelativeLayout>
 
 </pics.sift.android.widget.FixedAspectRatioLayout>
