@@ -24,6 +24,7 @@ public class WebImageView extends ImageView {
     private WebService.Connection m_connection;
     private WebImage m_image;
     private int m_placeholderResourceId = INVALID_RESOURCE_ID;
+    private OnLoadListener m_loadListener;
     private Uri m_uri;
 
     public WebImageView(Context context) {
@@ -59,8 +60,16 @@ public class WebImageView extends ImageView {
 
             if(m_placeholderResourceId != INVALID_RESOURCE_ID && (m_image == null || m_image.getDrawable() != null)) {
                 setImageResource(m_placeholderResourceId);
+
+                if(m_loadListener != null) {
+                    m_loadListener.onImageUnloaded();
+                }
             }
         }
+    }
+
+    public void setOnLoadListener(OnLoadListener loadListener) {
+        m_loadListener = loadListener;
     }
 
     @Override
@@ -95,8 +104,18 @@ public class WebImageView extends ImageView {
             m_image = m_connection.enqueue(context, new WebImage(context, m_uri), new WebImage.ResultHandler() {
                 @Override
                 public void onImageResult(int status, Drawable drawable) {
-                    if(drawable != null && m_attachedToWindow) {
-                        setImageDrawable(drawable);
+                    if(m_attachedToWindow) {
+                        if(drawable != null) {
+                            setImageDrawable(drawable);
+
+                            if(m_loadListener != null) {
+                                m_loadListener.onImageLoaded();
+                            }
+                        } else {
+                            if(m_loadListener != null) {
+                                m_loadListener.onImageFailed();
+                            }
+                        }
                     }
                 }
             });
@@ -110,8 +129,13 @@ public class WebImageView extends ImageView {
         }
     }
 
-
     private void readAttributes(Context context, AttributeSet attrs) {
         m_placeholderResourceId = attrs.getAttributeResourceValue(NAMESPACE, KEY_SRC, INVALID_RESOURCE_ID);
+    }
+
+    public interface OnLoadListener {
+        void onImageLoaded();
+        void onImageUnloaded();
+        void onImageFailed();
     }
 }
