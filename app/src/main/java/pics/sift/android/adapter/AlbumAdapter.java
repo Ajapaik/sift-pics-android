@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import pics.sift.android.AlbumActivity;
 import pics.sift.android.R;
 import pics.sift.android.data.Album;
 
@@ -32,6 +33,14 @@ public class AlbumAdapter extends ArrayAdapter<Album> {
         if(convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_album_item, parent, false);
         }
+
+        button = (ImageButton)convertView.findViewById(R.id.button_action);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlbumActivity.start(v.getContext(), album);
+            }
+        });
 
         button = (ImageButton)convertView.findViewById(R.id.button_details);
         button.setImageResource(R.drawable.ic_info_outline_white_36dp);

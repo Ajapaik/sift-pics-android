@@ -6,15 +6,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import pics.sift.android.AlbumActivity;
 import pics.sift.android.R;
 import pics.sift.android.adapter.AlbumAdapter;
-import pics.sift.android.data.Album;
 import pics.sift.android.data.Feed;
 import pics.sift.android.data.util.Status;
 import pics.sift.android.fragment.util.WebFragment;
@@ -46,14 +43,6 @@ public class AlbumsFragment extends WebFragment {
 
         listView = getListView();
         listView.setEmptyView(getEmptyView());
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Album album = (Album)parent.getItemAtPosition(position);
-
-                AlbumActivity.start(getActivity(), album);
-            }
-        });
 
         if(savedInstanceState != null) {
             Feed feed = savedInstanceState.getParcelable(KEY_FEED);
