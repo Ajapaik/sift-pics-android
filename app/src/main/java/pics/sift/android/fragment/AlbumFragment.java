@@ -358,6 +358,24 @@ public class AlbumFragment extends WebFragment {
             getMainLayout().setVisibility(View.GONE);
         }
 
+        // Load favorites if the app is launched for the first time or the profile is too old.
+        if(m_profile == null || m_profile.isObsolete()) {
+            getConnection().enqueue(context, Profile.createAction(context, m_profile), new WebAction.ResultHandler<Profile>() {
+                @Override
+                public void onActionResult(Status status, Profile profile) {
+                    if(profile != null) {
+                        m_settings.setProfile(profile);
+                        m_profile = profile;
+
+                        onRefresh(animated);
+                    } else if(animated) {
+                        // TODO: Show error alert
+                    }
+                }
+            });
+            return;
+        }
+
         getConnection().enqueue(context, (m_album != null) ? Album.createStateAction(context, m_album) : Album.createStateAction(context, getAlbumIdentifier()), new WebAction.ResultHandler<Album>() {
             @Override
             public void onActionResult(Status status, Album album) {

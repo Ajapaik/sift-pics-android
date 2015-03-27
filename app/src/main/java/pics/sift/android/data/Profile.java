@@ -68,6 +68,8 @@ public class Profile extends Model {
 
     public Profile() {
         m_favorites = new ArrayList<Favorite>();
+        m_pics = -1;
+        m_tagged = -1;
     }
 
     public Profile(JsonObject attributes) {
@@ -158,6 +160,10 @@ public class Profile extends Model {
         m_pics = baseProfile.getPicturesCount();
         m_tagged = baseProfile.getTaggedCount();
         m_favorites = favorites;
+    }
+
+    public boolean isObsolete() {
+        return (m_tagged < 0 || m_pics < 0) ? true : false;
     }
 
     @Override
