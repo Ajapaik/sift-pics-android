@@ -31,7 +31,7 @@ public class WebImage extends WebOperation {
     private static final Object s_lock = new Object();
 
     public static void invalidate(Context context) {
-        List<File> cache = new ArrayList<File>();
+        List<FileEntry> cache = new ArrayList<FileEntry>();
         long timestamp = new Date().getTime();
         File dir = getCacheDir(context);
         File[] files = dir.listFiles();
@@ -47,15 +47,16 @@ public class WebImage extends WebOperation {
 
                         file.delete();
                     } else {
-                        cache.add(file);
+                        cache.add(new FileEntry(file));
                     }
                 }
             }
         }
 
-        Collections.sort(cache, new FileComparator());
+        Collections.sort(cache, new FileEntryComparator());
 
-        for(File file : cache) {
+        for(FileEntry entry : cache) {
+            File file = entry.file;
             long fileSize = file.length();
 
             if(totalSize + fileSize > MAX_CACHE_SIZE) {
@@ -218,10 +219,20 @@ public class WebImage extends WebOperation {
         return result;
     }
 
-    private static class FileComparator implements Comparator<File> {
-        public int compare(File a, File b) {
-            long aL = a.lastModified();
-            long bL = b.lastModified();
+    private static class FileEntry {
+        public File file;
+        public long lastModified;
+
+        public FileEntry(File file) {
+            this.file = file;
+            this.lastModified = file.lastModified();
+        }
+    }
+
+    private static class FileEntryComparator implements Comparator<FileEntry> {
+        public int compare(FileEntry a, FileEntry b) {
+            long aL = a.lastModified;
+            long bL = b.lastModified;
 
             if(aL > bL) {
                 return -1;
