@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -28,6 +27,8 @@ import pics.sift.android.fragment.util.WebFragment;
 import pics.sift.android.util.Objects;
 import pics.sift.android.util.Settings;
 import pics.sift.android.util.WebAction;
+import pics.sift.android.util.WebImage;
+import pics.sift.android.widget.WebImageView;
 import pics.sift.android.widget.util.OnSwipeTouchListener;
 
 public class AlbumFragment extends WebFragment {
@@ -35,6 +36,7 @@ public class AlbumFragment extends WebFragment {
     private static final String KEY_ALBUM = "album";
     private static final String KEY_IMMERSIVE_MODE = "immersive_mode";
     private static final String KEY_SELECTED_PHOTO = "selected_photo";
+    private static final String KEY_SELECTED_PHOTO_LOADED = "selected_photo_loaded";
     private static final String KEY_SELECTED_TAG = "selected_tag";
     private static final String KEY_SELECTED_INFO = "selected_info";
     private static final String KEY_ALBUM_IDENTIFIER = "album_id";
@@ -46,6 +48,7 @@ public class AlbumFragment extends WebFragment {
     private Profile m_profile;
     private boolean m_immersiveMode;
     private String m_selectedPhoto;
+    private boolean m_selectedPhotoLoaded;
     private Photo.Tag m_selectedTag;
     private boolean m_selectedInfo;
     private Settings m_settings;
@@ -132,6 +135,21 @@ public class AlbumFragment extends WebFragment {
                 setImmersiveMode(!m_immersiveMode);
             }
         });
+        getImageView().setOnLoadListener(new WebImageView.OnLoadListener() {
+            @Override
+            public void onImageLoaded() {
+                invalidatePhotoActions(true);
+            }
+
+            @Override
+            public void onImageUnloaded() {
+                invalidatePhotoActions(false);
+            }
+
+            @Override
+            public void onImageFailed() {
+            }
+        });
 
         getSubtitleView().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,6 +227,7 @@ public class AlbumFragment extends WebFragment {
 
             m_immersiveMode = savedInstanceState.getBoolean(KEY_IMMERSIVE_MODE);
             m_selectedPhoto = savedInstanceState.getString(KEY_SELECTED_PHOTO);
+            m_selectedPhotoLoaded = savedInstanceState.getBoolean(KEY_SELECTED_PHOTO_LOADED);
             m_selectedTag = Photo.Tag.parse(savedInstanceState.getString(KEY_SELECTED_TAG), null);
             m_selectedInfo = savedInstanceState.getBoolean(KEY_SELECTED_INFO, false);
 
@@ -220,6 +239,7 @@ public class AlbumFragment extends WebFragment {
             setDetailsShown(m_selectedInfo);
         }
 
+        invalidatePhotoActions(m_selectedPhotoLoaded);
         setImmersiveMode(m_immersiveMode);
 
         // Re-syncronize unsynchronized favorites
@@ -249,6 +269,7 @@ public class AlbumFragment extends WebFragment {
         savedInstanceState.putBoolean(KEY_IMMERSIVE_MODE, m_immersiveMode);
         savedInstanceState.putBoolean(KEY_SELECTED_INFO, m_selectedInfo);
         savedInstanceState.putString(KEY_SELECTED_PHOTO, m_selectedPhoto);
+        savedInstanceState.putBoolean(KEY_SELECTED_PHOTO_LOADED, m_selectedPhotoLoaded);
         savedInstanceState.putString(KEY_SELECTED_TAG, (m_selectedTag != null) ? m_selectedTag.toString() : null);
     }
 
@@ -460,6 +481,15 @@ public class AlbumFragment extends WebFragment {
 
         invalidatePhotoFavorite(photo, isFavorite(photo.getIdentifier()));
         invalidatePhotoTag(photo, m_selectedTag);
+        preloadNextPhoto();
+    }
+
+    private void invalidatePhotoActions(boolean flag) {
+        m_selectedPhotoLoaded = flag;
+
+        getLeftActionButton().setEnabled(m_selectedPhotoLoaded);
+        getRightActionButton().setEnabled(m_selectedPhotoLoaded);
+        getOtherActionButton().setEnabled(m_selectedPhotoLoaded);
     }
 
     private void invalidatePhotoFavorite(Photo photo, boolean flag) {
@@ -498,6 +528,16 @@ public class AlbumFragment extends WebFragment {
         }
     }
 
+    private void preloadNextPhoto() {
+        Photo photo = m_album.getNextPhoto(m_selectedPhoto);
+
+        if(photo != null) {
+            Context context = getActivity();
+
+            getConnection().enqueue(context, new WebImage(context, photo.getThumbnail(THUMBNAIL_SIZE).toString()), null);
+        }
+    }
+
     private boolean isFavorite(String photoIdentifier) {
         Favorite favorite;
 
@@ -528,8 +568,8 @@ public class AlbumFragment extends WebFragment {
         return (ProgressBar)getView().findViewById(R.id.progress_bar);
     }
 
-    private ImageView getImageView() {
-        return (ImageView)getView().findViewById(R.id.image);
+    private WebImageView getImageView() {
+        return (WebImageView)getView().findViewById(R.id.image);
     }
 
     private TextView getTitleView() {

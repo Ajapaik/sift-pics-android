@@ -58,7 +58,7 @@ public class WebImageView extends ImageView {
                 startLoadingImage();
             }
 
-            if(m_placeholderResourceId != INVALID_RESOURCE_ID && (m_image == null || m_image.getDrawable() != null)) {
+            if(m_placeholderResourceId != INVALID_RESOURCE_ID && (m_image == null || m_image.getDrawable() == null)) {
                 setImageResource(m_placeholderResourceId);
 
                 if(m_loadListener != null) {
