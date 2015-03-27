@@ -415,7 +415,10 @@ public class WebService extends Service {
             }
 
             public void stop() {
-                m_binder.remove(m_image);
+                if(m_binder != null) {
+                    m_binder.remove(m_image);
+                }
+
                 m_handler = null;
             }
 
