@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import pics.sift.android.BuildConfig;
 import pics.sift.android.R;
 import pics.sift.android.data.Album;
 import pics.sift.android.data.Favorite;
@@ -219,6 +221,24 @@ public class AlbumFragment extends WebFragment {
         }
 
         setImmersiveMode(m_immersiveMode);
+
+        // Re-syncronize unsynchronized favorites
+        for(Favorite favorite : m_profile.getLocalFavorites()) {
+            if(BuildConfig.DEBUG) {
+                Log.d(TAG, (favorite.isObsolete()) ? "Re-deleting favorite for " + favorite.getPhotoIdentifier() : "Re-adding favorite for " + favorite.getPhotoIdentifier());
+            }
+
+            // Remote synchronization
+            getConnection().enqueue(getActivity(), Profile.createFavoriteAction(getActivity(), m_profile, favorite, !favorite.isObsolete()), new WebAction.ResultHandler<Profile>() {
+                @Override
+                public void onActionResult(Status status, Profile profile) {
+                    if(profile != null) {
+                        m_settings.setProfile(profile);
+                        m_profile = profile;
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -306,17 +326,17 @@ public class AlbumFragment extends WebFragment {
         if(m_album != null && (photo = m_album.getPhoto(m_selectedPhoto)) != null) {
             Favorite favorite = new Favorite(m_album, photo);
 
-            if(flag) {
-                m_profile = m_settings.addFavorite(favorite, m_profile);
-            } else {
-                m_profile = m_settings.removeFavorite(favorite, m_profile);
-            }
+            // Local synchronization
+            m_profile = (flag) ? m_settings.addFavorite(favorite, m_profile) : m_settings.removeFavorite(favorite, m_profile);
 
-            // TODO: Testing
+            // Remote synchronization
             getConnection().enqueue(getActivity(), Profile.createFavoriteAction(getActivity(), m_profile, favorite, flag), new WebAction.ResultHandler<Profile>() {
                 @Override
                 public void onActionResult(Status status, Profile profile) {
-
+                    if(profile != null) {
+                        m_settings.setProfile(profile);
+                        m_profile = profile;
+                    }
                 }
             });
 
@@ -479,13 +499,9 @@ public class AlbumFragment extends WebFragment {
     }
 
     private boolean isFavorite(String photoIdentifier) {
-        for(Favorite favorite : m_profile.getFavorites()) {
-            if(Objects.match(photoIdentifier, favorite.getPhotoIdentifier())) {
-                return true;
-            }
-        }
+        Favorite favorite;
 
-        return false;
+        return (m_profile != null && (favorite = m_profile.getFavorite(null, photoIdentifier)) != null && !favorite.isObsolete()) ? true : false;
     }
 
     private View getMainLayout() {

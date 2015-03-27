@@ -97,7 +97,7 @@ public class Profile extends Model {
                 }
             }
         } else if(baseProfile != null) {
-            List<Favorite> favorites = baseProfile.getFavorites();
+            List<Favorite> favorites = baseProfile.m_favorites;
 
             if(favorites != null && favorites.size() > 0) {
                 for(Favorite favorite : favorites) {
@@ -190,7 +190,15 @@ public class Profile extends Model {
     }
 
     public List<Favorite> getFavorites() {
-        return m_favorites;
+        List<Favorite> favorites = new ArrayList<Favorite>();
+
+        for(Favorite favorite : m_favorites) {
+            if(!favorite.isObsolete()) {
+                favorites.add(favorite);
+            }
+        }
+
+        return favorites;
     }
 
     public List<Favorite> getLocalFavorites() {
@@ -223,7 +231,7 @@ public class Profile extends Model {
         if(albumIdentifier != null && photoIdentifier != null && m_favorites != null) {
             for(Favorite favorite : m_favorites) {
                 if(favorite.getPhotoIdentifier().equals(photoIdentifier) &&
-                   favorite.getAlbumIdentifier().equals(albumIdentifier)) {
+                   (albumIdentifier == null || favorite.getAlbumIdentifier().equals(albumIdentifier))) {
                     return favorite;
                 }
             }
@@ -304,7 +312,7 @@ public class Profile extends Model {
            !Objects.match(profile.getLink(), m_link) ||
            !Objects.match(profile.getMessage(), m_message) ||
            !Objects.match(profile.getState(), m_state) ||
-           !Objects.match(profile.getFavorites(), m_favorites) ||
+           !Objects.match(profile.m_favorites, m_favorites) ||
            profile.getPicturesCount() != m_pics ||
            profile.getTaggedCount() != m_tagged) {
             return false;
