@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -197,6 +198,8 @@ public class Profile extends Model {
                 favorites.add(favorite);
             }
         }
+
+        Collections.sort(favorites, new Favorite.FavoriteComparator());
 
         return favorites;
     }
