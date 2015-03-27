@@ -34,7 +34,7 @@ public class FavoritesAdapter extends ArrayAdapter<Favorite> {
         imageView.setImageURI(favorite.getThumbnail(THUMBNAIL_SIZE));
 
         textView = (TextView)convertView.findViewById(R.id.text_title);
-        textView.setText(favorite.getDate().toString());
+        textView.setText(favorite.getTitle());
 
         return convertView;
     }

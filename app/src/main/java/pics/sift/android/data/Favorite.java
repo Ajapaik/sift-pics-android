@@ -18,6 +18,7 @@ public class Favorite extends Model {
     private static final String KEY_PHOTO_IDENTIFIER = "photo_id";
     private static final String KEY_IMAGE = "image";
     private static final String KEY_DATE = "date";
+    private static final String KEY_TITLE = "title";
 
     public static Favorite parse(String str) {
         return CREATOR.parse(str);
@@ -28,12 +29,14 @@ public class Favorite extends Model {
     private String m_photoIdentifier;
     private Uri m_image;
     private Date m_date;
+    private String m_title;
 
     public Favorite(Album album, Photo photo) {
         m_albumIdentifier = album.getIdentifier();
         m_photoIdentifier = photo.getIdentifier();
         m_image = photo.getImage();
         m_date = new Date();
+        m_title = photo.getTitle();
     }
 
     public Favorite(JsonObject attributes) {
@@ -48,6 +51,7 @@ public class Favorite extends Model {
         m_photoIdentifier = readIdentifier(attributes, KEY_PHOTO_IDENTIFIER, (baseFavorite != null) ? baseFavorite.getPhotoIdentifier() : null);
         m_image = readUri(attributes, KEY_IMAGE, (baseFavorite != null) ? baseFavorite.getImage() : null);
         m_date = Dates.parse(readString(attributes, KEY_DATE));
+        m_title = readString(attributes, KEY_TITLE, (baseFavorite != null) ? baseFavorite.getTitle() : null);
 
         if(m_date == null && baseFavorite != null) {
             m_date = baseFavorite.getDate();
@@ -64,6 +68,7 @@ public class Favorite extends Model {
         m_photoIdentifier = favorite.getPhotoIdentifier();
         m_image = favorite.getImage();
         m_date = favorite.getDate();
+        m_title = favorite.getTitle();
     }
 
     public JsonObject getAttributes() {
@@ -74,6 +79,7 @@ public class Favorite extends Model {
         write(attributes, KEY_ALBUM_IDENTIFIER, m_albumIdentifier);
         write(attributes, KEY_PHOTO_IDENTIFIER, m_photoIdentifier);
         write(attributes, KEY_DATE, Dates.toString(m_date));
+        write(attributes, KEY_TITLE, m_title);
 
         return attributes;
     }
@@ -102,6 +108,10 @@ public class Favorite extends Model {
         return m_date;
     }
 
+    public String getTitle() {
+        return m_title;
+    }
+
     public boolean isObsolete() {
         return (m_image == null) ? true : false;
     }
@@ -111,6 +121,7 @@ public class Favorite extends Model {
             Favorite obsolete = new Favorite(this);
 
             obsolete.m_image = null;
+            obsolete.m_title = null;
 
             return obsolete;
         }
@@ -145,6 +156,7 @@ public class Favorite extends Model {
            !Objects.match(favorite.getAlbumIdentifier(), m_albumIdentifier) ||
            !Objects.match(favorite.getPhotoIdentifier(), m_photoIdentifier) ||
            !Objects.match(favorite.getImage(), m_image) ||
+           !Objects.match(favorite.getTitle(), m_title) ||
            !Objects.match(favorite.getDate(), m_date)) {
             return false;
         }
