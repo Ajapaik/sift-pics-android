@@ -4,7 +4,7 @@
                 android:layout_width="fill_parent"
                 style="@style/ProfileItem">
 
-    <pics.sift.android.widget.WebImageView
+    <pics.sift.app.widget.WebImageView
         android:id="@+id/image_icon"
         style="@style/ProfileItemIcon"
         android:layout_height="fill_parent"

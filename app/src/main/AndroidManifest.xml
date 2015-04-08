@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pics.sift.android">
+    package="pics.sift.app">
 
     <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="21" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,9 +11,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:name=".Application">
+        android:name="pics.sift.app.Application">
         <activity
-            android:name=".AlbumsActivity"
+            android:name="pics.sift.app.AlbumsActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -23,19 +23,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AlbumActivity"
+            android:name="pics.sift.app.AlbumActivity"
             android:label="@string/album_title"
-            android:parentActivityName=".AlbumsActivity">
+            android:parentActivityName="pics.sift.app.AlbumsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="pics.sift.android.AlbumsActivity" />
+                android:value="pics.sift.app.AlbumsActivity" />
         </activity>
         <activity
-            android:name=".ProfileActivity"
+            android:name="pics.sift.app.ProfileActivity"
             android:label="@string/profile_title" >
         </activity>
         <service
-            android:name=".WebService">
+            android:name="pics.sift.app.WebService">
         </service>
         <activity android:name="org.acra.CrashReportDialog"
                   android:theme="@style/AppDialog"

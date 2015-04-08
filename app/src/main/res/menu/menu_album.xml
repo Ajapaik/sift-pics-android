@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context="pics.sift.android.AlbumActivity">
+    xmlns:tools="http://schemas.android.com/tools" tools:context="pics.sift.app.AlbumActivity">
 
     <item
         android:id="@+id/action_profile"

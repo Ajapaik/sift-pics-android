@@ -5,7 +5,7 @@ android {
     buildToolsVersion "20.0.0"
 
     defaultConfig {
-        applicationId "pics.sift.android"
+        applicationId "pics.sift.app"
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 9
