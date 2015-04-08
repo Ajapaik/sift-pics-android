@@ -287,7 +287,7 @@ Tells the back-end not to send any additional push notifications.
 	Parameters:
 		[session]
 		STRING type [R] - Push notification service type (Google - 'gcm', Apple - 'apns')
-		STRING token [R] - Push notification token from 
+		STRING token [R] - The token from the push notification service
 	
 	Returns:
         { "error": 0 }
