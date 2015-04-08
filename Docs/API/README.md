@@ -264,10 +264,11 @@ Removes a favorite and updates client-side favorites
 
 Tells the back-end to send push notifications.
 
-	/user/push/register
+	/user/device/register
 	
 	Parameters:
 		[session]
+		STRING id [R] - Device ID
 		STRING type [R] - Push notification service type (Google - 'gcm', Apple - 'apns')
 		STRING token [R] - The token from the push notification service
 		STRING filter [O=any] - Comma-separated list of notification types to send
@@ -282,10 +283,11 @@ Tells the back-end to send push notifications.
 
 Tells the back-end not to send any additional push notifications.
 
-	/user/push/unregister
+	/user/device/unregister
 	
 	Parameters:
 		[session]
+		STRING id [R] - Device ID
 		STRING type [R] - Push notification service type (Google - 'gcm', Apple - 'apns')
 		STRING token [R] - The token from the push notification service
 	
