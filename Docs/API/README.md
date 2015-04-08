@@ -259,3 +259,38 @@ Removes a favorite and updates client-side favorites
     
     Errors:
         See /user/me
+
+## Register for push notifications
+
+Tells the back-end to send push notifications.
+
+	/user/push/register
+	
+	Parameters:
+		[session]
+		STRING type [R] - Push notification service type (Google - 'gcm', Apple - 'apns')
+		STRING token [R] - The token from the push notification service
+		STRING filter [O=any] - Comma-separated list of notification types to send
+	
+	Returns:
+        { "error": 0 }
+    
+    Errors:
+        [standard]
+
+## Unregister for push notifications
+
+Tells the back-end not to send any additional push notifications.
+
+	/user/push/unregister
+	
+	Parameters:
+		[session]
+		STRING type [R] - Push notification service type (Google - 'gcm', Apple - 'apns')
+		STRING token [R] - Push notification token from 
+	
+	Returns:
+        { "error": 0 }
+    
+    Errors:
+        [standard]
