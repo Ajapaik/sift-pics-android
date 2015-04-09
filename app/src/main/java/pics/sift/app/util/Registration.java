@@ -94,7 +94,7 @@ public class Registration {
         }
 
         if(registration == null ||
-           Objects.match(m_code, registration.getCode()) ||
+           !Objects.match(m_code, registration.getCode()) ||
            m_version != registration.getVersion()) {
             return false;
         }
