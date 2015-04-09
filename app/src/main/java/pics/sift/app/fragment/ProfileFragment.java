@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ import pics.sift.app.data.Profile;
 import pics.sift.app.data.util.Status;
 import pics.sift.app.fragment.util.WebFragment;
 import pics.sift.app.util.Objects;
+import pics.sift.app.util.Registration;
 import pics.sift.app.util.WebAction;
 
 public class ProfileFragment extends WebFragment {
@@ -39,6 +43,7 @@ public class ProfileFragment extends WebFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         Profile profile = null;
         ListView listView;
+        CheckBox checkbox;
 
         super.onActivityCreated(savedInstanceState);
 
@@ -59,6 +64,27 @@ public class ProfileFragment extends WebFragment {
         }
 
         setProfile(profile);
+
+        checkbox = getNotificationsCheckBox();
+
+        if(checkPlayServices(false)) {
+            Registration registration = getSettings().getRegistration();
+
+            checkbox.setChecked((registration != null && registration.isValid()) ? true : false);
+            checkbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton button, boolean state) {
+                    if(state) {
+                        registerDevice(true);
+                    } else {
+                        unregisterDevice();
+                    }
+                }
+            });
+        } else {
+            checkbox.setChecked(false);
+            checkbox.setEnabled(false);
+        }
     }
 
     @Override
@@ -158,5 +184,9 @@ public class ProfileFragment extends WebFragment {
 
     private ProgressBar getProgressBar() {
         return (ProgressBar)getView().findViewById(R.id.progress_bar);
+    }
+
+    private CheckBox getNotificationsCheckBox() {
+        return (CheckBox)getView().findViewById(R.id.checkbox_notifications);
     }
 }

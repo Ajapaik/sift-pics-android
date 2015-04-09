@@ -74,6 +74,8 @@ public class WebActivity extends ActionBarActivity {
                         if(Objects.match(registration_, registration)) {
                             m_settings.setRegistration(null);
                         }
+                    } else {
+                        Log.d(TAG, "Unable to unregister (error=" + status.getCode() + ")");
                     }
                 }
             });
@@ -99,16 +101,19 @@ public class WebActivity extends ActionBarActivity {
             @Override
             protected Boolean doInBackground(Void... params) {
                 try {
-                    Registration registration;
-
-
                     if(m_gcm == null) {
                         m_gcm = GoogleCloudMessaging.getInstance(WebActivity.this);
                     }
 
-                    registration = m_settings.createRegistration(m_gcm.register(SENDER_ID));
+                    final Registration registration = m_settings.createRegistration(m_gcm.register(SENDER_ID));
                     Log.i(TAG, "Device registered, registration ID=" + registration.getCode());
-                    sendRegistrationIdToBackend(registration);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            sendRegistrationIdToBackend(registration);
+                        }
+                    });
                 }
                 catch(IOException ex) {
                     Log.e(TAG, "register", ex);
@@ -133,6 +138,8 @@ public class WebActivity extends ActionBarActivity {
                 public void onActionResult(Status status, Device device) {
                     if(status == Status.NONE) {
                         m_settings.setRegistration(registration);
+                    } else {
+                        Log.d(TAG, "Unable to register (error=" + status.getCode() + ")");
                     }
                 }
             });
