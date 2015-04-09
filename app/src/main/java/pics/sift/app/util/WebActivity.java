@@ -126,6 +126,8 @@ public class WebActivity extends ActionBarActivity {
 
     private void sendRegistrationIdToBackend(final Registration registration) {
         if(registration != null && registration.isValid()) {
+            m_settings.setRegistration(registration.toExpired());
+
             getConnection().enqueue(this, Device.createRegistrationAction(this, registration), new WebAction.ResultHandler<Device>() {
                 @Override
                 public void onActionResult(Status status, Device device) {

@@ -73,7 +73,11 @@ public class Registration {
     }
 
     public boolean isValid() {
-        return (m_code != null && m_code.length() > 0 && m_version != m_packageVersion) ? true : false;
+        return (m_code != null && m_code.length() > 0) ? true : false;
+    }
+
+    public Registration toExpired() {
+        return new Registration(m_packageVersion, m_code, Integer.MIN_VALUE);
     }
 
     @Override
