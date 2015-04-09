@@ -2,6 +2,8 @@ package pics.sift.app.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.provider.Settings;
 
 import com.google.gson.JsonObject;
@@ -37,6 +39,17 @@ public class Device extends Model {
         parameters.put("token", token);
 
         return new WebAction(context, "/user/device/unregister/", parameters, CREATOR);
+    }
+
+    public static int getPackageVersion(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+
+            return packageInfo.versionCode;
+        }
+        catch(NameNotFoundException e) {
+            throw new RuntimeException("Could not get package name: " + e);
+        }
     }
 
     public static String getUniqueIdentifier(Context context) {

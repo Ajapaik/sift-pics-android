@@ -3,6 +3,7 @@ package pics.sift.app.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import pics.sift.app.data.Device;
 import pics.sift.app.data.Favorite;
 import pics.sift.app.data.Profile;
 import pics.sift.app.data.Session;
@@ -12,13 +13,16 @@ public class Settings {
     private static final String TAG = "Settings";
     private static final String SHARED_PREFS = "prefs";
 
-    private static String KEY_AUTHORIZATION = "authorization";
-    private static String KEY_PROFILE = "profile";
-    private static String KEY_SESSION = "session";
+    private static final String KEY_AUTHORIZATION = "authorization";
+    private static final String KEY_PROFILE = "profile";
+    private static final String KEY_REGISTRATION = "registration";
+    private static final String KEY_SESSION = "session";
 
+    private int m_packageVersion;
     private SharedPreferences m_preferences;
 
     public Settings(Context context) {
+        m_packageVersion = Device.getPackageVersion(context);
         m_preferences = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
     }
 
@@ -70,6 +74,21 @@ public class Settings {
         }
 
         return newProfile;
+    }
+
+    public Registration getRegistration() {
+        return Registration.parse(m_packageVersion, m_preferences.getString(KEY_REGISTRATION, null));
+    }
+
+    public void setRegistration(Registration registration) {
+        SharedPreferences.Editor editor = m_preferences.edit();
+
+        editor.putString(KEY_REGISTRATION, (registration != null) ? registration.toString() : null);
+        editor.apply();
+    }
+
+    public void setRegistration(String token) {
+        setRegistration(new Registration(m_packageVersion, token));
     }
 
     public Session getSession() {
