@@ -76,6 +76,10 @@ public class Settings {
         return newProfile;
     }
 
+    public Registration createRegistration(String token) {
+        return new Registration(m_packageVersion, token);
+    }
+
     public Registration getRegistration() {
         return Registration.parse(m_packageVersion, m_preferences.getString(KEY_REGISTRATION, null));
     }
@@ -83,12 +87,12 @@ public class Settings {
     public void setRegistration(Registration registration) {
         SharedPreferences.Editor editor = m_preferences.edit();
 
-        editor.putString(KEY_REGISTRATION, (registration != null) ? registration.toString() : null);
-        editor.apply();
-    }
+        if(registration == null) {
+            registration = new Registration(m_packageVersion, (String)null);
+        }
 
-    public void setRegistration(String token) {
-        setRegistration(new Registration(m_packageVersion, token));
+        editor.putString(KEY_REGISTRATION, registration.toString());
+        editor.apply();
     }
 
     public Session getSession() {

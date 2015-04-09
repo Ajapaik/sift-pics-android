@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import pics.sift.app.data.util.Model;
+import pics.sift.app.util.Registration;
 import pics.sift.app.util.SHA1;
 import pics.sift.app.util.WebAction;
 
@@ -21,22 +22,22 @@ public class Device extends Model {
     private static final String KEY_UNIQUE_ID = "user.id";
     private static final String VALUE_GCM = "gcm";
 
-    public static WebAction<Device> createRegistrationAction(Context context, String token) {
+    public static WebAction<Device> createRegistrationAction(Context context, Registration registration) {
         Map<String, String> parameters = new Hashtable<String, String>();
 
         parameters.put("id", SHA1.encode(getUniqueIdentifier(context)));
         parameters.put("type", VALUE_GCM);
-        parameters.put("token", token);
+        parameters.put("token", registration.getCode());
 
         return new WebAction(context, "/user/device/register/", parameters, CREATOR);
     }
 
-    public static WebAction<Device> createUnregistrationAction(Context context, String token) {
+    public static WebAction<Device> createUnregistrationAction(Context context, Registration registration) {
         Map<String, String> parameters = new Hashtable<String, String>();
 
         parameters.put("id", SHA1.encode(getUniqueIdentifier(context)));
         parameters.put("type", VALUE_GCM);
-        parameters.put("token", token);
+        parameters.put("token", registration.getCode());
 
         return new WebAction(context, "/user/device/unregister/", parameters, CREATOR);
     }

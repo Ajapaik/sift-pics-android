@@ -72,6 +72,10 @@ public class Registration {
         return (m_version != m_packageVersion) ? true : false;
     }
 
+    public boolean isValid() {
+        return (m_code != null && m_code.length() > 0 && m_version != m_packageVersion) ? true : false;
+    }
+
     @Override
     public String toString() {
         return getAttributes().toString();
