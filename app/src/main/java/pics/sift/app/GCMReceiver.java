@@ -52,18 +52,6 @@ public class GCMReceiver extends BroadcastReceiver {
                     notification.flags |= Notification.FLAG_AUTO_CANCEL;
                     notificationManager.notify(NOTIFICATION_REQUEST + offset, notification);
                 }
-            } else {
-                // FIXME: Temporary, for testing
-                NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-                if(notificationManager != null) {
-                    Notification notification = new NotificationCompat.Builder(context).setContentTitle(context.getString(R.string.app_name)).setContentText("Received push, but it was invalid").setSmallIcon(R.mipmap.ic_launcher).build();
-                    Intent ni = new Intent(context, AlbumsActivity.class);
-
-                    notification.contentIntent = PendingIntent.getActivity(context, NOTIFICATION_REQUEST, ni, PendingIntent.FLAG_CANCEL_CURRENT);
-                    notification.flags |= Notification.FLAG_AUTO_CANCEL;
-                    notificationManager.notify(NOTIFICATION_REQUEST, notification);
-                }
             }
         }
     }
