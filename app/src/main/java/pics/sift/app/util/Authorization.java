@@ -1,8 +1,6 @@
 package pics.sift.app.util;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.provider.Settings.Secure;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -11,18 +9,16 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.stream.JsonReader;
 
 import java.io.StringReader;
-import java.util.UUID;
+
+import pics.sift.app.data.Device;
 
 public class Authorization {
-    private static final String SHARED_PREFS = "prefs";
-    private static final String KEY_UNIQUE_ID = "user.id";
-
     private static final String KEY_TYPE = "type";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
 
     public static Authorization getAnonymous(Context context) {
-        String password = SHA256.encode(getUniqueIdentifier(context));
+        String password = SHA256.encode(Device.getUniqueIdentifier(context));
 
         return new Authorization(Type.ANONYMOUS, SHA1.encode(password), password);
     }
@@ -42,24 +38,6 @@ public class Authorization {
         }
 
         return null;
-    }
-
-    private static String getUniqueIdentifier(Context context) {
-        String androidId = Secure.getString(context.getContentResolver(), Secure.ANDROID_ID);
-
-        if(androidId == null || androidId.length() == 0) {
-            SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-
-            if((androidId = preferences.getString(KEY_UNIQUE_ID, "")).length() == 0) {
-                SharedPreferences.Editor editor = preferences.edit();
-
-                androidId = UUID.randomUUID().toString();
-                editor.putString(KEY_UNIQUE_ID, androidId);
-                editor.apply();
-            }
-        }
-
-        return androidId;
     }
 
     private Type m_type;
