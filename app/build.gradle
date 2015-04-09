@@ -17,6 +17,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    signingConfigs {
+        debug {
+            storeFile file("../Release.jks")
+            storePassword AJAPAIK_STORE_PASSWORD
+            keyAlias 'ajapaik'
+            keyPassword AJAPAIK_KEY_PASSWORD
+        }
+    }
 }
 
 dependencies {
