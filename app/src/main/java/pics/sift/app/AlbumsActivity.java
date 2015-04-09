@@ -20,6 +20,17 @@ public class AlbumsActivity extends WebActivity {
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.container, new AlbumsFragment()).commit();
         }
+
+        if(checkPlayServices(true)) {
+            registerDevice(false);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        checkPlayServices(true);
     }
 
     @Override

@@ -25,7 +25,6 @@ import pics.sift.app.data.Profile;
 import pics.sift.app.data.util.Status;
 import pics.sift.app.fragment.util.WebFragment;
 import pics.sift.app.util.Objects;
-import pics.sift.app.util.Settings;
 import pics.sift.app.util.WebAction;
 import pics.sift.app.util.WebImage;
 import pics.sift.app.widget.WebImageView;
@@ -52,7 +51,6 @@ public class AlbumFragment extends WebFragment {
     private boolean m_selectedPhotoLoaded;
     private Photo.Tag m_selectedTag;
     private boolean m_selectedInfo;
-    private Settings m_settings;
 
     public String getAlbumIdentifier() {
         Bundle arguments = getArguments();
@@ -112,8 +110,6 @@ public class AlbumFragment extends WebFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        m_settings = new Settings(getActivity());
 
         getImageView().setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
             @Override
@@ -223,7 +219,7 @@ public class AlbumFragment extends WebFragment {
         }
 
         if(m_profile == null) {
-            m_profile = m_settings.getProfile();
+            m_profile = getSettings().getProfile();
 
             if(m_profile == null) {
                 m_profile = new Profile();
@@ -261,7 +257,7 @@ public class AlbumFragment extends WebFragment {
                 @Override
                 public void onActionResult(Status status, Profile profile) {
                     if(profile != null) {
-                        m_settings.setProfile(profile);
+                        getSettings().setProfile(profile);
                         m_profile = profile;
                     }
                 }
@@ -359,14 +355,14 @@ public class AlbumFragment extends WebFragment {
             Favorite favorite = new Favorite(m_album, photo);
 
             // Local synchronization
-            m_profile = (flag) ? m_settings.addFavorite(favorite, m_profile) : m_settings.removeFavorite(favorite, m_profile);
+            m_profile = (flag) ? getSettings().addFavorite(favorite, m_profile) : getSettings().removeFavorite(favorite, m_profile);
 
             // Remote synchronization
             getConnection().enqueue(getActivity(), Profile.createFavoriteAction(getActivity(), m_profile, favorite, flag), new WebAction.ResultHandler<Profile>() {
                 @Override
                 public void onActionResult(Status status, Profile profile) {
                     if(profile != null) {
-                        m_settings.setProfile(profile);
+                        getSettings().setProfile(profile);
                         m_profile = profile;
                     }
                 }
@@ -416,7 +412,7 @@ public class AlbumFragment extends WebFragment {
                 @Override
                 public void onActionResult(Status status, Profile profile) {
                     if(profile != null) {
-                        m_settings.setProfile(profile);
+                        getSettings().setProfile(profile);
                         m_profile = profile;
 
                         onRefresh(animated);

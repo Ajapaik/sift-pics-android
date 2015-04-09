@@ -22,7 +22,6 @@ import pics.sift.app.data.Profile;
 import pics.sift.app.data.util.Status;
 import pics.sift.app.fragment.util.WebFragment;
 import pics.sift.app.util.Objects;
-import pics.sift.app.util.Settings;
 import pics.sift.app.util.WebAction;
 
 public class ProfileFragment extends WebFragment {
@@ -30,7 +29,6 @@ public class ProfileFragment extends WebFragment {
     private static final String KEY_PROFILE = "profile";
 
     private Profile m_profile;
-    private Settings m_settings;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,7 +58,6 @@ public class ProfileFragment extends WebFragment {
             profile = savedInstanceState.getParcelable(KEY_PROFILE);
         }
 
-        m_settings = new Settings(getActivity());
         setProfile(profile);
     }
 
@@ -119,7 +116,7 @@ public class ProfileFragment extends WebFragment {
             getProgressBar().setVisibility(View.VISIBLE);
         }
 
-        getConnection().enqueue(context, Profile.createAction(context, (m_profile != null) ? m_profile : m_settings.getProfile()), new WebAction.ResultHandler<Profile>() {
+        getConnection().enqueue(context, Profile.createAction(context, (m_profile != null) ? m_profile : getSettings().getProfile()), new WebAction.ResultHandler<Profile>() {
             @Override
             public void onActionResult(Status status, Profile profile) {
                 if(m_profile == null) {
@@ -128,7 +125,7 @@ public class ProfileFragment extends WebFragment {
 
                 if(profile != null) {
                     if(!Objects.match(m_profile, profile)) {
-                        m_settings.setProfile(m_profile);
+                        getSettings().setProfile(m_profile);
                     }
 
                     setProfile(profile);

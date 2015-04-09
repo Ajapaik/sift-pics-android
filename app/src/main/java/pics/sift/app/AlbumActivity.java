@@ -16,13 +16,17 @@ public class AlbumActivity extends WebActivity {
     private static final String EXTRA_PHOTO_ID = "photo_id";
     private static final String EXTRA_TITLE = "title";
 
-    public static void start(Context context, Album album) {
+    public static Intent getStartIntent(Context context, String albumId, String title) {
         Intent intent = new Intent(context, AlbumActivity.class);
 
-        intent.putExtra(EXTRA_ALBUM_ID, album.getIdentifier());
-        intent.putExtra(EXTRA_TITLE, album.getTitle());
+        intent.putExtra(EXTRA_ALBUM_ID, albumId);
+        intent.putExtra(EXTRA_TITLE, title);
 
-        context.startActivity(intent);
+        return intent;
+    }
+
+    public static void start(Context context, Album album) {
+        context.startActivity(getStartIntent(context, album.getIdentifier(), album.getTitle()));
     }
 
     public static void start(Context context, Favorite favorite) {
