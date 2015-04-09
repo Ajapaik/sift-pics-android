@@ -55,6 +55,8 @@
         <item quantity="other">You have made &lt;b>%1$d&lt;/b> classifications for &lt;b>%2$d&lt;/b> pictures.</item>
     </plurals>
     <string name="profile_favorites">Favorites:</string>
+    <string name="profile_notifications_action">Push Notifications</string>
+    <string name="profile_notifications_hint">Enable/disable push notifications through Google Cloud Messaging</string>
     <string name="profile_title">My Profile</string>
 
     <!-- Notifications -->

@@ -17,9 +17,11 @@
 
     <!-- Profile -->
     <color name="profile_header">#000000</color>
+    <color name="profile_hint">#666666</color>
     <color name="profile_item_separator">#CCCCCC</color>
     <color name="profile_item_subtitle">#333333</color>
     <color name="profile_item_title">#000000</color>
+    <color name="profile_separator">#999999</color>
     <color name="profile_subtitle">#333333</color>
     <color name="profile_title">#000000</color>
 

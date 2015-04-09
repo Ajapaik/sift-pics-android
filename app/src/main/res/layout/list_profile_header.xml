@@ -27,6 +27,23 @@
         android:autoLink="all"
         android:text="" />
 
+    <View style="@style/ProfileSeparator" />
+
+    <CheckBox
+        android:id="@+id/checkbox_notifications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_notifications_action" />
+
+    <TextView
+        android:id="@+id/notifications_hint"
+        style="@style/ProfileHintText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_notifications_hint" />
+
+    <View style="@style/ProfileSeparator" />
+
     <TextView
         android:id="@+id/text_favorites"
         style="@style/ProfileHeaderText"
