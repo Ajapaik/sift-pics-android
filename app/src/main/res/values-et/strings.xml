@@ -57,4 +57,7 @@
     <string name="profile_favorites">Favorites:</string>
     <string name="profile_title">My Profile</string>
 
+    <!-- Notifications -->
+    <string name="notification_new_album">New album \'%s\' was just added!</string>
+
 </resources>
