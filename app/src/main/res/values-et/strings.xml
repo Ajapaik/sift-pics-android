@@ -44,6 +44,8 @@
         <item quantity="one">&lt;b>%d&lt;/b> picture in total</item>
         <item quantity="other">&lt;b>%d&lt;/b> pictures in total</item>
     </plurals>
+    <string name="album_summary_stats">&lt;b>%1$d&lt;/b> users have made &lt;b>%2$d&lt;/b> decisions about &lt;b>%3$d&lt;/b> pictures.</string>
+    <string name="album_summary_rank">You are contributor number &lt;b>%d&lt;/b></string>
 
     <!-- Album -->
     <string name="album_title">Album</string>
