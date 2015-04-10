@@ -41,6 +41,10 @@
             android:name="pics.sift.app.ProfileActivity"
             android:label="@string/profile_title" >
         </activity>
+        <activity
+            android:name="pics.sift.app.FavoritesActivity"
+            android:label="@string/favorites_title">
+        </activity>
         <service
             android:name="pics.sift.app.WebService">
         </service>
