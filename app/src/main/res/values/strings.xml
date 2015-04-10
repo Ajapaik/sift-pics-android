@@ -3,6 +3,7 @@
     <!-- Global -->
     <string name="app_name">Sift.pics</string>
     <string name="none"></string>
+    <string name="action_favorites">Favorites</string>
     <string name="action_profile">Profile</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_settings">Settings</string>
@@ -41,6 +42,9 @@
 
     <!-- Album -->
     <string name="album_title">Album</string>
+
+    <!-- Favorites -->
+    <string name="favorites_title">Favorites</string>
 
     <!-- Profile -->
     <plurals name="profile_stats">
