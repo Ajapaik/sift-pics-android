@@ -26,6 +26,7 @@ public class Profile extends Model {
     private static final String KEY_META = "meta";
     private static final String KEY_STATE = "state";
     private static final String KEY_STATS_PICS = "pics";
+    private static final String KEY_STATS_RANK = "rank";
     private static final String KEY_STATS_TAGGED = "tagged";
     private static final String KEY_FAVORITES = "favorites";
     private static final String KEY_FAVORITES_ADD = "favorites+";
@@ -68,6 +69,7 @@ public class Profile extends Model {
     private Meta m_meta;
     private Hyperlink m_link;
     private int m_pics;
+    private int m_rank;
     private String m_state;
     private int m_tagged;
 
@@ -88,6 +90,7 @@ public class Profile extends Model {
         m_link = readHyperlink(attributes, KEY_LINK);
         m_message = readString(attributes, KEY_MESSAGE);
         m_pics = readInteger(attributes, KEY_STATS_PICS);
+        m_rank = readInteger(attributes, KEY_STATS_RANK);
         m_state = readString(attributes, KEY_STATE);
         m_tagged = readInteger(attributes, KEY_STATS_TAGGED);
         m_favorites = new HashSet<Favorite>();
@@ -170,6 +173,7 @@ public class Profile extends Model {
         m_meta = baseProfile.getMeta();
         m_state = baseProfile.getState();
         m_pics = baseProfile.getPicturesCount();
+        m_rank = baseProfile.getRank();
         m_tagged = baseProfile.getTaggedCount();
         m_favorites = favorites;
     }
@@ -186,6 +190,7 @@ public class Profile extends Model {
         write(attributes, KEY_MESSAGE, m_message);
         write(attributes, KEY_STATE, m_state);
         write(attributes, KEY_STATS_PICS, m_pics);
+        write(attributes, KEY_STATS_RANK, m_rank);
         write(attributes, KEY_STATS_TAGGED, m_tagged);
 
         if(m_meta != null) {
@@ -278,6 +283,10 @@ public class Profile extends Model {
         return m_state;
     }
 
+    public int getRank() {
+        return m_rank;
+    }
+
     public int getTaggedCount() {
         return m_tagged;
     }
@@ -331,6 +340,7 @@ public class Profile extends Model {
         if(profile == null ||
            profile.getPicturesCount() != m_pics ||
            profile.getTaggedCount() != m_tagged ||
+           profile.getRank() != m_rank ||
            !Objects.match(profile.getLink(), m_link) ||
            !Objects.match(profile.getMessage(), m_message) ||
            !Objects.match(profile.getMeta(), m_meta) ||
