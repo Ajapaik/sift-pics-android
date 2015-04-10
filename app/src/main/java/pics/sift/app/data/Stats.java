@@ -19,6 +19,13 @@ public class Stats extends Model {
     private int m_tagged;
     private int m_rank;
 
+    public Stats() {
+        m_users = 0;
+        m_decisions = 0;
+        m_tagged = 0;
+        m_rank = 0;
+    }
+
     public Stats(JsonObject attributes) {
         m_users = readInteger(attributes, KEY_USERS);
         m_decisions = readInteger(attributes, KEY_DECISIONS);
