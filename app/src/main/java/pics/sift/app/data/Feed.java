@@ -17,6 +17,7 @@ import pics.sift.app.util.WebAction;
 public class Feed extends Model {
     private static final String API_PATH = "/albums/";
     private static final String KEY_ALBUMS = "albums";
+    private static final String KEY_STATS = "stats";
 
     public static WebAction<Feed> createAction(Context context) {
         return new Action(context, API_PATH, null);
@@ -27,9 +28,13 @@ public class Feed extends Model {
     }
 
     private List<Album> m_albums;
+    private Stats m_stats;
 
     public Feed(JsonObject attributes) {
+        JsonObject stats = readObject(attributes, KEY_STATS);
+
         m_albums = new ArrayList<Album>();
+        m_stats = (stats != null) ? new Stats(stats) : new Stats();
 
         for(JsonElement tagElement : readArray(attributes, KEY_ALBUMS)) {
             if(tagElement.isJsonObject()) {
@@ -57,11 +62,19 @@ public class Feed extends Model {
             attributes.add(KEY_ALBUMS, array);
         }
 
+        if(m_stats != null && !m_stats.empty()) {
+            attributes.add(KEY_STATS, m_stats.getAttributes());
+        }
+
         return attributes;
     }
 
     public List<Album> getAlbums() {
         return m_albums;
+    }
+
+    public Stats getStats() {
+        return m_stats;
     }
 
     @Override
@@ -72,7 +85,9 @@ public class Feed extends Model {
             return true;
         }
 
-        if(feed == null || !Objects.match(feed.getAlbums(), m_albums)) {
+        if(feed == null ||
+           !Objects.match(feed.getAlbums(), m_albums) ||
+           !Objects.match(feed.getStats(), m_stats)) {
             return false;
         }
 
