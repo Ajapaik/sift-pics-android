@@ -28,7 +28,7 @@ public class Session extends Model {
         Map<String, String> parameters = new Hashtable<String, String>();
 
         parameters.put("os", "android");
-        parameters.put("version", "0.1");
+        parameters.put("version", "0.2");
         parameters.put("type", (authorization.getType() == Authorization.Type.ANONYMOUS) ? "auto" : "user");
         parameters.put("username", authorization.getUsername());
         parameters.put("password", authorization.getPassword());
