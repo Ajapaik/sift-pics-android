@@ -59,6 +59,7 @@ Performs a login or creates an account if possible (type=auto). Returns a new se
         STRING type [R] - Login type. Use 'auto' to automatically create an account
         STRING username [R] - Username or a randomly generated unique identifier
         STRING password [R] - Hashed password or a randomly generated password
+        NUMBER version [O] - API version ID
         INTEGER length [O=0] - Session length in seconds. 0 - automatic
         STRING os [O=android] - Platform
     
