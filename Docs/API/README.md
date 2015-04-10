@@ -216,6 +216,7 @@ Returns the current state for an album
 			"state": "ABCDEF012345789", /* State variable managed by the back-end that can be used to track client-app state */
 			"tagged": 123 /* Number of times tagged */
 			"pics": 123, /* Number of tagged photos */
+			"rank": 0, /* User rank in the overall leaderboard, 0 if not applicable */
 			"message": "Message", /* An optional message from the server to display */,
 			"link": "http://", /* An optional link to open in the browser. See: hyperlinks */
 			"favorites": [
