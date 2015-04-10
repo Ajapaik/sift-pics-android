@@ -315,7 +315,7 @@ public class AlbumFragment extends WebFragment {
     }
 
     protected void onPrevPhoto() {
-        if(m_album != null) {
+        if(m_album != null && getPhotoIdentifier() == null) {
             Photo photo = m_album.getPrevPhoto(m_selectedPhoto);
 
             if(photo == null) {
@@ -332,7 +332,7 @@ public class AlbumFragment extends WebFragment {
     }
 
     protected void onNextPhoto() {
-        if(m_album != null) {
+        if(m_album != null && getPhotoIdentifier() == null) {
             Photo photo = m_album.getNextPhoto(m_selectedPhoto);
 
             if(photo == null) {
@@ -488,7 +488,10 @@ public class AlbumFragment extends WebFragment {
 
         invalidatePhotoFavorite(photo, isFavorite(photo.getIdentifier()));
         invalidatePhotoTag(photo, m_selectedTag);
-        preloadNextPhoto();
+
+        if(getPhotoIdentifier() == null) {
+            preloadNextPhoto();
+        }
     }
 
     private void invalidatePhotoActions(boolean flag) {
@@ -510,7 +513,7 @@ public class AlbumFragment extends WebFragment {
     private void invalidatePhotoTag(Photo photo, Photo.Tag selectedTag) {
         m_selectedTag = selectedTag;
 
-        if(photo.hasTags()) {
+        if(photo.hasTags() && getPhotoIdentifier() == null) {
             Resources resources = getActivity().getResources();
             List<Photo.Tag> tags = photo.getTags();
 

@@ -34,7 +34,8 @@ public class AlbumActivity extends WebActivity {
 
         intent.putExtra(EXTRA_ALBUM_ID, favorite.getAlbumIdentifier());
         intent.putExtra(EXTRA_PHOTO_ID, favorite.getPhotoIdentifier());
-
+        intent.putExtra(EXTRA_TITLE, "");
+        
         context.startActivity(intent);
     }
 
@@ -62,7 +63,9 @@ public class AlbumActivity extends WebActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_album, menu);
+        if(!isPhotoOnly()) {
+            getMenuInflater().inflate(R.menu.menu_album, menu);
+        }
 
         return true;
     }
@@ -82,5 +85,9 @@ public class AlbumActivity extends WebActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean isPhotoOnly() {
+        return (getIntent().getStringExtra(EXTRA_PHOTO_ID) != null) ? true : false;
     }
 }
