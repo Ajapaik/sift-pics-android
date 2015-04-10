@@ -22,9 +22,11 @@ public class Album extends Model {
     private static final String KEY_IMAGE = "image";
     private static final String KEY_TITLE = "title";
     private static final String KEY_SUBTITLE = "subtitle";
+    private static final String KEY_DECISIONS = "decisions";
     private static final String KEY_TAGGED = "tagged";
     private static final String KEY_TOTAL = "total";
     private static final String KEY_STATE = "state";
+    private static final String KEY_STATS = "stats";
     private static final String KEY_PHOTOS = "photos";
     private static final String KEY_PHOTOS_ADD = "photos+";
     private static final String KEY_PHOTOS_REMOVE = "photos-";
@@ -72,9 +74,11 @@ public class Album extends Model {
     private Uri m_image;
     private String m_title;
     private String m_subtitle;
+    private int m_decisions;
     private int m_tagged;
     private int m_total;
     private String m_state;
+    private Stats m_stats;
     private List<Photo> m_photos;
 
     public Album(JsonObject attributes) {
@@ -82,15 +86,18 @@ public class Album extends Model {
     }
 
     public Album(JsonObject attributes, Album baseAlbum, String baseIdentifier) {
+        JsonObject stats = readObject(attributes, KEY_STATS);
         JsonElement element = attributes.get(KEY_PHOTOS);
 
         m_identifier = readIdentifier(attributes, KEY_IDENTIFIER);
         m_image = readUri(attributes, KEY_IMAGE, (baseAlbum != null) ? baseAlbum.getImage() : null);
         m_title = readString(attributes, KEY_TITLE, (baseAlbum != null) ? baseAlbum.getTitle() : null);
         m_subtitle = readString(attributes, KEY_SUBTITLE, (baseAlbum != null) ? baseAlbum.getSubtitle() : null);
+        m_decisions = readInteger(attributes, KEY_DECISIONS, (baseAlbum != null) ? baseAlbum.getDecisionsCount() : 0);
         m_tagged = readInteger(attributes, KEY_TAGGED, (baseAlbum != null) ? baseAlbum.getTaggedCount() : 0);
         m_total = readInteger(attributes, KEY_TOTAL, (baseAlbum != null) ? baseAlbum.getTotalCount() : 0);
         m_state = readString(attributes, KEY_STATE, (baseAlbum != null) ? baseAlbum.getState() : null);
+        m_stats = (stats != null) ? new Stats(stats) : ((baseAlbum != null) ? baseAlbum.getStats() : null);
         m_photos = new ArrayList<Photo>();
 
         if(m_identifier == null && baseIdentifier != null) {
@@ -165,8 +172,13 @@ public class Album extends Model {
         write(attributes, KEY_IMAGE, m_image);
         write(attributes, KEY_TITLE, m_title);
         write(attributes, KEY_SUBTITLE, m_subtitle);
+        write(attributes, KEY_DECISIONS, m_decisions);
         write(attributes, KEY_TAGGED, m_tagged);
         write(attributes, KEY_TOTAL, m_total);
+
+        if(m_stats != null && !m_stats.empty()) {
+            attributes.add(KEY_STATS, m_stats.getAttributes());
+        }
 
         if(m_photos != null && m_photos.size() > 0) {
             JsonArray array = new JsonArray();
@@ -201,6 +213,10 @@ public class Album extends Model {
         return m_subtitle;
     }
 
+    public int getDecisionsCount() {
+        return m_decisions;
+    }
+
     public int getTaggedCount() {
         return m_tagged;
     }
@@ -211,6 +227,10 @@ public class Album extends Model {
 
     public String getState() {
         return m_state;
+    }
+
+    public Stats getStats() {
+        return m_stats;
     }
 
     public Photo getFirstPhoto() {
@@ -305,7 +325,9 @@ public class Album extends Model {
            !Objects.match(album.getTitle(), m_title) ||
            !Objects.match(album.getSubtitle(), m_subtitle) ||
            !Objects.match(album.getState(), m_state) ||
+           !Objects.match(album.getStats(), m_stats) ||
            !Objects.match(album.getPhotos(), m_photos) ||
+           album.getDecisionsCount() != m_decisions ||
            album.getTaggedCount() != m_tagged ||
            album.getTotalCount() != m_total) {
             return false;
