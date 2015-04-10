@@ -35,7 +35,7 @@ public class AlbumActivity extends WebActivity {
         intent.putExtra(EXTRA_ALBUM_ID, favorite.getAlbumIdentifier());
         intent.putExtra(EXTRA_PHOTO_ID, favorite.getPhotoIdentifier());
         intent.putExtra(EXTRA_TITLE, "");
-        
+
         context.startActivity(intent);
     }
 
