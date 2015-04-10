@@ -10,7 +10,7 @@
 
     <!-- ACRA -->
     <string name="acra_dialog_title">Sift.pics on kokku jooksnud</string>
-    <string name="acra_dialog_text">Rakendus jooksis mingi vea tõttu kokku. Aidake meil rakendust parandada saates vea info, selleks peate lihtsalt klikkima 'OK'.</string>
+    <string name="acra_dialog_text">Rakendus jooksis mingi vea tõttu kokku. Aidake meil rakendust parandada saates vea info, selleks peate lihtsalt klikkima \'OK\'.</string>
     <string name="acra_dialog_comment_prompt">Saate allpool lisada enda kommentaari:</string>
     <string name="acra_dialog_ok_toast">Suur tänu!</string>
 
