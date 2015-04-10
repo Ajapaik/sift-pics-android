@@ -2,6 +2,7 @@ package pics.sift.app.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import pics.sift.app.R;
 import pics.sift.app.adapter.AlbumAdapter;
 import pics.sift.app.data.Feed;
+import pics.sift.app.data.Stats;
 import pics.sift.app.data.util.Status;
 import pics.sift.app.fragment.util.WebFragment;
 import pics.sift.app.util.Objects;
@@ -43,6 +45,7 @@ public class AlbumsFragment extends WebFragment {
 
         listView = getListView();
         listView.setEmptyView(getEmptyView());
+        listView.addFooterView(LayoutInflater.from(getActivity()).inflate(R.layout.list_album_footer, listView, false), null, false);
 
         if(savedInstanceState != null) {
             Feed feed = savedInstanceState.getParcelable(KEY_FEED);
@@ -83,9 +86,21 @@ public class AlbumsFragment extends WebFragment {
 
     public void setFeed(Feed feed) {
         if(!Objects.match(m_feed, feed)) {
+            Stats stats = (feed != null) ? feed.getStats() : null;
+            TextView footerView = getFooterView();
             ListView listView = getListView();
+            String summary = "";
+
+            if(stats != null) {
+                summary = getString(R.string.album_summary_stats, stats.getUsersCount(), stats.getDecisionsCount(), stats.getTaggedCount());
+
+                if(stats.getRank() != 0) {
+                    summary = summary + " " + getString(R.string.album_summary_rank, stats.getRank());
+                }
+            }
 
             m_feed = feed;
+            footerView.setText(Html.fromHtml(summary));
 
             if(m_feed != null) {
                 listView.setAdapter(new AlbumAdapter(listView.getContext(), m_feed.getAlbums()));
@@ -129,5 +144,9 @@ public class AlbumsFragment extends WebFragment {
 
     private ProgressBar getProgressBar() {
         return (ProgressBar)getView().findViewById(R.id.progress_bar);
+    }
+
+    private TextView getFooterView() {
+        return (TextView)getView().findViewById(R.id.text_footer);
     }
 }

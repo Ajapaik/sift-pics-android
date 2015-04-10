@@ -3,6 +3,8 @@
 
     <!-- Albums -->
     <color name="album_placeholder_title">#666666</color>
+    <color name="album_footer_background">#000000</color>
+    <color name="album_footer_text">#FFFFFF</color>
     <color name="album_item_overlay">#66000000</color>
     <color name="album_item_separator">#999999</color>
     <color name="album_item_subtitle">#FFFFFF</color>
