@@ -232,6 +232,12 @@ Returns the current state for an album
 			],
 			"favorites-": [
 				1234, 1235, 1236 /* Optional, favorites to remove */
+			],
+			"meta": [ /* Useful rendering metadata for the UI */
+				"albums": {
+					"1234": "Album title 1",
+					"1235": "Album title 2"
+				}
 			]
 		}
 	
