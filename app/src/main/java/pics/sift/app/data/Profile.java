@@ -23,6 +23,7 @@ public class Profile extends Model {
     private static final String KEY_IDENTIFIER = "id";
     private static final String KEY_LINK = "link";
     private static final String KEY_MESSAGE = "message";
+    private static final String KEY_META = "meta";
     private static final String KEY_STATE = "state";
     private static final String KEY_STATS_PICS = "pics";
     private static final String KEY_STATS_TAGGED = "tagged";
@@ -64,6 +65,7 @@ public class Profile extends Model {
 
     private Set<Favorite> m_favorites;
     private String m_message;
+    private Meta m_meta;
     private Hyperlink m_link;
     private int m_pics;
     private String m_state;
@@ -81,6 +83,7 @@ public class Profile extends Model {
 
     public Profile(JsonObject attributes, Profile baseProfile) {
         JsonElement element = attributes.get(KEY_FAVORITES);
+        JsonObject meta = readObject(attributes, KEY_META);
 
         m_link = readHyperlink(attributes, KEY_LINK);
         m_message = readString(attributes, KEY_MESSAGE);
@@ -88,6 +91,10 @@ public class Profile extends Model {
         m_state = readString(attributes, KEY_STATE);
         m_tagged = readInteger(attributes, KEY_STATS_TAGGED);
         m_favorites = new HashSet<Favorite>();
+
+        if(meta != null) {
+            m_meta = new Meta(meta);
+        }
 
         if(element != null && element.isJsonArray()) {
             for(JsonElement favoriteElement : element.getAsJsonArray()) {
@@ -160,6 +167,7 @@ public class Profile extends Model {
     protected Profile(Profile baseProfile, Set<Favorite> favorites) {
         m_link = baseProfile.getLink();
         m_message = baseProfile.getMessage();
+        m_meta = baseProfile.getMeta();
         m_state = baseProfile.getState();
         m_pics = baseProfile.getPicturesCount();
         m_tagged = baseProfile.getTaggedCount();
@@ -179,6 +187,10 @@ public class Profile extends Model {
         write(attributes, KEY_STATE, m_state);
         write(attributes, KEY_STATS_PICS, m_pics);
         write(attributes, KEY_STATS_TAGGED, m_tagged);
+
+        if(m_meta != null) {
+            attributes.add(KEY_META, m_meta.getAttributes());
+        }
 
         if(m_favorites != null && m_favorites.size() > 0) {
             JsonArray array = new JsonArray();
@@ -254,6 +266,10 @@ public class Profile extends Model {
         return m_message;
     }
 
+    public Meta getMeta() {
+        return m_meta;
+    }
+
     public int getPicturesCount() {
         return m_pics;
     }
@@ -317,6 +333,7 @@ public class Profile extends Model {
            profile.getTaggedCount() != m_tagged ||
            !Objects.match(profile.getLink(), m_link) ||
            !Objects.match(profile.getMessage(), m_message) ||
+           !Objects.match(profile.getMeta(), m_meta) ||
            !Objects.match(profile.getState(), m_state) ||
            !Objects.match(profile.m_favorites, m_favorites)) {
             return false;
