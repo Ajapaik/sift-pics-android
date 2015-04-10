@@ -3,61 +3,61 @@
     <!-- Global -->
     <string name="app_name">Sift.pics</string>
     <string name="none"></string>
-    <string name="action_favorites">Favorites</string>
-    <string name="action_profile">Profile</string>
-    <string name="action_refresh">Refresh</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_favorites">Lemmikud</string>
+    <string name="action_profile">Profiil</string>
+    <string name="action_refresh">Värskenda</string>
+    <string name="action_settings">Seaded</string>
 
     <!-- ACRA -->
-    <string name="acra_dialog_title">Sift.pics has crashed</string>
-    <string name="acra_dialog_text">An unexpected error occurred forcing the application to stop. Please help us fix this by sending us error data, all you have to do is click OK.</string>
-    <string name="acra_dialog_comment_prompt">You might add your comments about the problem below:</string>
-    <string name="acra_dialog_ok_toast">Thank you!</string>
+    <string name="acra_dialog_title">Sift.pics on kokku jooksnud</string>
+    <string name="acra_dialog_text">Rakendus jooksis mingi vea tõttu kokku. Aidake meil rakendust parandada saates vea info, selleks peate lihtsalt klikkima 'OK'.</string>
+    <string name="acra_dialog_comment_prompt">Saate allpool lisada enda kommentaari:</string>
+    <string name="acra_dialog_ok_toast">Suur tänu!</string>
 
     <!-- Photo tags -->
-    <string name="photo_tag_detail">Close-up</string>
-    <string name="photo_tag_exterior">Exterior</string>
-    <string name="photo_tag_ground">Ground</string>
-    <string name="photo_tag_interior">Interior</string>
-    <string name="photo_tag_many">Many People</string>
-    <string name="photo_tag_na">Not Applicable</string>
-    <string name="photo_tag_natural">Natural</string>
-    <string name="photo_tag_one">One Person</string>
+    <string name="photo_tag_detail">Suur plaan</string>
+    <string name="photo_tag_exterior">Välivaade</string>
+    <string name="photo_tag_ground">Maapinnalt</string>
+    <string name="photo_tag_interior">Sisevaade</string>
+    <string name="photo_tag_many">Mitu inimest</string>
+    <string name="photo_tag_na">Ei sobi</string>
+    <string name="photo_tag_natural">Loomulik</string>
+    <string name="photo_tag_one">Üks inimene</string>
     <string name="photo_tag_private">Private</string>
     <string name="photo_tag_public">Public</string>
-    <string name="photo_tag_raised">Raised</string>
-    <string name="photo_tag_rural">Countryside</string>
-    <string name="photo_tag_social">Social</string>
-    <string name="photo_tag_staged">Staged</string>
-    <string name="photo_tag_urban">Urban</string>
-    <string name="photo_tag_whole">General</string>
-    <string name="photo_tag_view">View</string>
+    <string name="photo_tag_raised">Kõrgemalt</string>
+    <string name="photo_tag_rural">Maa</string>
+    <string name="photo_tag_social">Inimesed</string>
+    <string name="photo_tag_staged">Poseeritud</string>
+    <string name="photo_tag_urban">Linn</string>
+    <string name="photo_tag_whole">Üldvaade</string>
+    <string name="photo_tag_view">Vaade</string>
 
     <!-- Albums -->
-    <string name="album_label_no_data">No Albums</string>
-    <string name="album_stats_personal">You have made &lt;b>%1$d&lt;/b> decisions about &lt;b>%2$d&lt;/b> pictures in this album.</string>
-    <string name="album_stats_summary">&lt;b>%1$d&lt;/b> pictures: &lt;b>%2$d&lt;/b> decisions about &lt;b>%3$d&lt;/b> pictures made by &lt;b>%4$d&lt;/b> users</string>
-    <string name="album_summary_stats">&lt;b>%1$d&lt;/b> users have made &lt;b>%2$d&lt;/b> decisions about &lt;b>%3$d&lt;/b> pictures.</string>
-    <string name="album_summary_rank">You are contributor number &lt;b>%d&lt;/b></string>
+    <string name="album_label_no_data">Albumeid pole</string>
+    <string name="album_stats_personal">Oled teinud &lt;b>%1$d&lt;/b> otsust &lt;b>%2$d&lt;/b> pildi kohta selles albumis.</string>
+    <string name="album_stats_summary">&lt;b>%1$d&lt;/b> pilti kokku: neist &lt;b>%3$d&lt;/b> pildi kohta on &lt;b>%4$d&lt;/b> kasutajat &lt;b>%2$d&lt;/b> otsust</string>
+    <string name="album_summary_stats">&lt;b>%1$d&lt;/b> kasutajat on teinud &lt;b>%2$d&lt;/b> otsust &lt;b>%3$d&lt;/b> pildi kohta.</string>
+    <string name="album_summary_rank">Oled nr &lt;b>%d&lt;/b> panustaja</string>
 
     <!-- Album -->
     <string name="album_title">Album</string>
 
     <!-- Favorites -->
-    <string name="favorites_title">Favorites</string>
+    <string name="favorites_title">Lemmikud</string>
 
     <!-- Profile -->
     <plurals name="profile_stats">
-        <item quantity="zero">You haven\'t tagged any pictures yet.</item>
-        <item quantity="one">You have tagged &lt;b>1&lt;/b> classification for &lt;b>1&lt;/b> picture.</item>
-        <item quantity="other">You have made &lt;b>%1$d&lt;/b> classifications for &lt;b>%2$d&lt;/b> pictures.</item>
+        <item quantity="zero">Sa pole ühegi pildi kohta ühtegi otsust teinud.</item>
+        <item quantity="one">Oled teinud &lt;b>1&lt;/b> klassifitseerimisotsuse &lt;b>1&lt;/b> pildile.</item>
+        <item quantity="other">Oled teinud &lt;b>%1$d&lt;/b> klassifitseerimisotsust &lt;b>%2$d&lt;/b> pildile.</item>
     </plurals>
-    <string name="profile_favorites">Favorites:</string>
-    <string name="profile_notifications_action">Push Notifications</string>
-    <string name="profile_notifications_hint">Enable/disable push notifications through Google Cloud Messaging</string>
-    <string name="profile_title">My Profile</string>
+    <string name="profile_favorites">Lemmikud:</string>
+    <string name="profile_notifications_action">Teavitused</string>
+    <string name="profile_notifications_hint">Luba/keela teavitused</string>
+    <string name="profile_title">Minu profiil</string>
 
     <!-- Notifications -->
-    <string name="notification_new_album">New album \'%s\' was just added!</string>
+    <string name="notification_new_album">Lisatud uus album \'%s\'!</string>
 
 </resources>
