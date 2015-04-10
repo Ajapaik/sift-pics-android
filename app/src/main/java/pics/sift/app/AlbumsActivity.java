@@ -1,5 +1,6 @@
 package pics.sift.app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +11,16 @@ import pics.sift.app.util.WebActivity;
 
 public class AlbumsActivity extends WebActivity {
     private static final String TAG = "AlbumsActivity";
+
+    private static final String EXTRA_ALBUM_ID = "album_id";
+
+    public static Intent getStartIntent(Context context, String albumId) {
+        Intent intent = new Intent(context, AlbumsActivity.class);
+
+        intent.putExtra(EXTRA_ALBUM_ID, albumId);
+
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

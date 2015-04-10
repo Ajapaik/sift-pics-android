@@ -39,7 +39,8 @@ public class GCMReceiver extends BroadcastReceiver {
                 if(notificationManager != null) {
                     String message = context.getString(R.string.notification_new_album, title);
                     Notification notification = new NotificationCompat.Builder(context).setContentTitle(context.getString(R.string.app_name)).setContentText(message).setSmallIcon(R.mipmap.ic_launcher).build();
-                    Intent ni = AlbumActivity.getStartIntent(context, albumId, title);
+                    //Intent ni = AlbumActivity.getStartIntent(context, albumId, title);
+                    Intent ni = AlbumsActivity.getStartIntent(context, albumId);
                     int offset = DEFAULT_OFFSET;
 
                     try {
