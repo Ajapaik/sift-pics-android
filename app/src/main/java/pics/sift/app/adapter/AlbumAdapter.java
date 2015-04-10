@@ -1,6 +1,7 @@
 package pics.sift.app.adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import java.util.List;
 import pics.sift.app.AlbumActivity;
 import pics.sift.app.R;
 import pics.sift.app.data.Album;
+import pics.sift.app.data.Stats;
 
 public class AlbumAdapter extends ArrayAdapter<Album> {
     private static final int THUMBNAIL_SIZE = 250;
@@ -57,9 +59,22 @@ public class AlbumAdapter extends ArrayAdapter<Album> {
                 m_details = !m_details;
 
                 if(m_details) {
-                    textView.setText(Html.fromHtml(context.getResources().getQuantityString(R.plurals.album_stats_total, album.getTotalCount(), album.getTotalCount())));
+                    Resources resources = context.getResources();
+                    String personal = resources.getString(R.string.album_stats_personal, album.getDecisionsCount(), album.getTaggedCount());
+                    Stats stats = album.getStats();
+                    String summary = "";
+
+                    if(stats != null) {
+                        if(stats.getRank() != 0) {
+                            personal = personal + " " + resources.getString(R.string.album_summary_rank, stats.getRank());
+                        }
+
+                        summary = resources.getString(R.string.album_stats_summary, album.getTotalCount(), stats.getDecisionsCount(), stats.getTaggedCount(), stats.getUsersCount());
+                    }
+
+                    textView.setText(Html.fromHtml(personal));
                     textView = (TextView)container.findViewById(R.id.text_subtitle);
-                    textView.setText(Html.fromHtml(context.getResources().getQuantityString(R.plurals.album_stats_tagged, album.getTaggedCount(), album.getTaggedCount())));
+                    textView.setText(Html.fromHtml(summary));
                 } else {
                     textView.setText(album.getTitle());
                     textView = (TextView)container.findViewById(R.id.text_subtitle);
