@@ -113,9 +113,14 @@ public class ProfileFragment extends WebFragment {
             if(m_profile != null) {
                 List<Favorite> favorites = m_profile.getFavorites();
                 Hyperlink link = m_profile.getLink();
+                String summary = context.getResources().getQuantityString(R.plurals.profile_stats, m_profile.getTaggedCount(), m_profile.getTaggedCount(), m_profile.getPicturesCount());
+
+                if(m_profile.getRank() != 0) {
+                    summary = summary + " " + context.getResources().getString(R.string.album_summary_rank, m_profile.getRank());
+                }
 
                 listView.setAdapter(new FavoritesAdapter(listView.getContext(), favorites));
-                getTitleView().setText(Html.fromHtml(context.getResources().getQuantityString(R.plurals.profile_stats, m_profile.getTaggedCount(), m_profile.getTaggedCount(), m_profile.getPicturesCount())));
+                getTitleView().setText(Html.fromHtml(summary));
 
                 if(m_profile.getMessage() != null) {
                     getSubtitleView().setText(m_profile.getMessage());
