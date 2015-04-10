@@ -110,9 +110,22 @@ Returns all the albums.
 	                "subtitle": "hmm" /* Optional subtitle under the name */,
 	                "image": "http://www.example.org/image.png", /* Album thumbnail image */
 	                "tagged": 0, /* Number of tagged photos for the user */
-	                "total": 0 /* Number of photos in the album */
+	                "total": 0, /* Number of photos in the album */
+	                "decisions": 0, /* Number of tagging decisions for the user */
+	                "stats": { /* Album stats */
+						"users": 0, /* Number of users who have tagged photos */
+						"decisions": 0, /* Number of tagging decisions by everyone */
+						"tagged": 0, /* Number of tagged photos */
+						"rank": 0 /* User rank in this leaderboard, 0 if not applicable */
+					}
 	            }
-	        ]
+	        ],
+	        "stats": { /* Overall stats */
+	        	"users": 0, /* Number of users who have tagged photos */
+	        	"decisions": 0, /* Number of tagging decisions by everyone */
+	        	"tagged": 0, /* Number of tagged photos */
+	        	"rank": 0 /* User rank in the overall leaderboard, 0 if not applicable */
+	        }
 	    }
 	
 	Errors:
