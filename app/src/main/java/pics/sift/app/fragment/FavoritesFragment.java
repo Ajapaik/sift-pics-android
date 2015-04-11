@@ -99,7 +99,7 @@ public class FavoritesFragment extends WebFragment {
 
                 if(profile != null) {
                     if(!Objects.match(m_profile, profile)) {
-                        getSettings().setProfile(m_profile);
+                        getSettings().setProfile(profile);
                     }
 
                     setProfile(profile);

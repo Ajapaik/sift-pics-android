@@ -201,7 +201,7 @@ public class Profile extends Model {
             JsonArray array = new JsonArray();
 
             for(Favorite favorite : m_favorites) {
-                array.add(new JsonPrimitive(favorite.toString()));
+                array.add(favorite.getAttributes());
             }
 
             attributes.add(KEY_FAVORITES, array);

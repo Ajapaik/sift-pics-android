@@ -184,7 +184,7 @@ public class Album extends Model {
             JsonArray array = new JsonArray();
 
             for(Photo photo : m_photos) {
-                array.add(new JsonPrimitive(photo.toString()));
+                array.add(photo.getAttributes());
             }
 
             attributes.add(KEY_PHOTOS, array);
