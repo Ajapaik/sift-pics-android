@@ -18,7 +18,10 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
 
-        ACRA.init(this);
+        if(!BuildConfig.DEBUG) {
+            ACRA.init(this);
+        }
+
         WebImage.invalidate(this);
     }
 }
