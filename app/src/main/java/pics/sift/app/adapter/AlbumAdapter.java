@@ -61,20 +61,20 @@ public class AlbumAdapter extends ArrayAdapter<Album> {
 
                 if(m_details) {
                     Resources resources = context.getResources();
-                    String personal = resources.getString(R.string.album_stats_personal, album.getDecisionsCount(), album.getTaggedCount());
+                    String summary = resources.getString(R.string.album_stats_header, album.getTotalCount());
                     Stats stats = album.getStats();
-                    String summary = "";
+
+                    summary = summary + resources.getString(R.string.album_stats_personal, album.getDecisionsCount(), album.getTaggedCount());
 
                     if(stats != null) {
                         if(stats.getRank() != 0) {
-                            personal = personal + " " + resources.getString(R.string.album_summary_rank, stats.getRank());
+                            summary = summary + " " + resources.getString(R.string.album_stats_rank, stats.getRank());
                         }
-
-                        summary = resources.getString(R.string.album_stats_summary, album.getTotalCount(), stats.getDecisionsCount(), stats.getTaggedCount(), stats.getUsersCount());
                     }
 
-                    textView.setText(Html.fromHtml(personal));
+                    textView.setText(Html.fromHtml(summary));
                     textView = (TextView)container.findViewById(R.id.text_subtitle);
+                    summary = resources.getString(R.string.album_stats_summary, stats.getUsersCount(), stats.getDecisionsCount(), stats.getTaggedCount());
                     textView.setText(Html.fromHtml(summary));
                 } else {
                     textView.setText(album.getTitle());

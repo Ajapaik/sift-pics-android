@@ -116,7 +116,7 @@ public class ProfileFragment extends WebFragment {
                 String summary = context.getResources().getQuantityString(R.plurals.profile_stats, m_profile.getTaggedCount(), m_profile.getTaggedCount(), m_profile.getPicturesCount());
 
                 if(m_profile.getRank() != 0) {
-                    summary = summary + " " + context.getResources().getString(R.string.album_summary_rank, m_profile.getRank());
+                    summary = summary + " " + context.getResources().getString(R.string.album_stats_rank, m_profile.getRank());
                 }
 
                 listView.setAdapter(new FavoritesAdapter(listView.getContext(), favorites));

@@ -35,10 +35,10 @@
 
     <!-- Albums -->
     <string name="album_label_no_data">No Albums</string>
+    <string name="album_stats_header">&lt;b>%1$d&lt;/b> pictures in album&lt;br />&lt;br /></string>
     <string name="album_stats_personal">You have made &lt;b>%1$d&lt;/b> decisions about &lt;b>%2$d&lt;/b> pictures in this album.</string>
-    <string name="album_stats_summary">&lt;b>%1$d&lt;/b> pictures: &lt;b>%2$d&lt;/b> decisions about &lt;b>%3$d&lt;/b> pictures made by &lt;b>%4$d&lt;/b> users</string>
-    <string name="album_summary_stats">&lt;b>%1$d&lt;/b> users have made &lt;b>%2$d&lt;/b> decisions about &lt;b>%3$d&lt;/b> pictures.</string>
-    <string name="album_summary_rank">You are contributor number &lt;b>%d&lt;/b></string>
+    <string name="album_stats_summary">&lt;b>%1$d&lt;/b> users have made &lt;b>%2$d&lt;/b> decisions about &lt;b>%3$d&lt;/b> pictures.</string>
+    <string name="album_stats_rank">You are contributor number &lt;b>%d&lt;/b>.</string>
 
     <!-- Album -->
     <string name="album_title">Album</string>

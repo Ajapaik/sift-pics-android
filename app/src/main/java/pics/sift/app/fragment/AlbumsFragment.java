@@ -92,10 +92,10 @@ public class AlbumsFragment extends WebFragment {
             String summary = "";
 
             if(stats != null) {
-                summary = getString(R.string.album_summary_stats, stats.getUsersCount(), stats.getDecisionsCount(), stats.getTaggedCount());
+                summary = getString(R.string.album_stats_summary, stats.getUsersCount(), stats.getDecisionsCount(), stats.getTaggedCount());
 
                 if(stats.getRank() != 0) {
-                    summary = summary + " " + getString(R.string.album_summary_rank, stats.getRank());
+                    summary = summary + " " + getString(R.string.album_stats_rank, stats.getRank());
                 }
             }
 
