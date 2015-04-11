@@ -78,6 +78,10 @@ public class AlbumActivity extends WebActivity {
             onBackPressed();
 
             return true;
+        } else if(id == R.id.action_favorites) {
+            startActivity(new Intent(this, FavoritesActivity.class));
+
+            return true;
         } else if(id == R.id.action_profile) {
             startActivity(new Intent(this, ProfileActivity.class));
 

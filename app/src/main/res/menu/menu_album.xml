@@ -3,9 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context="pics.sift.app.AlbumActivity">
 
     <item
+        android:id="@+id/action_favorites"
+        android:title="@string/action_favorites"
+        android:icon="@drawable/ic_favorite_white_36dp"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_profile"
         android:title="@string/action_profile"
         android:icon="@drawable/ic_account_circle_white_36dp"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
 
 </menu>

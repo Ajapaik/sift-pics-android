@@ -55,7 +55,11 @@ public class AlbumsActivity extends WebActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.action_profile) {
+        if(id == R.id.action_favorites) {
+            startActivity(new Intent(this, FavoritesActivity.class));
+
+            return true;
+        } else if(id == R.id.action_profile) {
             startActivity(new Intent(this, ProfileActivity.class));
 
             return true;
