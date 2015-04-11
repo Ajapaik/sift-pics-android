@@ -3,14 +3,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/list"
-        style="@style/ProfileListView"
-        android:isScrollContainer="false"
+    <LinearLayout
+        android:id="@+id/layout_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    </ListView>
+
+        <TextView
+            android:id="@+id/text_title"
+            style="@style/ProfileTitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/text_subtitle"
+            style="@style/ProfileSubtitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/text_link"
+            style="@style/ProfileLinkText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="all"
+            android:text="" />
+
+        <View style="@style/ProfileSeparator" />
+
+        <CheckBox
+            android:id="@+id/checkbox_notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_notifications_action" />
+
+        <TextView
+            android:id="@+id/notifications_hint"
+            style="@style/ProfileHintText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_notifications_hint" />
+
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progress_bar"

@@ -48,7 +48,7 @@ public class FavoritesFragment extends WebFragment {
                 AlbumActivity.start(getActivity(), favorite);
             }
         });
-        listView.addHeaderView(LayoutInflater.from(getActivity()).inflate(R.layout.list_profile_header, listView, false), null, false);
+        //listView.addHeaderView(LayoutInflater.from(getActivity()).inflate(R.layout.list_profile_header, listView, false), null, false);
 
         if(savedInstanceState != null) {
             profile = savedInstanceState.getParcelable(KEY_PROFILE);

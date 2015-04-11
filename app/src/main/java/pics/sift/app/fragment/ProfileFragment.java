@@ -6,20 +6,13 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.util.List;
-
-import pics.sift.app.AlbumActivity;
 import pics.sift.app.R;
-import pics.sift.app.adapter.FavoritesAdapter;
-import pics.sift.app.data.Favorite;
 import pics.sift.app.data.Hyperlink;
 import pics.sift.app.data.Profile;
 import pics.sift.app.data.util.Status;
@@ -42,24 +35,14 @@ public class ProfileFragment extends WebFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Profile profile = null;
-        ListView listView;
         CheckBox checkbox;
 
         super.onActivityCreated(savedInstanceState);
 
-        listView = getListView();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Favorite favorite = (Favorite)parent.getItemAtPosition(position);
-
-                AlbumActivity.start(getActivity(), favorite);
-            }
-        });
-        listView.addHeaderView(LayoutInflater.from(getActivity()).inflate(R.layout.list_profile_header, listView, false), null, false);
-
         if(savedInstanceState != null) {
             profile = savedInstanceState.getParcelable(KEY_PROFILE);
+        } else {
+            getLayout().setVisibility(View.GONE);
         }
 
         setProfile(profile);
@@ -106,12 +89,11 @@ public class ProfileFragment extends WebFragment {
     public void setProfile(Profile profile) {
         if(!Objects.match(m_profile, profile)) {
             Context context = getActivity();
-            ListView listView = getListView();
+            View layout = getLayout();
 
             m_profile = profile;
 
             if(m_profile != null) {
-                List<Favorite> favorites = m_profile.getFavorites();
                 Hyperlink link = m_profile.getLink();
                 String summary = context.getResources().getQuantityString(R.plurals.profile_stats, m_profile.getTaggedCount(), m_profile.getTaggedCount(), m_profile.getPicturesCount());
 
@@ -119,7 +101,7 @@ public class ProfileFragment extends WebFragment {
                     summary = summary + " " + context.getResources().getString(R.string.album_stats_rank, m_profile.getRank());
                 }
 
-                listView.setAdapter(new FavoritesAdapter(listView.getContext(), favorites));
+                layout.setVisibility(View.VISIBLE);
                 getTitleView().setText(Html.fromHtml(summary));
 
                 if(m_profile.getMessage() != null) {
@@ -131,10 +113,8 @@ public class ProfileFragment extends WebFragment {
                 } else {
                     getLinkView().setVisibility(View.GONE);
                 }
-
-                getFavoritesView().setVisibility((favorites.size() == 0) ? View.GONE : View.VISIBLE);
             } else {
-                listView.setAdapter(null);
+                layout.setVisibility(View.GONE);
             }
         }
     }
@@ -166,8 +146,8 @@ public class ProfileFragment extends WebFragment {
         });
     }
 
-    private ListView getListView() {
-        return (ListView)getView().findViewById(R.id.list);
+    private View getLayout() {
+        return getView().findViewById(R.id.layout_main);
     }
 
     private TextView getTitleView() {
@@ -176,10 +156,6 @@ public class ProfileFragment extends WebFragment {
 
     private TextView getSubtitleView() {
         return (TextView)getView().findViewById(R.id.text_subtitle);
-    }
-
-    private TextView getFavoritesView() {
-        return (TextView)getView().findViewById(R.id.text_favorites);
     }
 
     private TextView getLinkView() {
