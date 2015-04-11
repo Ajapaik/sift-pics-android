@@ -57,6 +57,7 @@ public class AlbumAdapter extends ArrayAdapter<Album> {
 
                 textView = (TextView)container.findViewById(R.id.text_title);
                 m_details = !m_details;
+                ((ImageButton)v).setImageResource((m_details) ? R.drawable.ic_highlight_remove_white_36dp : R.drawable.ic_info_outline_white_36dp);
 
                 if(m_details) {
                     Resources resources = context.getResources();
