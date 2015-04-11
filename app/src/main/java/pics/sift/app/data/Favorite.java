@@ -166,18 +166,24 @@ public class Favorite extends Model {
 
     public static class FavoriteComparator implements Comparator<Favorite> {
         public int compare(Favorite a, Favorite b) {
-            long aL = a.m_date.getTime();
-            long bL = b.m_date.getTime();
+            String aS = a.getAlbumIdentifier();
+            String bS = b.getAlbumIdentifier();
+            int result = aS.compareTo(bS);
 
-            if(aL > bL) {
-                return -1;
+            if(result == 0) {
+                long aL = a.m_date.getTime();
+                long bL = b.m_date.getTime();
+
+                if(aL > bL) {
+                    return -1;
+                }
+
+                if(aL < bL) {
+                    return 1;
+                }
             }
 
-            if(aL < bL) {
-                return 1;
-            }
-
-            return 0;
+            return result;
         }
     }
 

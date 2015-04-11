@@ -91,8 +91,8 @@
     <orderEntry type="library" exported="" name="support-annotations-22.0.0" level="project" />
     <orderEntry type="library" exported="" name="superslim-0.4.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.0.0" level="project" />
-    <orderEntry type="library" exported="" name="recyclerview-v7-21.0.2" level="project" />
     <orderEntry type="library" exported="" name="acra-4.5.0" level="project" />
+    <orderEntry type="library" exported="" name="recyclerview-v7-22.0.0" level="project" />
   </component>
 </module>
 

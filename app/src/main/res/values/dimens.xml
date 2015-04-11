@@ -20,10 +20,12 @@
     <dimen name="album_overlay_horizontal_margin">8dp</dimen>
     <dimen name="album_overlay_vertical_margin">8dp</dimen>
 
+    <!-- Favorites -->
+    <integer name="favorite_column_count">2</integer>
+    <dimen name="favorite_item_horizontal_margin">16dp</dimen>
+    <dimen name="favorite_item_vertical_margin">16dp</dimen>
+
     <!-- Profile -->
     <dimen name="profile_item_divider">1dp</dimen>
-    <dimen name="profile_item_height">48dp</dimen>
-    <dimen name="profile_item_horizontal_margin">16dp</dimen>
-    <dimen name="profile_item_vertical_margin">16dp</dimen>
 
 </resources>

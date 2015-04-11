@@ -2,16 +2,16 @@ package pics.sift.app.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
+
+import com.tonicartos.superslim.LayoutManager;
 
 import java.util.List;
 
-import pics.sift.app.AlbumActivity;
 import pics.sift.app.R;
 import pics.sift.app.adapter.FavoritesAdapter;
 import pics.sift.app.data.Favorite;
@@ -29,26 +29,18 @@ public class FavoritesFragment extends WebFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_favorites, container, false);
+        View view = inflater.inflate(R.layout.fragment_favorites, container, false);
+
+        getRecyclerView(view).setLayoutManager(new LayoutManager(inflater.getContext()));
+
+        return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Profile profile = null;
-        ListView listView;
 
         super.onActivityCreated(savedInstanceState);
-
-        listView = getListView();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Favorite favorite = (Favorite)parent.getItemAtPosition(position);
-
-                AlbumActivity.start(getActivity(), favorite);
-            }
-        });
-        //listView.addHeaderView(LayoutInflater.from(getActivity()).inflate(R.layout.list_profile_header, listView, false), null, false);
 
         if(savedInstanceState != null) {
             profile = savedInstanceState.getParcelable(KEY_PROFILE);
@@ -76,17 +68,17 @@ public class FavoritesFragment extends WebFragment {
 
     public void setProfile(Profile profile) {
         if(!Objects.match(m_profile, profile)) {
+            RecyclerView recyclerView = getRecyclerView();
             Context context = getActivity();
-            ListView listView = getListView();
 
             m_profile = profile;
 
             if(m_profile != null) {
                 List<Favorite> favorites = m_profile.getFavorites();
 
-                listView.setAdapter(new FavoritesAdapter(listView.getContext(), favorites));
+                recyclerView.setAdapter(new FavoritesAdapter(context, favorites, m_profile.getMeta()));
             } else {
-                listView.setAdapter(null);
+                recyclerView.setAdapter(null);
             }
         }
     }
@@ -118,8 +110,12 @@ public class FavoritesFragment extends WebFragment {
         });
     }
 
-    private ListView getListView() {
-        return (ListView)getView().findViewById(R.id.list);
+    private RecyclerView getRecyclerView() {
+        return getRecyclerView(getView());
+    }
+
+    private RecyclerView getRecyclerView(View view) {
+        return (RecyclerView)view.findViewById(R.id.recycler_view);
     }
 
     private ProgressBar getProgressBar() {

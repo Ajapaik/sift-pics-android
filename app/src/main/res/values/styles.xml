@@ -95,6 +95,29 @@
         <item name="android:textSize">@dimen/font_size_medium</item>
     </style>
 
+    <!-- Favorites -->
+    <style name="FavoriteHeaderText" parent="@android:style/TextAppearance">
+        <item name="android:paddingTop">@dimen/favorite_item_vertical_margin</item>
+        <item name="android:paddingLeft">@dimen/favorite_item_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/favorite_item_horizontal_margin</item>
+        <item name="android:paddingBottom">@dimen/favorite_item_vertical_margin</item>
+        <item name="android:textColor">@color/profile_header</item>
+        <item name="android:textSize">@dimen/font_size_large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="FavoriteItem">
+    </style>
+
+    <style name="FavoriteItemIcon">
+        <item name="android:layout_marginTop">@dimen/favorite_item_vertical_margin</item>
+        <item name="android:layout_marginLeft">@dimen/favorite_item_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/favorite_item_horizontal_margin</item>
+        <item name="android:layout_marginBottom">@dimen/favorite_item_vertical_margin</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
     <!-- Profile -->
     <style name="ProfileListView" parent="@android:style/Widget.ListView">
         <item name="android:divider">@color/profile_item_separator</item>
@@ -140,35 +163,6 @@
         <item name="android:paddingBottom">@dimen/activity_horizontal_margin</item>
         <item name="android:textColor">@color/profile_hint</item>
         <item name="android:textSize">@dimen/font_size_medium</item>
-    </style>
-
-    <style name="ProfileHeaderText" parent="@android:style/TextAppearance">
-        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
-        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
-        <item name="android:paddingBottom">@dimen/activity_horizontal_margin</item>
-        <item name="android:textColor">@color/profile_header</item>
-        <item name="android:textSize">@dimen/font_size_large</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="ProfileItem">
-        <item name="android:paddingLeft">@dimen/profile_item_horizontal_margin</item>
-        <item name="android:paddingRight">@dimen/profile_item_horizontal_margin</item>
-        <item name="android:layout_height">@dimen/profile_item_height</item>
-    </style>
-
-    <style name="ProfileItemIcon">
-        <item name="android:layout_width">@dimen/profile_item_height</item>
-    </style>
-
-    <style name="ProfileItemTitleText" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/profile_item_title</item>
-        <item name="android:textSize">@dimen/font_size_medium</item>
-    </style>
-
-    <style name="ProfileItemSubtitleText" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/profile_item_subtitle</item>
-        <item name="android:textSize">@dimen/font_size_small</item>
     </style>
 
 </resources>
