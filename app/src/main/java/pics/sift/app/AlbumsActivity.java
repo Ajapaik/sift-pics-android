@@ -32,7 +32,7 @@ public class AlbumsActivity extends WebActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.container, new AlbumsFragment()).commit();
         }
 
-        if(checkPlayServices(true)) {
+        if(checkPlayServices(false)) {
             registerDevice(false);
         }
     }
@@ -41,7 +41,7 @@ public class AlbumsActivity extends WebActivity {
     protected void onResume() {
         super.onResume();
 
-        checkPlayServices(true);
+        checkPlayServices(false);
     }
 
     @Override
