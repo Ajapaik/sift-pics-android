@@ -44,6 +44,7 @@
     <string name="album_title">Album</string>
 
     <!-- Favorites -->
+    <string name="favorites_label_no_data">No Favorites</string>
     <string name="favorites_title">Favorites</string>
 
     <!-- Profile -->

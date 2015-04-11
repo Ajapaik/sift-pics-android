@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.tonicartos.superslim.LayoutManager;
 
@@ -70,15 +71,16 @@ public class FavoritesFragment extends WebFragment {
         if(!Objects.match(m_profile, profile)) {
             RecyclerView recyclerView = getRecyclerView();
             Context context = getActivity();
+            List<Favorite> favorites = (profile != null) ? profile.getFavorites() : null;
 
             m_profile = profile;
 
-            if(m_profile != null) {
-                List<Favorite> favorites = m_profile.getFavorites();
-
+            if(favorites != null && favorites.size() > 0) {
                 recyclerView.setAdapter(new FavoritesAdapter(context, favorites, m_profile.getMeta()));
+                getEmptyView().setText(R.string.none);
             } else {
                 recyclerView.setAdapter(null);
+                getEmptyView().setText(R.string.favorites_label_no_data);
             }
         }
     }
@@ -108,6 +110,10 @@ public class FavoritesFragment extends WebFragment {
                 }
             }
         });
+    }
+
+    private TextView getEmptyView() {
+        return (TextView)getView().findViewById(R.id.empty);
     }
 
     private RecyclerView getRecyclerView() {

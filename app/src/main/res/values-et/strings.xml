@@ -44,6 +44,7 @@
     <string name="album_title">Album</string>
 
     <!-- Favorites -->
+    <string name="favorites_label_no_data">Lemmikuid pole</string>
     <string name="favorites_title">Lemmikud</string>
 
     <!-- Profile -->

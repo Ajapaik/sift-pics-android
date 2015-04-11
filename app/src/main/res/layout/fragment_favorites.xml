@@ -10,6 +10,16 @@
         android:scrollbars="vertical"
         android:clipToPadding="false" />
 
+    <TextView
+        android:id="@+id/empty"
+        style="@style/FavoritePlaceholderTitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="@string/none" />
+
     <ProgressBar
         android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyleLarge"

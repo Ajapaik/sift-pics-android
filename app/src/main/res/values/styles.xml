@@ -96,6 +96,11 @@
     </style>
 
     <!-- Favorites -->
+    <style name="FavoritePlaceholderTitleText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/favorites_placeholder_title</item>
+        <item name="android:textSize">@dimen/font_size_huge</item>
+    </style>
+
     <style name="FavoriteHeaderText" parent="@android:style/TextAppearance">
         <item name="android:paddingTop">@dimen/favorite_item_vertical_margin</item>
         <item name="android:paddingLeft">@dimen/favorite_item_horizontal_margin</item>

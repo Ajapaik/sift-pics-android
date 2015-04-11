@@ -17,6 +17,9 @@
     <color name="album_info_subtitle">#FFFFFF</color>
     <color name="album_info_title">#FFFFFF</color>
 
+    <!-- Favorites -->
+    <color name="favorites_placeholder_title">#666666</color>
+
     <!-- Profile -->
     <color name="profile_header">#000000</color>
     <color name="profile_hint">#666666</color>
