@@ -2,6 +2,7 @@ package pics.sift.app.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import pics.sift.app.util.WebAction;
 
 public class FavoritesFragment extends WebFragment {
     private static final String TAG = "FavoritesFragment";
+    private static final String KEY_LAYOUT = "layout";
     private static final String KEY_PROFILE = "profile";
 
     private Profile m_profile;
@@ -39,21 +41,24 @@ public class FavoritesFragment extends WebFragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        Parcelable layout = null;
         Profile profile = null;
 
         super.onActivityCreated(savedInstanceState);
 
         if(savedInstanceState != null) {
             profile = savedInstanceState.getParcelable(KEY_PROFILE);
+            layout = savedInstanceState.getParcelable(KEY_LAYOUT);
         }
 
-        setProfile(profile);
+        setProfile(profile, layout);
     }
 
     @Override
-    public void onSaveInstanceState(final Bundle savedInstanceState) {
+    public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
 
+        savedInstanceState.putParcelable(KEY_LAYOUT, getRecyclerView().getLayoutManager().onSaveInstanceState());
         savedInstanceState.putParcelable(KEY_PROFILE, m_profile);
     }
 
@@ -68,6 +73,10 @@ public class FavoritesFragment extends WebFragment {
     }
 
     public void setProfile(Profile profile) {
+        setProfile(profile, null);
+    }
+
+    public void setProfile(Profile profile, Parcelable state) {
         if(!Objects.match(m_profile, profile)) {
             RecyclerView recyclerView = getRecyclerView();
             Context context = getActivity();
@@ -75,12 +84,20 @@ public class FavoritesFragment extends WebFragment {
 
             m_profile = profile;
 
+            if(state == null) {
+                state = recyclerView.getLayoutManager().onSaveInstanceState();
+            }
+
             if(favorites != null && favorites.size() > 0) {
                 recyclerView.setAdapter(new FavoritesAdapter(context, favorites, m_profile.getMeta()));
                 getEmptyView().setText(R.string.none);
             } else {
                 recyclerView.setAdapter(null);
                 getEmptyView().setText(R.string.favorites_label_no_data);
+            }
+
+            if(state != null) {
+                recyclerView.getLayoutManager().onRestoreInstanceState(state);
             }
         }
     }
