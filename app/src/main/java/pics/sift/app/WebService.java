@@ -87,19 +87,20 @@ public class WebService extends Service {
         queue.execute(new Runnable() {
             @Override
             public void run() {
+                String language = m_settings.getLanguage();
                 boolean isSecure = operation.isSecure();
 
                 if(isSecure && (m_session == null || m_session.isExpired())) {
                     runSilentLogin();
                 }
 
-                operation.performRequest(API_URL, (isSecure && m_session != null) ? m_session.getWebParameters() : null);
+                operation.performRequest(API_URL, (isSecure && m_session != null) ? m_session.getWebParameters(language) : null);
 
                 if(operation.shouldRetry()) {
                     runSilentLogin();
 
                     if(m_session != null) {
-                        operation.performRequest(API_URL, m_session.getWebParameters());
+                        operation.performRequest(API_URL, m_session.getWebParameters(language));
                     }
                 }
 

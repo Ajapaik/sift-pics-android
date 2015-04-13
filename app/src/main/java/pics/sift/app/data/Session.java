@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Locale;
 import java.util.Map;
 
 import pics.sift.app.data.util.Model;
@@ -19,6 +20,7 @@ public class Session extends Model {
     private static final String KEY_SESSION = "session";
     private static final String KEY_USER = "id";
 
+    private static final String KEY_WEB_LANGUAGE = "_l";
     private static final String KEY_WEB_TOKEN = "_s";
     private static final String KEY_WEB_USER = "_u";
 
@@ -83,11 +85,23 @@ public class Session extends Model {
         return attributes;
     }
 
-    public Map<String, String> getWebParameters() {
+    public Map<String, String> getWebParameters(String language) {
         Map<String, String> parameters = new Hashtable<String, String>();
 
         parameters.put(KEY_WEB_TOKEN, m_token);
         parameters.put(KEY_WEB_USER, m_user);
+
+        if(language == null || language.length() == 0) {
+            Locale locale = Locale.getDefault();
+
+            if(locale != null) {
+                language = locale.getLanguage();
+            }
+        }
+
+        if(language != null) {
+            parameters.put(KEY_WEB_LANGUAGE, language);
+        }
 
         return parameters;
     }
