@@ -48,6 +48,7 @@ Session parameters are standardised:
 	STRING _u [R] = user ID (required)
 	STRING _s [R] = session ID (required)
 	STRING _v [O] = client version ID (optional)
+	STRING _l [O] = client language code (optional)
 
 ## Login
 
