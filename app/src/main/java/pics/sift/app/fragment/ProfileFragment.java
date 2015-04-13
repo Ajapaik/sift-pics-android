@@ -56,6 +56,7 @@ public class ProfileFragment extends WebFragment {
         setProfile(profile);
 
         checkbox = getNotificationsCheckBox();
+        checkbox.setText(R.string.profile_notifications_action);
 
         if(checkPlayServices(false)) {
             Registration registration = getSettings().getRegistration();

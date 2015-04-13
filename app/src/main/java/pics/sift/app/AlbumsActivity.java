@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import pics.sift.app.fragment.AlbumsFragment;
-import pics.sift.app.util.Settings;
 import pics.sift.app.util.WebActivity;
 
 public class AlbumsActivity extends WebActivity {
@@ -25,14 +24,7 @@ public class AlbumsActivity extends WebActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String language = null;
-
         super.onCreate(savedInstanceState);
-
-        if((language = getSettings().getLanguage()) != null) {
-            Settings.updateLocale(this, language);
-        }
-
         setContentView(R.layout.activity_albums);
 
         if(savedInstanceState == null) {

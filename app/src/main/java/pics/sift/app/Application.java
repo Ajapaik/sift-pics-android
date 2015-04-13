@@ -4,6 +4,7 @@ import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
+import pics.sift.app.util.Settings;
 import pics.sift.app.util.WebImage;
 
 @ReportsCrashes(formKey="",
@@ -16,6 +17,8 @@ import pics.sift.app.util.WebImage;
 public class Application extends android.app.Application {
     @Override
     public void onCreate() {
+        String language = null;
+
         super.onCreate();
 
         if(!BuildConfig.DEBUG) {
@@ -23,5 +26,9 @@ public class Application extends android.app.Application {
         }
 
         WebImage.invalidate(this);
+
+        if((language = new Settings(this).getLanguage()) != null) {
+            Settings.updateLocale(this, language);
+        }
     }
 }

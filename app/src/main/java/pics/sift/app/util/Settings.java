@@ -30,6 +30,7 @@ public class Settings {
         Configuration cfg = resources.getConfiguration();
 
         cfg.locale = (language != null) ? new Locale(language) : Locale.getDefault();
+        //Locale.setDefault(cfg.locale);
         resources.updateConfiguration(cfg, dm);
     }
 

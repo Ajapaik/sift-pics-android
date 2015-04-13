@@ -13,6 +13,7 @@ public class ProfileActivity extends WebActivity {
 
         setContentView(R.layout.activity_profile);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getResources().getString(R.string.profile_title));
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.container, new ProfileFragment()).commit();
