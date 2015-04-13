@@ -59,7 +59,7 @@
     <string name="profile_language_en">Inglise</string>
     <string name="profile_language_et">Eesti</string>
     <string name="profile_notifications_action">Teavitused</string>
-    <string name="profile_notifications_hint">Luba/keela teavitused</string>
+    <string name="profile_notifications_hint">Teavita uute albumite lisamisest</string>
     <string name="profile_title">Minu profiil</string>
 
     <!-- Notifications -->
