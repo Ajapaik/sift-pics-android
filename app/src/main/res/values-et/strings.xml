@@ -35,7 +35,7 @@
 
     <!-- Albums -->
     <string name="album_label_no_data">Albumeid pole</string>
-    <string name="album_stats_header">&lt;b>%1$d&lt;/b> pilti selles albumis&lt;br />&lt;br /></string>
+    <string name="album_stats_header">Selles albumis on &lt;b>%1$d&lt;/b> pilti.&lt;br />&lt;br /></string>
     <string name="album_stats_personal">Oled teinud &lt;b>%1$d&lt;/b> otsust &lt;b>%2$d&lt;/b> pildi kohta selles albumis.</string>
     <string name="album_stats_summary">&lt;b>%1$d&lt;/b> kasutajat on teinud &lt;b>%2$d&lt;/b> otsust &lt;b>%3$d&lt;/b> pildi kohta.</string>
     <string name="album_stats_rank">Oled nr &lt;b>%d&lt;/b> panustaja.</string>
