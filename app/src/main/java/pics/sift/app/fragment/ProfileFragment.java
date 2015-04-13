@@ -6,10 +6,13 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import pics.sift.app.R;
@@ -19,11 +22,14 @@ import pics.sift.app.data.util.Status;
 import pics.sift.app.fragment.util.WebFragment;
 import pics.sift.app.util.Objects;
 import pics.sift.app.util.Registration;
+import pics.sift.app.util.Settings;
 import pics.sift.app.util.WebAction;
 
 public class ProfileFragment extends WebFragment {
     private static final String TAG = "ProfileFragment";
     private static final String KEY_PROFILE = "profile";
+    private static final String LANGUAGE_ENGLISH = "en";
+    private static final String LANGUAGE_ESTONIAN = "et";
 
     private Profile m_profile;
 
@@ -35,7 +41,9 @@ public class ProfileFragment extends WebFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Profile profile = null;
+        String language;
         CheckBox checkbox;
+        Spinner spinner;
 
         super.onActivityCreated(savedInstanceState);
 
@@ -67,6 +75,52 @@ public class ProfileFragment extends WebFragment {
             checkbox.setChecked(false);
             checkbox.setEnabled(false);
         }
+
+        language = getSettings().getLanguage();
+        spinner = getLanguageSpinner();
+        spinner.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, new String[] {
+            getActivity().getString(R.string.profile_language_auto),
+            getActivity().getString(R.string.profile_language_en),
+            getActivity().getString(R.string.profile_language_et)
+        }));
+
+        if(Objects.match(language, LANGUAGE_ENGLISH)) {
+            spinner.setSelection(1);
+        } else if(Objects.match(language, LANGUAGE_ESTONIAN)) {
+            spinner.setSelection(2);
+        } else {
+            spinner.setSelection(0);
+        }
+
+        spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                Settings settings = getSettings();
+                String oldLanguage = settings.getLanguage();
+                String newLanguage = null;
+
+                switch(position) {
+                    case 0:
+                        break;
+                    case 1:
+                        newLanguage = LANGUAGE_ENGLISH;
+                        break;
+                    case 2:
+                        newLanguage = LANGUAGE_ESTONIAN;
+                        break;
+                }
+
+                if(!Objects.match(oldLanguage, newLanguage)) {
+                    settings.setLanguage(newLanguage);
+                    Settings.updateLocale(getActivity(), newLanguage);
+                    getActivity().recreate();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
     }
 
     @Override
@@ -168,5 +222,9 @@ public class ProfileFragment extends WebFragment {
 
     private CheckBox getNotificationsCheckBox() {
         return (CheckBox)getView().findViewById(R.id.checkbox_notifications);
+    }
+
+    private Spinner getLanguageSpinner() {
+        return (Spinner)getView().findViewById(R.id.spinner_language);
     }
 }

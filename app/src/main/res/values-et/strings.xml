@@ -54,6 +54,10 @@
         <item quantity="other">Oled teinud &lt;b>%1$d&lt;/b> klassifitseerimisotsust &lt;b>%2$d&lt;/b> pildile.</item>
     </plurals>
     <string name="profile_favorites">Lemmikud:</string>
+    <string name="profile_language">Keel</string>
+    <string name="profile_language_auto">Automaatne</string>
+    <string name="profile_language_en">Inglise</string>
+    <string name="profile_language_et">Eesti</string>
     <string name="profile_notifications_action">Teavitused</string>
     <string name="profile_notifications_hint">Luba/keela teavitused</string>
     <string name="profile_title">Minu profiil</string>

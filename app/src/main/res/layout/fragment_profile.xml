@@ -46,6 +46,20 @@
             android:layout_height="wrap_content"
             android:text="@string/profile_notifications_hint" />
 
+        <View style="@style/ProfileSeparator" />
+
+        <TextView
+            style="@style/ProfileHintText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_language" />
+
+        <Spinner
+            android:id="@+id/spinner_language"
+            style="@style/ProfileSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
     </LinearLayout>
 
     <ProgressBar

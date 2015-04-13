@@ -170,4 +170,7 @@
         <item name="android:textSize">@dimen/font_size_medium</item>
     </style>
 
+    <style name="ProfileSpinner">
+    </style>
+
 </resources>
