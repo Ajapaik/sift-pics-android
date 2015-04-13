@@ -13,6 +13,7 @@ public class FavoritesActivity extends WebActivity {
 
         setContentView(R.layout.activity_favorites);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getResources().getString(R.string.favorites_title));
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.container, new FavoritesFragment()).commit();
