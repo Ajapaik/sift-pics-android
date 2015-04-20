@@ -58,6 +58,7 @@
     <string name="profile_language_auto">Automatic</string>
     <string name="profile_language_en">English</string>
     <string name="profile_language_et">Estonian</string>
+    <string name="profile_language_fi">Finnish</string>
     <string name="profile_notifications_action">Push Notifications</string>
     <string name="profile_notifications_hint">Keep me updated when new albums are added</string>
     <string name="profile_title">My Profile</string>
