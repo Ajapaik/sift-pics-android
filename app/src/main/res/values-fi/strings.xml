@@ -3,66 +3,67 @@
     <!-- Global -->
     <string name="app_name">Sift.pics</string>
     <string name="none"></string>
-    <string name="action_favorites">Lemmikud</string>
-    <string name="action_profile">Profiil</string>
-    <string name="action_refresh">Värskenda</string>
-    <string name="action_settings">Seaded</string>
+    <string name="action_favorites">Suosikit</string>
+    <string name="action_profile">Profiili</string>
+    <string name="action_refresh">Päivitä</string>
+    <string name="action_settings">Asetukset</string>
 
     <!-- ACRA -->
-    <string name="acra_dialog_title">Sift.pics on kokku jooksnud</string>
-    <string name="acra_dialog_text">Rakendus jooksis mingi vea tõttu kokku. Aidake meil rakendust parandada saates vea info, selleks peate lihtsalt klikkima \'OK\'.</string>
-    <string name="acra_dialog_comment_prompt">Saate allpool lisada enda kommentaari:</string>
-    <string name="acra_dialog_ok_toast">Suur tänu!</string>
+    <string name="acra_dialog_title">Sift.pics on kaatunut</string>
+    <string name="acra_dialog_text">Odottamaton virhe pakotti ohjelman lopettamaan. Auta meitä korjaamaan virhe lähettämällä virheen tiedot. Riittää, kun klikkaat OK.</string>
+    <string name="acra_dialog_comment_prompt">Voit lisätä kommenttisi ongelmasta alle:</string>
+    <string name="acra_dialog_ok_toast">Kiitos!</string>
 
     <!-- Photo tags -->
-    <string name="photo_tag_detail">Suur plaan</string>
-    <string name="photo_tag_exterior">Välivaade</string>
-    <string name="photo_tag_ground">Maapinnalt</string>
-    <string name="photo_tag_interior">Sisevaade</string>
-    <string name="photo_tag_many">Mitu inimest</string>
-    <string name="photo_tag_na">Ei sobi</string>
-    <string name="photo_tag_natural">Loomulik</string>
-    <string name="photo_tag_one">Üks inimene</string>
+    <string name="photo_tag_detail">Lähikuva</string>
+    <string name="photo_tag_exterior">Ulkokuva</string>
+    <string name="photo_tag_ground">Maan tasalta</string>
+    <string name="photo_tag_interior">Sisäkuva</string>
+    <string name="photo_tag_many">Useita henkilöitä</string>
+    <string name="photo_tag_na">Ei sovi</string>
+    <string name="photo_tag_natural">Dokumentaarinen</string>
+    <string name="photo_tag_one">Yksi henkilö</string>
     <string name="photo_tag_private">Private</string>
     <string name="photo_tag_public">Public</string>
-    <string name="photo_tag_raised">Kõrgemalt</string>
-    <string name="photo_tag_rural">Maa</string>
-    <string name="photo_tag_social">Inimesed</string>
-    <string name="photo_tag_staged">Poseeritud</string>
-    <string name="photo_tag_urban">Linn</string>
-    <string name="photo_tag_whole">Üldvaade</string>
-    <string name="photo_tag_view">Vaade</string>
+    <string name="photo_tag_raised">Ylhäältä</string>
+    <string name="photo_tag_rural">Maaseutu</string>
+    <string name="photo_tag_social">Sosiaalinen</string>
+    <string name="photo_tag_staged">Lavastettu</string>
+    <string name="photo_tag_urban">Kaupunki</string>
+    <string name="photo_tag_whole">Yleinen</string>
+    <string name="photo_tag_view">Katso</string>
 
     <!-- Albums -->
-    <string name="album_label_no_data">Albumeid pole</string>
-    <string name="album_stats_header">Selles albumis on &lt;b>%1$d&lt;/b> pilti.&lt;br />&lt;br /></string>
-    <string name="album_stats_personal">Oled teinud &lt;b>%1$d&lt;/b> otsust &lt;b>%2$d&lt;/b> pildi kohta selles albumis.</string>
-    <string name="album_stats_summary">&lt;b>%1$d&lt;/b> kasutajat on teinud &lt;b>%2$d&lt;/b> otsust &lt;b>%3$d&lt;/b> pildi kohta.</string>
-    <string name="album_stats_rank">Oled nr &lt;b>%d&lt;/b> panustaja.</string>
+    <string name="album_label_no_data">Ei albumeita</string>
+    <string name="album_stats_header">&lt;b>%1$d&lt;/b> kuvaa albumissa &lt;br />&lt;br /></string>
+    <string name="album_stats_personal">Teit &lt;b>%1$d&lt;/b> määrittelyä &lt;b>%2$d&lt;/b> kuvalle tässä albumissa.</string>
+    <string name="album_stats_summary">&lt;b>%1$d&lt;/b> käyttäjää on tehnyt &lt;b>%2$d&lt;/b> määrittelyä &lt;b>%3$d&lt;/b> kuvalle.</string>
+    <string name="album_stats_rank">Olet osallistuja numero &lt;b>%d&lt;/b>.</string>
 
     <!-- Album -->
-    <string name="album_title">Album</string>
+    <string name="album_title">Albumi</string>
 
     <!-- Favorites -->
-    <string name="favorites_label_no_data">Lemmikuid pole</string>
-    <string name="favorites_title">Lemmikud</string>
+    <string name="favorites_label_no_data">Ei suosikkeja</string>
+    <string name="favorites_title">Suosikit</string>
 
     <!-- Profile -->
     <plurals name="profile_stats">
-        <item quantity="zero">Sa pole ühegi pildi kohta ühtegi otsust teinud.</item>
-        <item quantity="one">Oled teinud &lt;b>1&lt;/b> klassifitseerimisotsuse &lt;b>1&lt;/b> pildile.</item>
-        <item quantity="other">Oled teinud &lt;b>%1$d&lt;/b> klassifitseerimisotsust &lt;b>%2$d&lt;/b> pildile.</item>
+        <item quantity="zero">Et ole merkinnyt kuvia vielä.</item>
+        <item quantity="one">Olet merkinnyt &lt;b>1&lt;/b> luokituksen &lt;b>1&lt;/b> kuvalle.</item>
+        <item quantity="other">Olet merkinnyt &lt;b>%1$d&lt;/b> luokitusta &lt;b>%2$d&lt;/b> kuvalle.</item>
     </plurals>
-    <string name="profile_favorites">Lemmikud:</string>
-    <string name="profile_language">Keel</string>
-    <string name="profile_language_auto">Automaatne</string>
-    <string name="profile_language_en">Inglise</string>
-    <string name="profile_language_et">Eesti</string>
-    <string name="profile_notifications_action">Teavitused</string>
-    <string name="profile_notifications_hint">Teavita uute albumite lisamisest</string>
-    <string name="profile_title">Minu profiil</string>
+    <string name="profile_favorites">Suosikit:</string>
+    <string name="profile_language">Kieli</string>
+    <string name="profile_language_auto">Automaattinen</string>
+    <string name="profile_language_en">Englanti</string>
+    <string name="profile_language_et">Viro</string>
+    <string name="profile_language_fi">Suomi</string>
+    <string name="profile_notifications_action">Push Notifications</string>
+    <string name="profile_notifications_hint">Ilmoita minulle, kun uusia albumeita lisätään.</string>
+    <string name="profile_title">Profiilini</string>
 
     <!-- Notifications -->
-    <string name="notification_new_album">Lisatud uus album \'%s\'!</string>
+    <string name="notification_new_album">Uusi albumi \'%s\' lisättiin juuri!</string>
 
 </resources>
