@@ -30,6 +30,7 @@ public class ProfileFragment extends WebFragment {
     private static final String KEY_PROFILE = "profile";
     private static final String LANGUAGE_ENGLISH = "en";
     private static final String LANGUAGE_ESTONIAN = "et";
+    private static final String LANGUAGE_FINNISH = "fi";
 
     private Profile m_profile;
 
@@ -82,13 +83,16 @@ public class ProfileFragment extends WebFragment {
         spinner.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, new String[] {
             getActivity().getString(R.string.profile_language_auto),
             getActivity().getString(R.string.profile_language_en),
-            getActivity().getString(R.string.profile_language_et)
+            getActivity().getString(R.string.profile_language_et),
+            getActivity().getString(R.string.profile_language_fi)
         }));
 
         if(Objects.match(language, LANGUAGE_ENGLISH)) {
             spinner.setSelection(1);
         } else if(Objects.match(language, LANGUAGE_ESTONIAN)) {
             spinner.setSelection(2);
+        } else if(Objects.match(language, LANGUAGE_FINNISH)) {
+            spinner.setSelection(3);
         } else {
             spinner.setSelection(0);
         }
@@ -108,6 +112,9 @@ public class ProfileFragment extends WebFragment {
                         break;
                     case 2:
                         newLanguage = LANGUAGE_ESTONIAN;
+                        break;
+                    case 3:
+                        newLanguage = LANGUAGE_FINNISH;
                         break;
                 }
 
