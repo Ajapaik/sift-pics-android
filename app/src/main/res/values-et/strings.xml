@@ -15,7 +15,7 @@
     <string name="acra_dialog_ok_toast">Suur tänu!</string>
 
     <!-- Photo tags -->
-    <string name="photo_tag_detail">Suur plaan</string>
+    <string name="photo_tag_detail">Lähivaade</string>
     <string name="photo_tag_exterior">Välivaade</string>
     <string name="photo_tag_ground">Maapinnalt</string>
     <string name="photo_tag_interior">Sisevaade</string>
@@ -55,9 +55,10 @@
     </plurals>
     <string name="profile_favorites">Lemmikud:</string>
     <string name="profile_language">Keel</string>
-    <string name="profile_language_auto">Automaatne</string>
-    <string name="profile_language_en">Inglise</string>
-    <string name="profile_language_et">Eesti</string>
+    <string name="profile_language_auto">automaatne</string>
+    <string name="profile_language_en">inglise</string>
+    <string name="profile_language_et">eesti</string>
+    <string name="profile_language_fi">soome</string>
     <string name="profile_notifications_action">Teavitused</string>
     <string name="profile_notifications_hint">Teavita uute albumite lisamisest</string>
     <string name="profile_title">Minu profiil</string>
