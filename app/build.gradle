@@ -25,6 +25,11 @@ android {
             keyPassword AJAPAIK_KEY_PASSWORD
         }
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
 }
 
 dependencies {
