@@ -157,7 +157,12 @@ public class ProfileFragment extends WebFragment {
 
             if(m_profile != null) {
                 Hyperlink link = m_profile.getLink();
-                String summary = context.getResources().getQuantityString(R.plurals.profile_stats, m_profile.getTaggedCount(), m_profile.getTaggedCount(), m_profile.getPicturesCount());
+                String summary;
+                if (m_profile.getTaggedCount() == 0) {
+                    summary = context.getResources().getString(R.string.zero_tagged);
+                } else {
+                    summary = context.getResources().getQuantityString(R.plurals.profile_stats, m_profile.getTaggedCount(), m_profile.getTaggedCount(), m_profile.getPicturesCount());
+                }
 
                 if(m_profile.getRank() != 0) {
                     summary = summary + " " + context.getResources().getString(R.string.album_stats_rank, m_profile.getRank());

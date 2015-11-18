@@ -48,8 +48,8 @@
     <string name="favorites_title">Lemmikud</string>
 
     <!-- Profile -->
+    <string name="zero_tagged">Sa pole ühegi pildi kohta ühtegi otsust teinud.</string>
     <plurals name="profile_stats">
-        <item quantity="zero">Sa pole ühegi pildi kohta ühtegi otsust teinud.</item>
         <item quantity="one">Oled teinud &lt;b>1&lt;/b> klassifitseerimisotsuse &lt;b>1&lt;/b> pildile.</item>
         <item quantity="other">Oled teinud &lt;b>%1$d&lt;/b> klassifitseerimisotsust &lt;b>%2$d&lt;/b> pildile.</item>
     </plurals>

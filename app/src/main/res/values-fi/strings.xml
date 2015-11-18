@@ -48,8 +48,8 @@
     <string name="favorites_title">Suosikit</string>
 
     <!-- Profile -->
+    <string name="zero_tagged">Et ole merkinnyt kuvia vielä.</string>
     <plurals name="profile_stats">
-        <item quantity="zero">Et ole merkinnyt kuvia vielä.</item>
         <item quantity="one">Olet merkinnyt &lt;b>1&lt;/b> luokituksen &lt;b>1&lt;/b> kuvalle.</item>
         <item quantity="other">Olet merkinnyt &lt;b>%1$d&lt;/b> luokitusta &lt;b>%2$d&lt;/b> kuvalle.</item>
     </plurals>
