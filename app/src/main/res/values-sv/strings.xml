@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+  <!--Global-->
+  <string name="app_name">Sift.pics</string>
+  <string name="none"></string>
+  <string name="action_favorites">Favoriter</string>
+  <string name="action_profile">Profil</string>
+  <string name="action_refresh">Uppdatera</string>
+  <string name="action_settings">Inställningar</string>
+  <!--ACRA-->
+  <string name="acra_dialog_title">Sift.pics har kraschat</string>
+  <string name="acra_dialog_text">Ett oväntat fel inträffade och tvingade applikationen att stanna. Snälla hjälp oss fixa detta genom att skicka oss fel data, allt du behöver göra är att klicka OK.</string>
+  <string name="acra_dialog_comment_prompt">Du kan skriva en kommentar till problemet nedan:</string>
+  <string name="acra_dialog_ok_toast">Tack ska du ha!</string>
+  <!--Photo tags-->
+  <string name="photo_tag_detail">Närbild</string>
+  <string name="photo_tag_exterior">Utomhus</string>
+  <string name="photo_tag_ground">Från Mark Nivå</string>
+  <string name="photo_tag_interior">Inomhus</string>
+  <string name="photo_tag_many">Många personer</string>
+  <string name="photo_tag_na">Inte Tillämpbar</string>
+  <string name="photo_tag_natural">Naturlig</string>
+  <string name="photo_tag_one">En Person</string>
+  <string name="photo_tag_private">Privat</string>
+  <string name="photo_tag_public">Offentlig</string>
+  <string name="photo_tag_raised">Från Upprest Nivå</string>
+  <string name="photo_tag_rural">Landsbygd</string>
+  <string name="photo_tag_social">Social</string>
+  <string name="photo_tag_staged">Iscensatt</string>
+  <string name="photo_tag_urban">Tätort</string>
+  <string name="photo_tag_whole">Generell </string>
+  <string name="photo_tag_view">Vy</string>
+  <!--Albums-->
+  <string name="album_label_no_data">Inga Album</string>
+  <string name="album_stats_header">&lt;b&gt;%1$d&lt;/b&gt; bilder i album&lt;br /&gt;&lt;br /&gt;</string>
+  <string name="album_stats_personal">Du har gjort &lt;b&gt;%1$d&lt;/b&gt; beslut om &lt;b&gt;%2$d&lt;/b&gt; bilder i detta album.</string>
+  <string name="album_stats_summary">&lt;b&gt;%1$d&lt;/b&gt; användare har gjort &lt;b&gt;%2$d&lt;/b&gt; beslut om &lt;b&gt;%3$d&lt;/b&gt; bilder.</string>
+  <string name="album_stats_rank">Du är bidragsgivare nummer &lt;b&gt;%d&lt;/b&gt;.</string>
+  <!--Album-->
+  <string name="album_title">Album</string>
+  <!--Favorites-->
+  <string name="favorites_label_no_data">Inga Favoriter</string>
+  <string name="favorites_title">Favoriter</string>
+  <!--Profile-->
+  <string name="zero_tagged">Du har inte taggat några bilder än.</string>
+  <plurals name="profile_stats">
+    <item quantity="one">Du har taggat &lt;b&gt;1&lt;/b&gt; klassifikation för &lt;b&gt;1&lt;/b&gt; bild.</item>
+    <item quantity="other">Du har gjort &lt;b&gt;%1$d&lt;/b&gt; klassifikationer om &lt;b&gt;%2$d&lt;/b&gt; bilder.</item>
+  </plurals>
+  <string name="profile_favorites">Favoriter:</string>
+  <string name="profile_language">Språk</string>
+  <string name="profile_language_auto">Automatiskt</string>
+  <string name="profile_language_en">Engelska</string>
+  <string name="profile_language_et">Estniska</string>
+  <string name="profile_language_fi">Finska</string>
+  <string name="profile_language_sv">Svenska</string>
+  <string name="profile_notifications_action">Notifikationer</string>
+  <string name="profile_notifications_hint">Håll mig uppdaterad när nya album tillkommer.</string>
+  <string name="profile_title">Min Profil</string>
+  <!--Notifications-->
+  <string name="notification_new_album">Nytt album \'%s\' har just tillkommit!</string>
+</resources>

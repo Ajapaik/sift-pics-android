@@ -59,6 +59,7 @@
     <string name="profile_language_en">Englanti</string>
     <string name="profile_language_et">Viro</string>
     <string name="profile_language_fi">Suomi</string>
+    <string name="profile_language_sv">Ruotsi</string>
     <string name="profile_notifications_action">Push Notifications</string>
     <string name="profile_notifications_hint">Ilmoita minulle, kun uusia albumeita lisätään.</string>
     <string name="profile_title">Profiilini</string>

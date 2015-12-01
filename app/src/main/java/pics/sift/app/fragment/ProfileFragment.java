@@ -31,6 +31,7 @@ public class ProfileFragment extends WebFragment {
     private static final String LANGUAGE_ENGLISH = "en";
     private static final String LANGUAGE_ESTONIAN = "et";
     private static final String LANGUAGE_FINNISH = "fi";
+    private static final String LANGUAGE_SWEDISH = "sv";
 
     private Profile m_profile;
 
@@ -84,7 +85,8 @@ public class ProfileFragment extends WebFragment {
             getActivity().getString(R.string.profile_language_auto),
             getActivity().getString(R.string.profile_language_en),
             getActivity().getString(R.string.profile_language_et),
-            getActivity().getString(R.string.profile_language_fi)
+            getActivity().getString(R.string.profile_language_fi),
+            getActivity().getString(R.string.profile_language_sv)
         }));
 
         if(Objects.match(language, LANGUAGE_ENGLISH)) {
@@ -93,6 +95,8 @@ public class ProfileFragment extends WebFragment {
             spinner.setSelection(2);
         } else if(Objects.match(language, LANGUAGE_FINNISH)) {
             spinner.setSelection(3);
+        } else if(Objects.match(language, LANGUAGE_SWEDISH)) {
+            spinner.setSelection(4);
         } else {
             spinner.setSelection(0);
         }
@@ -115,6 +119,9 @@ public class ProfileFragment extends WebFragment {
                         break;
                     case 3:
                         newLanguage = LANGUAGE_FINNISH;
+                        break;
+                    case 4:
+                        newLanguage = LANGUAGE_SWEDISH;
                         break;
                 }
 

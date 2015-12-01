@@ -59,6 +59,7 @@
     <string name="profile_language_en">inglise</string>
     <string name="profile_language_et">eesti</string>
     <string name="profile_language_fi">soome</string>
+    <string name="profile_language_sv">rootsi</string>
     <string name="profile_notifications_action">Teavitused</string>
     <string name="profile_notifications_hint">Teavita uute albumite lisamisest</string>
     <string name="profile_title">Minu profiil</string>
