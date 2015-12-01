@@ -53,6 +53,7 @@
   <string name="profile_language_en">Engelska</string>
   <string name="profile_language_et">Estniska</string>
   <string name="profile_language_fi">Finska</string>
+  <string name="profile_language_sv">Svenska</string>
   <string name="profile_notifications_action">Notifikationer</string>
   <string name="profile_notifications_hint">Håll mig uppdaterad när nya album tillkommer.</string>
   <string name="profile_title">Min Profil</string>
