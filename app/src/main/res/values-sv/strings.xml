@@ -24,12 +24,12 @@
   <string name="photo_tag_private">Privat</string>
   <string name="photo_tag_public">Offentlig</string>
   <string name="photo_tag_raised">Från Upprest Nivå</string>
-  <string name="photo_tag_rural">Landsbygd</string>
   <string name="photo_tag_social">Social</string>
   <string name="photo_tag_staged">Iscensatt</string>
-  <string name="photo_tag_urban">Tätort</string>
   <string name="photo_tag_whole">Generell </string>
   <string name="photo_tag_view">Vy</string>
+  <string name="photo_tag_nature">Natur</string>
+  <string name="photo_tag_manmade">Konstgjord</string>
   <!--Albums-->
   <string name="album_label_no_data">Inga Album</string>
   <string name="album_stats_header">&lt;b&gt;%1$d&lt;/b&gt; bilder i album&lt;br /&gt;&lt;br /&gt;</string>
