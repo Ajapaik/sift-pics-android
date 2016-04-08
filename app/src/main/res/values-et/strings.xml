@@ -26,12 +26,12 @@
     <string name="photo_tag_private">Private</string>
     <string name="photo_tag_public">Public</string>
     <string name="photo_tag_raised">Kõrgemalt</string>
-    <string name="photo_tag_rural">Maa</string>
     <string name="photo_tag_social">Inimesed</string>
     <string name="photo_tag_staged">Poseeritud</string>
-    <string name="photo_tag_urban">Linn</string>
     <string name="photo_tag_whole">Üldvaade</string>
     <string name="photo_tag_view">Vaade</string>
+    <string name="photo_tag_nature">Loodus</string>
+    <string name="photo_tag_manmade">Ehitatud</string>
 
     <!-- Albums -->
     <string name="album_label_no_data">Albumeid pole</string>

@@ -26,12 +26,12 @@
     <string name="photo_tag_private">Private</string>
     <string name="photo_tag_public">Public</string>
     <string name="photo_tag_raised">Ylhäältä</string>
-    <string name="photo_tag_rural">Maaseutu</string>
     <string name="photo_tag_social">Sosiaalinen</string>
     <string name="photo_tag_staged">Lavastettu</string>
-    <string name="photo_tag_urban">Kaupunki</string>
     <string name="photo_tag_whole">Yleinen</string>
     <string name="photo_tag_view">Katso</string>
+    <string name="photo_tag_nature">Luonto</string>
+    <string name="photo_tag_manmade">Keinotekoinen</string>
 
     <!-- Albums -->
     <string name="album_label_no_data">Ei albumeita</string>

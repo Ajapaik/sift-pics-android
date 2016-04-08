@@ -161,7 +161,7 @@ public class Photo extends Model {
     public enum Tag {
         INTERIOR_OR_EXTERIOR("interior_or_exterior", 0x01, R.string.photo_tag_interior, R.drawable.ic_local_hotel_white_48dp, R.string.photo_tag_exterior, R.drawable.ic_nature_people_white_48dp),
         PUBLIC_OR_PRIVATE("public_or_private", 0x02, R.string.photo_tag_public, R.drawable.ic_public_white_48dp, R.string.photo_tag_private, R.drawable.ic_vpn_lock_white_48dp),
-        URBAN_OR_RURAL("urban_or_rural", 0x04, R.string.photo_tag_urban, R.drawable.ic_location_city_white_48dp, R.string.photo_tag_rural, R.drawable.ic_nature_white_48dp),
+        MANMADE_OR_NATURE("manmade_or_nature", 0x04, R.string.photo_tag_manmade, R.drawable.ic_location_city_white_48dp, R.string.photo_tag_nature, R.drawable.ic_nature_white_48dp),
         GROUND_OR_RAISED("ground_or_raised", 0x08, R.string.photo_tag_ground, R.drawable.ic_nature_people_white_48dp, R.string.photo_tag_raised, R.drawable.ic_filter_drama_white_48dp),
         VIEW_OR_SOCIAL("view_or_social", 0x10, R.string.photo_tag_view, R.drawable.ic_home_white_48dp, R.string.photo_tag_social, R.drawable.ic_accessibility_white_48dp),
         STAGED_OR_NATURAL("staged_or_natural", 0x20, R.string.photo_tag_staged, R.drawable.ic_portrait_white_48dp, R.string.photo_tag_natural, R.drawable.ic_directions_walk_white_48dp),
@@ -207,7 +207,7 @@ public class Photo extends Model {
 
         public int getLeftSubtractMask() {
             if(this == INTERIOR_OR_EXTERIOR) {
-                return GROUND_OR_RAISED.getMask() | URBAN_OR_RURAL.getMask();
+                return GROUND_OR_RAISED.getMask() | MANMADE_OR_NATURE.getMask();
             }
 
             if(this == VIEW_OR_SOCIAL) {

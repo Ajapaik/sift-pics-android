@@ -26,12 +26,12 @@
     <string name="photo_tag_private">Private</string>
     <string name="photo_tag_public">Public</string>
     <string name="photo_tag_raised">Raised</string>
-    <string name="photo_tag_rural">Countryside</string>
     <string name="photo_tag_social">Social</string>
     <string name="photo_tag_staged">Staged</string>
-    <string name="photo_tag_urban">Urban</string>
     <string name="photo_tag_whole">General</string>
     <string name="photo_tag_view">View</string>
+    <string name="photo_tag_nature">Nature</string>
+    <string name="photo_tag_manmade">Man-made</string>
 
     <!-- Albums -->
     <string name="album_label_no_data">No Albums</string>
