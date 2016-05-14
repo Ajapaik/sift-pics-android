@@ -29,7 +29,7 @@ import pics.sift.app.util.WebOperation;
 public class WebService extends Service {
     private static final String TAG = "WebService";
 
-    private static final String API_URL = "http://ajapaik.ee/cat/v1/";
+    private static final String API_URL = "https://ajapaik.ee/cat/v1/";
     private static final int MAX_CONNECTIONS = 4;
     private static final int SHUTDOWN_DELAY_IN_SECONDS = 1;
 
